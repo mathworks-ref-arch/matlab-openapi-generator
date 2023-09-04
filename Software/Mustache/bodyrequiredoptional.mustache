@@ -1,0 +1,5 @@
+{{#isBodyParam}}{{#bodyParam}}
+            %       Required properties in the model for this call:{{#vars}}{{#required}}
+            %           {{name}}{{/required}}{{/vars}}
+            %       Optional properties in the model for this call:{{#vars}}{{^required}}
+            %           {{name}}{{/required}}{{/vars}}{{/bodyParam}}{{/isBodyParam}}

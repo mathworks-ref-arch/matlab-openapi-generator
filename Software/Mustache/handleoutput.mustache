@@ -1,0 +1,1 @@
+{{#isFreeFormObject}}result = {{modelPackage}}.FreeFormObject(response.Body.Data);{{/isFreeFormObject}}{{^isFreeFormObject}}{{#primitiveType}}result = response.Body.Data;{{/primitiveType}}{{^primitiveType}}result = {{modelPackage}}.{{#isArray}}{{items.dataType}}{{/isArray}}{{^isArray}}{{dataType}}{{/isArray}}(response.Body.Data);{{/primitiveType}}{{/isFreeFormObject}}

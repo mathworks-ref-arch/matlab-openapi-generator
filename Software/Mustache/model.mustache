@@ -1,0 +1,5 @@
+{{#models}}
+{{#model}}
+{{#isEnum}}{{>model_enum}}{{/isEnum}}{{^isEnum}}{{#vendorExtensions.x-is-one-of-interface}}{{>model_oneof_interface}}{{/vendorExtensions.x-is-one-of-interface}}{{^vendorExtensions.x-is-one-of-interface}}{{>model_generic}}{{/vendorExtensions.x-is-one-of-interface}}{{/isEnum}}
+{{/model}}
+{{/models}}
