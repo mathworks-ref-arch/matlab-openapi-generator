@@ -4,7 +4,7 @@ MATLAB® Generator *for OpenAPI™* provides a generator to enable generation of
 
 ## Requirements
 
-### MathWorks Products (http://www.mathworks.com)
+### MathWorks Products (https://www.mathworks.com)
 
 * Requires MATLAB release R2020b or later
 
