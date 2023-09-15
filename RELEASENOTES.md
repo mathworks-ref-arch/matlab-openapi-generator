@@ -1,5 +1,9 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 1.0.6 (September 15th 2023)
+
+* Fix to Basic Auth credential handling
+
 ## Version 1.0.5 (September 4th 2023)
 
 * Minor documentation improvements

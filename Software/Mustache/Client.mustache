@@ -133,7 +133,7 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
                     request.Header(end+1) = matlab.net.http.field.GenericField("{{keyParamName}}",obj.apiKey);{{/isKeyInHeader}}{{#isKeyInQuery}}
                     uri.Query(end+1) = matlab.net.QueryParameter("{{keyParamName}}", obj.apiKey);{{/isKeyInQuery}}{{/isKeyInCookie}}{{/isApiKey}}{{#isBasicBasic}}
                     % Basic (or Digest) authentication, assumed httpCredentials have been set.
-                    httpOptions('Credentials',obj.httpCredentials);{{/isBasicBasic}}{{#isBasicBearer}}
+                    httpOptions.Credentials = obj.httpCredentials;{{/isBasicBasic}}{{#isBasicBearer}}
                     % Basic Bearer authentication, assumes bearerToken has been set.
                     request.Header(end+1) = matlab.net.http.field.AuthorizationField("Authorization","Bearer " + obj.bearerToken);{{/isBasicBearer}}{{#isOAuth}}
                     % oAuth authentication, calls getOAuthToken and adds returned token as Bearer authorization header.
