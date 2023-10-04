@@ -31,11 +31,18 @@ The code generator generates entirely standalone packages, all helper MATLAB cod
 
 ## Building MATLAB client code
 
-Generating a MATLAB client for a provided spec can be done inside or outside of MATLAB. To generate the client outside of MATLAB, use:
+Generating a MATLAB client for a provided spec can be done inside or outside of MATLAB. To generate the client outside of MATLAB using npx directly, use:
 
 ```bash
-cd Software
-npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i http://localhost:3000/api-json -o TestClient --package-name Test
+cd <package_directory>/Software
+npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB \
+                 -i http://localhost:3000/api-json -o TestClient --package-name Test
+```
+
+If not working in the package's `Software` directory, use full paths and add the following additional arguments:
+
+```bash
+-t "<package_directory>/Software/Mustache" --additional-properties openapiRoot="<package_directory>/Software/MATLAB
 ```
 
 Alternatively, if MATLAB Generator *for OpenAPI* has been added to the MATLAB path, the MATLAB client can also be generated inside MATLAB using:

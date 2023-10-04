@@ -29,18 +29,18 @@ classdef Client < openapi.build.Object
     methods
         function obj = Client(options)
             arguments
-                options.inputSpec string {mustBeTextScalar}
-                options.jarPath string {mustBeTextScalar} = openapiRoot(-1, 'MATLAB', 'lib', 'jar', 'MATLABClientCodegen-openapi-generator-0.0.1.jar')
+                options.inputSpec string {mustBeTextScalar, mustBeNonzeroLengthText}
+                options.jarPath string {mustBeTextScalar, mustBeNonzeroLengthText} = openapiRoot(-1, 'MATLAB', 'lib', 'jar', 'MATLABClientCodegen-openapi-generator-0.0.1.jar')
                 options.templateDir string {mustBeTextScalar} = openapiRoot(-1, 'Mustache')
-                options.packageName string {mustBeTextScalar} = 'OpenAPIClient'
+                options.packageName string {mustBeTextScalar, mustBeNonzeroLengthText} = 'OpenAPIClient'
                 options.output string {mustBeTextScalar} = fullfile(pwd, 'OpenAPIClient')
-                options.additionalArguments string {mustBeTextScalar}
+                options.additionalArguments string {mustBeTextScalar, mustBeNonzeroLengthText}
                 options.globalProperty containers.Map
                 options.openapiRoot = openapiRoot
-                options.copyrightNotice string {mustBeTextScalar}
+                options.copyrightNotice string {mustBeTextScalar, mustBeNonzeroLengthText}
                 options.additionalProperties containers.Map
                 options.useConfigurationFile (1,1) logical = true
-                options.configurationFile string {mustBeTextScalar} = 'openapitools.json'
+                options.configurationFile string {mustBeTextScalar, mustBeNonzeroLengthText} = 'openapitools.json'
                 options.nodePath string {mustBeTextScalar}
                 options.npxPath string {mustBeTextScalar}
                 options.skipValidateSpec (1,1) logical = true
@@ -65,6 +65,18 @@ classdef Client < openapi.build.Object
             end
         end
 
+        function set.packageName(obj, name)
+            arguments
+                obj (1,1) openapi.build.Client
+                name string {mustBeTextScalar, mustBeNonzeroLengthText}
+            end
+
+            [newName, modified] = matlab.lang.makeValidName(name);
+            if modified
+                fprintf("Warning: Invalid packageName: %s, changing to: %s\n", name, newName);
+            end
+            obj.packageName = newName;
+        end
 
         function obj = build(obj)
             arguments
@@ -538,7 +550,7 @@ classdef Client < openapi.build.Object
 
 
         function tf = checkMATLABVersion(~)
-            if verLessThan('MATLAB', '9.9')
+            if verLessThan('MATLAB', '9.9') %#ok<VERLESSMATLAB>
                 warning('Client:checkMATLABVersion','MATLAB R2020b or later is required');
                 tf = false;
             else

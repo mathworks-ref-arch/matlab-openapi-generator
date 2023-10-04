@@ -36,13 +36,13 @@ mvn clean package
 
 ## Usage
 
-To generate MATLAB client code for the well known [PetStore](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml) sample spec, download it and use a command similar to:
+To generate MATLAB client code for the well known [PetStore](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml) sample spec, download it and use commands similar to:
 
 ### Using a MATLAB client builder
 
 ```matlab
 % Run startup to configure the package's MATLAB paths
-cd Software/MATLAB
+cd <package_directory>/Software/MATLAB
 startup
 cd ..
 
@@ -60,18 +60,30 @@ c.build;
 
 ### Using the command line
 
-On Linux:
+If there is a preference to work directly with `npx` rather than the higher-level MATLAB client, it can be called as follows. On Linux:
 
 ```bash
+cd <package_directory>/Software
 npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i openapi.yaml -o PetClient --package-name PetStore
+```
+If not working in the package's `Software` directory, use full paths and add the following additional arguments:
+
+```bash
+-t "<package_directory>/Software/Mustache" --additional-properties openapiRoot="<package_directory>/Software/MATLAB
 ```
 
 Or on Windows replace the forward slashes in local paths with back slashes:
 
 ```bat
+cd <package_directory>\Software
 npx @openapitools/openapi-generator-cli --custom-generator MATLAB\lib\jar\MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i openapi.yaml -o PetClient --package-name PetStore
 ```
 
+If not working in the package's `Software` directory, use full paths and add the following additional arguments:
+
+```bat
+-t "c:\<package_directory>\Software\Mustache" --additional-properties openapiRoot="c:\ <package_directory>\Software\MATLAB"
+```
 > The slash in `@openapitools/openapi-generator-cli` is Node/npx syntax and not a local path, so this needs to remain a forward slash.
 
 ## License

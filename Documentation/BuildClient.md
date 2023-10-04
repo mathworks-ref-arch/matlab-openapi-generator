@@ -106,6 +106,13 @@ c.configurationFile = '/my/alternative/path/openapitools.json';
 c.useFileConfiguration = false;
 ```
 
+## Package naming
+
+The `packageName` property will be used to create a top-level package directory, i.e. a "+ directory", for this reason it must comply with naming requirements.
+If the provided value does not meet the requirements it may be changed automatically and a warning will be displayed.
+
+For more details see: [https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html](https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html) & [https://www.mathworks.com/help/matlab/ref/matlab.lang.makevalidname.html](https://www.mathworks.com/help/matlab/ref/matlab.lang.makevalidname.html).
+
 ## Copyright notice insertion
 
 A Copyright notice can be automatically inserted into generated code. To do so prior to calling the client's `build` method set the client's `copyrightNotice` property, e.g.:
@@ -149,7 +156,7 @@ To easiest way to set these *Java* flags while working with `openapi-generator-c
 export JAVA_TOOL_OPTIONS=-DdebugModels
 ```
 
-or on Windows
+or on Windows:
 
 ```bat
 set JAVA_TOOL_OPTIONS=-DdebugModels
@@ -174,6 +181,12 @@ The following commands show how a MATLAB client can be generated from a given sp
 cd <package_dir>/Software
 
 npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i http://localhost:3000/api-json -o TestClient --package-name Test
+```
+
+If not working in the package's `Software` directory, use full paths and add the following additional arguments:
+
+```bash
+-t "<package_directory>/Software/Mustache" --additional-properties openapiRoot="<package_directory>/Software/MATLAB
 ```
 
 Note, the `-i` argument can also point to a local spec file in `.yaml` or `.json` format.

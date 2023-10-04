@@ -1,5 +1,10 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 1.0.7 (October 3rd 2023)
+
+* Add validation to MATLAB client packageName property
+* npx command documentation improvements
+
 ## Version 1.0.6 (September 15th 2023)
 
 * Fix to Basic Auth credential handling
