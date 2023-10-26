@@ -1,5 +1,9 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 1.0.8 (October 26th 2023)
+
+* Minor bug fix to Client error message handling
+
 ## Version 1.0.7 (October 3rd 2023)
 
 * Add validation to MATLAB client packageName property

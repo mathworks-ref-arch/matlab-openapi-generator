@@ -897,11 +897,11 @@ classdef Client < openapi.build.Object
                     if str2double(fields{1}) >= 11 % Not clear what upper bound is TBD
                         tf = true;
                     else
-                        warning('Client:checkJavacVersion','Javac 11 or compatible is required, found: %s', cmdout);
+                        warning('Client:checkJavacVersion','Javac 11 or compatible is required, found: %s', cmdOut);
                         tf = false;
                     end
                 else
-                    warning('Client:checkcJavaVersion','Javac version could not be determined: %s', cmdout);
+                    warning('Client:checkcJavaVersion','Javac version could not be determined: %s', cmdOut);
                     tf = false;
                 end
             else
