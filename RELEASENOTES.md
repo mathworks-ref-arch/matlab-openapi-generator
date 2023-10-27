@@ -1,5 +1,11 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 1.0.9 (October 27th 2023)
+
+* Correctly set package version in file header when using the MATLAB client
+* Added support for package names containing periods when using the MATLAB client
+* Minor improvement to copyright string handling
+
 ## Version 1.0.8 (October 26th 2023)
 
 * Minor bug fix to Client error message handling

@@ -51,7 +51,7 @@ classdef Client < openapi.build.Object
             end
 
             if isempty(obj.additionalProperties) && isa(obj.additionalProperties, 'double')
-                obj.additionalProperties = containers.Map();
+                obj.additionalProperties = containers.Map({'packageVersion'}, {obj.getPackageVersion});
             end
             if ~isa(obj.additionalProperties, 'containers.Map')
                 error('Client:Client', 'Expected additionalProperties property to be a containers.Map, not: %s', class(obj.additionalProperties));
@@ -71,11 +71,16 @@ classdef Client < openapi.build.Object
                 name string {mustBeTextScalar, mustBeNonzeroLengthText}
             end
 
-            [newName, modified] = matlab.lang.makeValidName(name);
-            if modified
-                fprintf("Warning: Invalid packageName: %s, changing to: %s\n", name, newName);
+            % Allow for package names that have "." in them
+            nfields = split(name, '.');
+            for m = 1:numel(nfields)
+                [newName, modified] = matlab.lang.makeValidName(nfields(m));
+                if modified
+                    fprintf("Warning: Invalid packageName: %s, changing to: %s\n", nfields(m), newName);
+                    nfields(m) = newName;
+                end
             end
-            obj.packageName = newName;
+            obj.packageName = join(nfields, '.');
         end
 
         function obj = build(obj)
@@ -144,7 +149,7 @@ classdef Client < openapi.build.Object
             [tf, reportOut] = openapi.verifyPackage(obj.output, 'mode', options.mode, 'ignoredChecks', options.ignoredChecks);
         end
 
-        
+
         function set.templateDir(obj, templateDir)
             arguments
                 obj (1,1) openapi.build.Client
@@ -257,7 +262,7 @@ classdef Client < openapi.build.Object
                 copyrightNotice string {mustBeTextScalar}
             end
 
-            if ~startsWith(copyrightNotice, whitespacePattern + "%")
+            if ~startsWith(copyrightNotice, whitespacePattern(0,inf) + "%")
                 copyrightNotice = "% " + copyrightNotice;
             end
             obj.copyrightNotice = copyrightNotice;
@@ -909,5 +914,18 @@ classdef Client < openapi.build.Object
                 tf = false;
             end
         end
+
+        function V = getPackageVersion()
+            % getPackageVersion Return version of the package from the VERSION file
+            % A character vector is returned
+            verFile = fullfile(openapiRoot(-2), 'VERSION');
+            if ~isfile(verFile)
+                V = '1.0.0';
+                warning('Client:getPackageVersion','VERSION file not found: %s, using version 1.0.0', verFile, V);
+            else
+                V = char(strip(string(fileread(verFile))));
+            end
+        end
+
     end
 end %class
