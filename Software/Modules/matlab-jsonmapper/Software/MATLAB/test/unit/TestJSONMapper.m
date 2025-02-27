@@ -1,6 +1,6 @@
 classdef TestJSONMapper < matlab.unittest.TestCase
     methods(Test)
-        function testEmpty(testCase)
+        function testEmpty(testCase) %#ok<MANU>
             obj = myClass1;
             obj.fromJSON("{}");
         end
@@ -25,7 +25,8 @@ classdef TestJSONMapper < matlab.unittest.TestCase
             testCase.verifyEqual(obj.dts, datetime("1984-01-01",'InputFormat','yyyy-MM-dd'))
             testCase.verifyEqual(obj.m, containers.Map({'a.b','e.f'},{'c.d','g.h'}))
             testCase.verifyEqual(obj.e, myEnum.VAL1)
-
+            % Note the white space in the string value is changed by the GSON parsing
+            testCase.verifyEqual(obj.j, string('{"jsonStr":"JSON which should not get parsed","x":3.14}')) %#ok<STRQUOT>
         end
 
         function testParseArray(testCase)
@@ -49,6 +50,7 @@ classdef TestJSONMapper < matlab.unittest.TestCase
             testCase.verifyEqual(obj(1).dts, datetime("1984-01-01",'InputFormat','yyyy-MM-dd'))
             testCase.verifyEqual(obj(1).m, containers.Map({'a.b','e.f'},{'c.d','g.h'}))
             testCase.verifyEqual(obj(1).e, myEnum.VAL1)
+            testCase.verifyEqual(obj(1).j, string('{"jsonStr":"JSON which should not get parsed 1","x":1.0}')) %#ok<STRQUOT>
 
             testCase.verifyEqual(obj(2).d, -2.225073858507201e-308)
             testCase.verifyEqual(obj(2).f, single(-1.1754944e-38))
@@ -67,6 +69,7 @@ classdef TestJSONMapper < matlab.unittest.TestCase
             testCase.verifyEqual(obj(2).dts, datetime("1900-01-01",'InputFormat','yyyy-MM-dd'))
             testCase.verifyEqual(obj(2).m, containers.Map({'a.b','e.f'},{'c.d','g.h'}))
             testCase.verifyEqual(obj(2).e, myEnum.VAL2)
+            testCase.verifyEqual(obj(2).j, string('{"jsonStr":"JSON which should not get parsed 2","x":2.0}')) %#ok<STRQUOT>
 
         end
 
@@ -78,14 +81,14 @@ classdef TestJSONMapper < matlab.unittest.TestCase
             testCase.verifySize(obj(2).mc,[1 1]);
         end
 
-        function testArrayWithScalar(testCase)
+        function testArrayWithScalar(testCase) %#ok<MANU>
             obj = myClass1;
-            obj = obj.fromJSON(fileread('scalararrays.json'));
+            obj = obj.fromJSON(fileread('scalararrays.json')); %#ok<NASGU>
         end
 
-        function testArrays(testCase)
+        function testArrays(testCase) %#ok<MANU>
             obj = myClass1;
-            obj = obj.fromJSON(fileread('actualarray.json'));
+            obj = obj.fromJSON(fileread('actualarray.json')); %#ok<NASGU>
         end
     end
 

@@ -193,3 +193,6 @@ epub_title = project
 epub_exclude_files = ['search.html']
 
 myst_heading_anchors = 5
+
+# enable field lists for nicely documented properties
+myst_enable_extensions = ['fieldlist']

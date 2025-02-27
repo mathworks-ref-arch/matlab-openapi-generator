@@ -6,7 +6,14 @@ JSONMapper base class - adds JSON serialization and deserialization.
 Derive MATLAB classes from this class to allow them to be
 deserialized from JSON mapping the JSON fields to the class
 properties. To allow proper nesting of objects, derived objects must
-call the JSONMapper constructor from their constructor:
+call the `initialize` method from their constructor
+
+```{note}
+In the past it was recommended to call the JSONMapper constructor from derived classes.
+While this can indeed also still be used as an alternative to calling `initialize`, this
+is no longer recommended as it does not allow building deeper class hierarchies, 
+also see [Building class hierarchies](#building-class-hierarchies).
+```
 
 ```matlab
 function obj = myClass(s,inputs)
@@ -14,7 +21,7 @@ function obj = myClass(s,inputs)
         s {JSONMapper.ConstructorArgument} = []
         inputs.?myClass
     end
-    obj@JSONMapper(s,inputs);
+    obj = obj.initialize(s,inputs);
 end
 ```
 
@@ -36,16 +43,91 @@ datetime (must be annotated), JSONMapperMap, classes derived from
 
 Annotations can be added to properties as "validation functions".
 
-JSONMapper *methods* usable as *annotation*:
+JSONMapper *methods* usable as *annotations*:
 
-```{eval-rst}
-:fieldName:         allows property to be mapped to a JSON field with different name
-:JSONArray:         specifies field is a JSON array 
-:epochDatetime:     for datetime properties specifies in JSON the date time is 
-                    encoded as epoch. Must be the first attribute if used
-:stringDatetime:    for datetime properties specifies in JSON the date time is
-                    encoded as string with a particular format. Must be the 
-                    first attribute if used.
+| Annotation | Description |
+| ---------- | ----------- |
+| fieldName | Allows property to be mapped to a JSON field with different name. |
+| JSONArray | Specifies field is a JSON array. |
+| epochDatetime | For datetime properties specifies in JSON the date time is encoded as epoch. Must be the first attribute if used. |
+| stringDatetime | For datetime properties specifies in JSON the date time encoded as string with a particular format. Must be the first attribute if used. |
+| discriminator | Indicates that the property acts as a discriminator based upon which the JSON document can be deserialized to a more specific derived class. Also see [Building class hierarchies](#building-class-hierarchies). |
+| doNotDecode | Indicates that the property will not be decoded using MATLAB's jsondecode or otherwise when mapping to an object. |
+
+### Building class hierarchies
+
+It is possible to build entire object hierarchies on top of `JSONMapper`. It is for example possible to define
+a `Pet` class and two classes `Cat` and `Dog` which derive from it. It is also possible to define a
+[discriminator property](#jsonmapperdiscriminator) then; this is a property whose value specifies the exact subclass of an instance.
+
+This all ties in with [composition, inheritance and polymorphism in OpenAPI compatible services](https://spec.openapis.org/oas/v3.0.3#composition-and-inheritance-polymorphism).
+
+So, it is for example possible to implement the following MATLAB classes:
+
+```matlab
+classdef Pet < JSONMapper
+    properties
+        name string
+        petType string {JSONMapper.discriminator(petType, "Cat","Cat","Dog","Dog")}
+    end
+    methods
+        function obj = Pet(s,inputs)
+            arguments
+                s {JSONMapper.ConstructorArgument} = []
+                inputs.?Pet
+            end
+            obj = obj.initialize(s,inputs);
+        end
+    end
+end
+
+classdef Cat < Pet
+    properties
+        huntingSkill string
+    end
+    methods
+        function obj = Cat(s,inputs)
+            arguments
+                s {JSONMapper.ConstructorArgument} = []
+                inputs.?Cat
+            end
+            obj = obj.initialize(s,inputs);
+        end
+    end    
+end
+
+classdef Dog < Pet
+    properties
+        packSize int32
+    end
+    methods
+        function obj = Dog(s,inputs)
+            arguments
+                s {JSONMapper.ConstructorArgument} = []
+                inputs.?Dog
+            end
+            obj = obj.initialize(s,inputs);
+        end
+    end    
+end
+```
+
+Where if `Pet().fromJSON` is called with a JSON document with the `petType` set, it can actually return a `Cat` or `Dog` specifically rather than a more generic `Pet`, for example:
+
+```matlabsession
+>> p = Pet().fromJSON('{"name":"Garfield","petType": "Cat","huntingSkill":"lazy"}')
+
+p = 
+
+  Cat with properties:
+
+    huntingSkill: "lazy"
+            name: "Garfield"
+         petType: "Cat"
+```
+
+```{note}
+This is only possible when working with `fromJSON`, this will *not* work if calling the *constructor* with a JSON document as input. (A constructor cannot return object of other classes, regardless of whether those classes are children of the class in question or not).
 ```
 
 ### Annotations
@@ -94,9 +176,9 @@ Example:
 ```matlab
 properties
     % start_date is a UNIX timestamp
-    start_date {JSONMapper.epochDatetime}
+    start_date datetime {JSONMapper.epochDatetime}
     % end_date is UNIX timestamp in milliseconds
-    end_date {JSONMapper.epochDatetime(end_date,'TicksPerSecond',1000)}
+    end_date datetime {JSONMapper.epochDatetime(end_date,'TicksPerSecond',1000)}
 end
 ```
 
@@ -116,7 +198,44 @@ Example:
 
 ```matlab
 properties
-    start_date {JSONMapper.stringDatetime(start_date,'yyyy-MM-dd''T''HH:mm:ss')}
+    start_date datetime {JSONMapper.stringDatetime(start_date,'yyyy-MM-dd''T''HH:mm:ss')}
+end
+```
+
+#### JSONMapper.discriminator
+
+Indicates that the property acts as a discriminator based upon which the JSON document can be deserialized to a more specific derived class. Also see [Building class hierarchies](#building-class-hierarchies).
+
+discriminator requires pairs of values and classes as input. Where the pair indicates that if the property has a particular value then this maps to a particular class.
+
+For example:
+
+```matlab
+properties
+    petType string {JSONMapper.discriminator(petType,"cat","Cat","dog","Dog")}
+end
+```
+
+Specifies that if:
+
+* `petType=="cat"` then the object should be deserialized as `Cat` class
+* `petType=="dog"` then the object should be deserialized as `Dog` class
+
+#### JSONMapper.doNotDecode
+
+Indicates that the text property should not be decoded using a JSON parser.
+However it may be parsed and thus should be valid JSON.
+A scenario where this can be useful is if receiving JSON which can only be
+decoded correctly using a bespoke schema at a higher level.
+
+Such a property should be a scalar string.
+It should not be used in combination with other annotations.
+
+For example:
+
+```matlab
+properties
+    myJSONValue string {JSONMapper.doNotDecode}
 end
 ```
 
@@ -167,7 +286,7 @@ json = obj.getPayload(["required1","required2"],["optional1","optional2"]);
 ```
 
 If both inputs (required- as well as optional-parameter arrays) are set to empty
-`[]`, no validation takes place and all properties which are non-empty are 
+`[]`, no validation takes place and all properties which are non-empty are
 included in the encoded JSON.
 
 ## JSONEnum
@@ -342,4 +461,4 @@ JSONMapperMap is a wrapper around `containers.Map` which:
         tags: [0×0 JSONMapperMap]
     ```
 
-[//]: #  (Copyright 2022-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2022-2024 The MathWorks, Inc.)

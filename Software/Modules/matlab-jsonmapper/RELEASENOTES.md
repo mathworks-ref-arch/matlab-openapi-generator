@@ -1,5 +1,27 @@
 # JSONMapper - Release Notes
 
+## Release 0.4.3 (January 12th 2025)
+
+- Documentation typo fix
+- Added JSONMapperrMap methods to get keys and values
+- JSONMapperrMap disp() update
+
+## Release 0.4.2 (September 20th 2024)
+
+- README.md typo fix, MATLAB R2020b is required
+- Added startup verbosity option
+
+## Release 0.4.1 (September 10th 2024)
+
+- Minor typo and markdown lint fixes
+
+## Release 0.4.0 (August 8th 2024)
+
+- Added doNotDecode annotation
+- Added discriminator support
+- Minor documentation fixes
+- Updated format for constructor
+
 ## Release 0.3.4 (September 1st 2023)
 
 - Minor documentation updates
@@ -32,4 +54,4 @@
 
 - Initial Release
 
-[//]: #  (Copyright 2022-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2022-2024 The MathWorks, Inc.)

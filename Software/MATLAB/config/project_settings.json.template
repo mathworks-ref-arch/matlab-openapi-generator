@@ -1,0 +1,9 @@
+{
+    "projectBaseDirectory" : "/home/username/git",
+    "baselineFiles" : ["/home/username/git/baseline/LICENSE.MD", "/home/username/git/baseline/SECURITY.md"],
+    "copyrightNotice" : "My Company Inc.",
+    "gitlabAPIToken" : "sdas[REDACTED]dasd",
+    "gitLabEndpoint" : "https://gitlab.example.com/",
+    "gitLabUsername" : "jdoe",
+    "apiDocGeneratorPath" : "/home/username/git/APIMarkdownDocGenerator"
+}

@@ -9,7 +9,7 @@ classdef (SharedTestFixtures={testServerFixture}) staticTests < matlab.unittest.
         function verifyGeneratedCode(testCase)
             % Run
             % verifyPackage
-            [tf, out] = openapi.verifyPackage(fileparts(fileparts(fileparts(which("Test.api.App")))));
+            [tf, out] = openapi.internal.utils.verifyPackage(fileparts(fileparts(fileparts(which("Test.api.App")))));
             % Verify it tested anything at all
             testCase.verifyNotEmpty(out);
             testCase.verifyTrue(tf);

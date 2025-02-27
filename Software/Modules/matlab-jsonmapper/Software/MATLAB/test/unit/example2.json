@@ -19,7 +19,9 @@
         "a.b": "c.d",
         "e.f": "g.h"
     },
-    "e": "VAL1"
+    "e": "VAL1",
+    "j": {"jsonStr": "JSON which should not get parsed 1", "x": 1.0}
+
 },
 {
     "d": -2.225073858507201e-308,
@@ -41,6 +43,8 @@
         "a.b": "c.d",
         "e.f": "g.h"
     },
-    "e": "VAL2"
+    "e": "VAL2",
+    "j": {"jsonStr": "JSON which should not get parsed 2", "x": 2.0}
+
 }
 ]

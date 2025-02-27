@@ -4,17 +4,16 @@ MATLAB® Generator *for OpenAPI™* provides a generator to enable generation of
 
 ## Requirements
 
-### MathWorks Products (https://www.mathworks.com)
+### MathWorks Products [https://www.mathworks.com](https://www.mathworks.com)
 
-* Requires MATLAB release R2020b or later
+* Requires MATLAB release R2020b or later.
 
 ### 3rd Party Products
 
-* Java Development Kit (JDK) 11 or compatible
-* [Maven](https://maven.apache.org/) 3.6 or greater
-* [Node.js®](https://nodejs.org/en/) 16.x LTS or greater (required by OpenAPITools openapi-generator)
-* [OpenAPITools openapi-generator](https://github.com/openapitools/openapi-generator), (downloaded by Maven build step and/or Node.js `npx`)
-* [npx/npm](https://github.com/npm/cli) 8.12.1 or greater, in recent Node.js >= v16 releases `npx` is included and the version numbers match so this is typically not an issue
+* Java Development Kit (JDK) 11 or compatible.
+* [Maven](https://maven.apache.org/) 3.6 or greater.
+* [OpenAPITools openapi-generator](https://github.com/openapitools/openapi-generator), downloaded by `setup.m`.
+* Node.js is required only is using the unit test suite.
 
 ## Introduction
 
@@ -60,12 +59,13 @@ c.build;
 
 ### Using the command line
 
-If there is a preference to work directly with `npx` rather than the higher-level MATLAB client, it can be called as follows. On Linux:
+If there is a preference to work directly with the Node.js `npx` command rather than the higher-level MATLAB client, it can be called as follows. On Linux:
 
 ```bash
 cd <package_directory>/Software
 npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i openapi.yaml -o PetClient --package-name PetStore
 ```
+
 If not working in the package's `Software` directory, use full paths and add the following additional arguments:
 
 ```bash
@@ -84,6 +84,7 @@ If not working in the package's `Software` directory, use full paths and add the
 ```bat
 -t "c:\<package_directory>\Software\Mustache" --additional-properties openapiRoot="c:\ <package_directory>\Software\MATLAB"
 ```
+
 > The slash in `@openapitools/openapi-generator-cli` is Node/npx syntax and not a local path, so this needs to remain a forward slash.
 
 ## License
@@ -93,10 +94,10 @@ The license for the MATLAB Generator *for OpenAPI* is available in the [LICENSE.
 ## Enhancement Requests
 
 Provide suggestions for additional features or capabilities using the following link:
-https://www.mathworks.com/products/reference-architectures/request-new-reference-architectures.html
+<https://www.mathworks.com/products/reference-architectures/request-new-reference-architectures.html>
 
 ## Support
 
 Email: `mwlab@mathworks.com` or please log an issue.
 
-[//]: #  (Copyright 2019-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2019-2025 The MathWorks, Inc.)

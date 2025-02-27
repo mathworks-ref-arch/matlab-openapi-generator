@@ -1,5 +1,28 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 2.1.0 (February 25th 2024)
+
+* Added support for generation based on a directory of several specs
+* Added optional GitLab integration
+* Updated default generator Java library to v7.1.0
+
+## Version 2.0.0 (December 8th 2024)
+
+* NodeJS & npx are no longer required
+* Improved setup process
+* Minor bug fixes
+* JSONMapper Release 0.4.3 (January 12th 2025)
+  * README.md typo fix, MATLAB R2020b is required.
+  * Added startup verbosity option
+
+## Version 1.1.0 (August 8th 2024)
+
+* Updated JSON Mapper module to v0.4.0
+* Added support for polymorphism through discriminators
+* Added support for arrays of object bodies
+* Documentation improvements
+* Changed default location of the cookie jar
+
 ## Version 1.0.9 (October 27th 2023)
 
 * Correctly set package version in file header when using the MATLAB client

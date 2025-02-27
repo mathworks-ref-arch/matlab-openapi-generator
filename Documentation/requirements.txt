@@ -1,0 +1,6 @@
+myst-parser==2.0.0
+Sphinx==6.2.1
+sphinx-rtd-theme==1.2.2
+sphinx_design==0.4.1
+sphinx-copybutton==0.5.2
+sphinxcontrib-mermaid==0.9.2

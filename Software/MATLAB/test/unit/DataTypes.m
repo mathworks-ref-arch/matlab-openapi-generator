@@ -343,6 +343,49 @@ classdef DataTypes < GenerateSpec
             
         end
 
+        function ReturnBaseClass(testCase)
+            testCase.generate('MyResponse',[ ...
+                "ref: #/components/schemas/BaseObject" 
+            ],'BaseObject',[...
+                "type: object"
+                "properties:"
+                "  objectType:"
+                "    type: string"
+                "discriminator:"
+                "  propertyName: objectType"
+            ],'ObjectA',[...
+                "type: object"
+                "allOf:"
+                "- $ref: '#/components/schemas/BaseObject'"
+                "- type: object"
+                "  properties:"
+                "    fieldA:"
+                "      type: string"
+            ],'ObjectB',[...
+                "type: object"
+                "allOf:"
+                "- $ref: '#/components/schemas/BaseObject'"
+                "- type: object"
+                "  properties:"
+                "    fieldB:"
+                "      type: string"
+            ]);
+
+           % Verify that both ObjectA and ObjectB actually derive from
+           % BaseObject
+           mA = ?DT.models.ObjectA;
+           testCase.verifyEqual(mA.SuperclassList,?DT.models.BaseObject)
+           mB = ?DT.models.ObjectB;
+           testCase.verifyEqual(mB.SuperclassList,?DT.models.BaseObject)
+
+           % Verify that BaseClass correctly deserializes to ObjectA and
+           % ObjectB respectively
+           A = DT.models.BaseObject().fromJSON('{"fieldA": "foo","objectType":"ObjectA"}');
+           testCase.verifyClass(A,?DT.models.ObjectA);
+           B = DT.models.BaseObject().fromJSON('{"fieldB": "bar","objectType":"ObjectB"}');
+           testCase.verifyClass(B,?DT.models.ObjectB);
+        end
+        
     end
 
 

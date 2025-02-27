@@ -1,89 +1,179 @@
 classdef Client < openapi.build.Object
-    % Client object to assist in building a MATLAB Client
+    % Client object to assist in building a MATLAB Client based on OpenAPI
+    % specs.
+    %
+    % Client Properties:
+    %
+    %   packageName - Name of the MATLAB package to generate the client in.
+    %
+    %   matlabJarPath - Location of MATLABClientCodegen-openapi-generator-0.0.1.jar.
+    %       Does not have to be specified and can be left at its default 
+    %       value if it is located in its default location.
+    %
+    %   inputSpec - Location of the single OpenAPI spec. If the
+    %       specification is spread across multiple separate files,
+    %       consider using inputSpecRootDirectory instead. Either inputSpec
+    %       or inputSpecRootDirectory must be set.
+    %
+    %   inputSpecRootDirectory - Directory containing a collection of files
+    %       which make up the entire specification. Either inputSpec or
+    %       inputSpecRootDirectory must be set.
+    %
+    %   output - Output directory
+    %
+    %   additionalArguments - Additional arguments to pass to the generator.
+    %
+    %   templateDir - Location of the mustache templates. Does not have to
+    %       be specified and can be left at its default value if these are
+    %       located in their default location.
+    %
+    %   globalProperty - Extra global properties to be passed to the
+    %       generated, specified as containers.Map.
+    %
+    %   copyrightNotice - Copyright notice to include in the generated code.
+    %
+    %   additionalProperties - Extra additional properties to be passed to
+    %       the generated, specified as containers.Map. 
+    %
+    %   configurationFile - Name and location of the configuration file to
+    %       use/generate.
+    %
+    %   skipValidateSpec - Disable spec validation. This can be useful in
+    %       cases where the spec is not 100% compliant but code can still
+    %       be generated.
+    %
+    %   objectParameters - Specify which common parameters are specified as
+    %       property on the generated classes rather than being inputs to
+    %       specific operations, specified as containers.Map
+    %
+    % Client Methods:
+    %
+    %   Client - constructor. Can be called with Name-Value pairs where
+    %       the name matches property names and the value specifies what value
+    %       to set this property to.
+    %
+    %   build - build the package.
 
-    %  (c) 2021-2023 MathWorks, Inc.
+    %  (c) 2021-2024 MathWorks, Inc.
 
     properties
+        % Name of the MATLAB package to generate the client in.
         packageName string
-        jarPath string
+        % Location of MATLABClientCodegen-openapi-generator-0.0.1.jar. Does
+        % not have to be specified and can be left at its default value if
+        % it is located in its default location.
+        matlabJarPath string
+        % Location of the OpenAPI spec.
         inputSpec string
+        % Directory containing a collection of files which make up the
+        % specification.
+        inputSpecRootDirectory string
+        % Output directory
         output string
+        % Additional arguments to pass to the generator.
         additionalArguments string
+        % Location of the mustache templates. Does not have to be specified
+        % and can be left at its default value if these are located in
+        % their default location.
         templateDir string
-        globalProperty % containers.Map
-        openapiRoot string
+        % Extra global properties to be passed to the generated, specified
+        % as containers.Map.
+        globalProperty
+        % Copyright notice to include in the generated code.
         copyrightNotice string
-        additionalProperties % containers.Map
-        useConfigurationFile (1,1) logical
-        configurationFile string
-        nodePath string
-        npxPath string
+        % Extra additional properties to be passed to the generated,
+        % specified as containers.Map.
+        additionalProperties
+        % Name and location of the configuration file to use/generate.
+        inputConfigurationFile string
+        % Default to openapitools.json
+        outputConfigurationFile string
+        % Disable spec validation. This can be useful in cases where the
+        % spec is not 100% compliant but code can still be generated.
         skipValidateSpec (1,1) logical
+        % Specify which common parameters are specified as property on the
+        % generated classes rather than being inputs to specific
+        % operations, specified as containers.Map
+        objectParameters
+        % Path to generator Jar file
+        % Default Software/MATLAB/lib/jar/openapi-generator-<version>.jar
+        generatorJarPath string
+        % Generator version e.g. 6.6.0
+        generatorVersion string
+        % Location of build log file
+        logPath string
     end
 
     properties (Hidden)
         logFid = 0
-        cliVersion = "6.6.0"
     end
 
     methods
         function obj = Client(options)
+            %CLIENT constructor
+            %
+            % Can be called with Name-Value pairs where the name matches
+            % property names and the value specifies what value to set this
+            % property to.
+            %
+            % Example:
+            %   builder = openapi.build.Client(inputSpec="mySpec.yaml");
             arguments
                 options.inputSpec string {mustBeTextScalar, mustBeNonzeroLengthText}
-                options.jarPath string {mustBeTextScalar, mustBeNonzeroLengthText} = openapiRoot(-1, 'MATLAB', 'lib', 'jar', 'MATLABClientCodegen-openapi-generator-0.0.1.jar')
+                options.inputSpecRootDirectory string {mustBeTextScalar, mustBeNonzeroLengthText}
+                options.matlabJarPath string {mustBeTextScalar, mustBeNonzeroLengthText}
                 options.templateDir string {mustBeTextScalar} = openapiRoot(-1, 'Mustache')
                 options.packageName string {mustBeTextScalar, mustBeNonzeroLengthText} = 'OpenAPIClient'
                 options.output string {mustBeTextScalar} = fullfile(pwd, 'OpenAPIClient')
                 options.additionalArguments string {mustBeTextScalar, mustBeNonzeroLengthText}
-                options.globalProperty containers.Map
-                options.openapiRoot = openapiRoot
+                options.globalProperty containers.Map = containers.Map.empty
                 options.copyrightNotice string {mustBeTextScalar, mustBeNonzeroLengthText}
-                options.additionalProperties containers.Map
-                options.useConfigurationFile (1,1) logical = true
-                options.configurationFile string {mustBeTextScalar, mustBeNonzeroLengthText} = 'openapitools.json'
-                options.nodePath string {mustBeTextScalar}
-                options.npxPath string {mustBeTextScalar}
+                options.additionalProperties containers.Map = containers.Map.empty
+                options.inputConfigurationFile string {mustBeTextScalar, mustBeNonzeroLengthText}
+                options.outputConfigurationFile string {mustBeTextScalar, mustBeNonzeroLengthText} = 'openapitools.json'
                 options.skipValidateSpec (1,1) logical = true
+                options.objectParameters containers.Map = containers.Map.empty
+                options.generatorJarPath string {mustBeTextScalar, mustBeNonzeroLengthText}
+                options.generatorVersion string {mustBeTextScalar, mustBeNonzeroLengthText}
+                options.logPath string {mustBeTextScalar, mustBeNonzeroLengthText}
             end
 
+            % Call all the setters
             for p = string(fieldnames(options))'
                 obj.(p) = options.(p);
             end
 
-            if isempty(obj.additionalProperties) && isa(obj.additionalProperties, 'double')
-                obj.additionalProperties = containers.Map({'packageVersion'}, {obj.getPackageVersion});
-            end
             if ~isa(obj.additionalProperties, 'containers.Map')
                 error('Client:Client', 'Expected additionalProperties property to be a containers.Map, not: %s', class(obj.additionalProperties));
+            else
+                obj.additionalProperties('packageVersion') = openapi.internal.utils.getPackageVersion();
             end
 
-            if isempty(obj.globalProperty) && isa(obj.globalProperty, 'double')
-                obj.globalProperty = containers.Map();
-            end
             if ~isa(obj.globalProperty, 'containers.Map')
                 error('Client:Client', 'Expected globalProperty property to be a containers.Map, not: %s', class(obj.globalProperty));
             end
-        end
 
-        function set.packageName(obj, name)
-            arguments
-                obj (1,1) openapi.build.Client
-                name string {mustBeTextScalar, mustBeNonzeroLengthText}
+            if ~isa(obj.objectParameters, 'containers.Map')
+                error('Client:Client', 'Expected objectParameters property to be a containers.Map, not: %s', class(obj.objectParameters));
             end
 
-            % Allow for package names that have "." in them
-            nfields = split(name, '.');
-            for m = 1:numel(nfields)
-                [newName, modified] = matlab.lang.makeValidName(nfields(m));
-                if modified
-                    fprintf("Warning: Invalid packageName: %s, changing to: %s\n", nfields(m), newName);
-                    nfields(m) = newName;
+            if isempty(obj.generatorJarPath)
+                if isempty(obj.generatorVersion)
+                    obj.generatorJarPath = openapi.internal.utils.getGeneratorJarPath(openapi.internal.utils.getGeneratorJarVersion());
+                else
+                    obj.generatorJarPath = openapi.internal.utils.getGeneratorJarPath(obj.generatorVersion);
                 end
             end
-            obj.packageName = join(nfields, '.');
+
+            if isempty(obj.matlabJarPath)
+                jarName = "MATLABClientCodegen-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
+                obj.matlabJarPath = string(fullfile(openapiRoot('lib', 'jar'), jarName));
+            end
         end
 
+
         function obj = build(obj)
+            %build build the MATLAB client
             arguments
                 obj (1,1) openapi.build.Client
             end
@@ -92,48 +182,76 @@ classdef Client < openapi.build.Object
 
             obj.log(sprintf('OpenAPI Client Generator: %s',datetime('now')));
 
-            % check for MATLAB version, jar file, npx, node
-            if ~obj.checkDeps
-                errMsg = sprintf('Dependency check failed review warnings\nCheck if java and javac (>= v11) paths are configured and if npxPath or nodePath client properties need to be set explicitly.');
+            % check for MATLAB version, jar file, javac
+            if ~obj.checkJavaDeps
+                errMsg = sprintf('Dependency check failed, review warnings\nCheck if java and javac (>= v11) paths are configured.');
                 obj.log(errMsg);
                 error('Client:build', errMsg); %#ok<SPERR>
             end
 
-            % Must be called before any calls to the CLI
-            configCLI(obj);
-
-            if ~strlength(obj.inputSpec) > 0
-                obj.log('inputSpec property is required but not set');
-                error('Client:build:specNotSet','inputSpec property is required but not set');
+            if ~isempty(obj.inputSpecRootDirectory)
+                if ~isempty(obj.inputSpec)
+                    warning('client:InputSpecAndInputSpecRootDirectoryBothSet','Both inputSpec and inputSpecRootDirectory have been set. In this case inputSpec is ignored and only inputSpecRootDirectory is used.')
+                end
+            elseif isempty(obj.inputSpec)
+                error('client:NeitherInputSpecNorInputSpecRootDirectorySet','Either inputSpec or inputSpecRootDirectory must be set.')
             end
 
-            if obj.useConfigurationFile
-                obj.dispLog(sprintf('Using configuration file: %s', obj.configurationFile));
+            classpath = obj.generatorJarPath + openapi.internal.utils.classpathSep + obj.matlabJarPath;
+
+            if ~isempty(obj.inputConfigurationFile)
+                obj.dispLog(sprintf('Using configuration file: %s', obj.inputConfigurationFile));
                 obj.buildAdditionalPropertiesFileEntry();
-                obj.writeConfigurationFile();
-                if ~isfile(obj.configurationFile)
-                    errMsg = sprintf('Configuration file not found: %s', obj.configurationFile);
+                obj.writeCLIConfigurationFile();
+                if ~isfile(obj.inputConfigurationFile)
+                    errMsg = sprintf('Configuration file not found: %s', obj.inputConfigurationFile);
                     obj.log(errMsg);
                     error('Client:build:FileNotFound', errMsg); %#ok<SPERR>
                 else
-                    cmdStr = obj.createFileCmdString();
+                    if strlength(obj.additionalArguments) > 0
+                        cmdStr = openapi.internal.utils.createJavaFileCmdString(classpath, obj.inputConfigurationFile, additionalArguments=obj.additionalArguments);
+                    else
+                        cmdStr = openapi.internal.utils.createJavaFileCmdString(classpath, obj.inputConfigurationFile);
+                    end
                 end
             else
-                cmdStr = obj.createCLICmdString();
+                cmdStr = openapi.internal.utils.createJavaCLICmdString();
+                cmdStr = cmdStr + " -cp " + '"' + classpath + '"';
+                cmdStr = cmdStr + " org.openapitools.codegen.OpenAPIGenerator";
+                cmdStr = cmdStr + " generate --generator-name MATLAB";
+                if ~isempty(obj.inputSpecRootDirectory)
+                    cmdStr = cmdStr + " --input-spec-root-directory " + '"' + obj.inputSpecRootDirectory + '"';
+                elseif ~isempty(obj.inputSpec)
+                    cmdStr = cmdStr + " --input-spec " + '"' + obj.inputSpec + '"';
+                end
+                cmdStr = cmdStr + " --output " + '"' + obj.output + '"';
+                cmdStr = cmdStr + " --package-name " + '"' + obj.packageName + '"';
+                cmdStr = cmdStr + " --template-dir " + '"' + obj.templateDir + '"';
+                cmdStr = cmdStr + obj.buildAdditionalPropertiesCLIEntry();
+
+                if obj.skipValidateSpec
+                    cmdStr = cmdStr + " --skip-validate-spec";
+                end
+
+                cmdStr = cmdStr + obj.buildGlobalPropertiesCLIEntry();
+
+                if strlength(obj.additionalArguments) > 0
+                   cmdStr = cmdStr + " " + obj.additionalArguments;
+                end
             end
 
-            obj.dispLog(['Building client, executing command:', newline, char(cmdStr), newline]);
+            obj.dispLog(['Building client, executing command:', newline, '  ', char(cmdStr), newline]);
 
-            [cmdStatus, cmdOut, cmdStrExec] = obj.wrappedSystem(cmdStr);
-
+            [cmdStatus, cmdOut, cmdStrExec] = openapi.internal.utils.wrappedSystem(cmdStr);
+    
             obj.log(sprintf('Prefixed command: %s\n', cmdStrExec));
             obj.log(sprintf('Command result: %d\n', cmdStatus));
             obj.log(sprintf('Command output:\n%s\n', cmdOut));
-
+    
             if cmdStatus ~= 0
-                error('Client:build', 'Build failed: \n%s\nLog: %s', cmdOut, fullfile(obj.output, obj.packageName + "_build.log"));
+                error('Client:build', 'build failed: \n%s\nLog: %s', cmdOut, fullfile(obj.output, obj.packageName + "_build.log"));
             else
-                obj.dispLog(sprintf('Build completed, output directory: %s', obj.output));
+                obj.dispLog(sprintf('build completed, output directory: %s', obj.output));
             end
         end
 
@@ -146,7 +264,26 @@ classdef Client < openapi.build.Object
                 options.ignoredChecks string = ""
             end
 
-            [tf, reportOut] = openapi.verifyPackage(obj.output, 'mode', options.mode, 'ignoredChecks', options.ignoredChecks);
+            [tf, reportOut] = openapi.internal.utils.verifyPackage(obj.output, 'mode', options.mode, 'ignoredChecks', options.ignoredChecks);
+        end
+
+
+        function set.packageName(obj, name)
+            arguments
+                obj (1,1) openapi.build.Client
+                name string {mustBeTextScalar, mustBeNonzeroLengthText}
+            end
+
+            % Allow for package names that have "." in them
+            nfields = split(name, '.');
+            for m = 1:numel(nfields)
+                [newName, modified] = matlab.lang.makeValidName(nfields(m));
+                if modified
+                    fprintf(2, "Invalid packageName field: %s, changing to: %s\n", nfields(m), newName);
+                    nfields(m) = newName;
+                end
+            end
+            obj.packageName = join(nfields, '.');
         end
 
 
@@ -199,52 +336,46 @@ classdef Client < openapi.build.Object
             end
         end
 
-
-        function set.jarPath(obj, jarPath)
+        function set.inputSpecRootDirectory(obj, inputSpecRootDirectory)
             arguments
                 obj (1,1) openapi.build.Client
-                jarPath string {mustBeTextScalar}
+                inputSpecRootDirectory string {mustBeTextScalar}
+            end
+            if ~isfolder(inputSpecRootDirectory)
+                error('Client:set_inputSpecRootDirectory','Specified input spec root directory does not exist: %s', inputSpecRootDirectory);
+            else
+                obj.inputSpecRootDirectory = inputSpecRootDirectory;
+            end
+        end        
+
+
+        function set.matlabJarPath(obj, matlabJarPath)
+            arguments
+                obj (1,1) openapi.build.Client
+                matlabJarPath string {mustBeTextScalar}
             end
 
-            if ~isfile(jarPath)
-                error('Client:set_jarPath','OpenAPI generator Jar file not found: %s, to build it run "mvn clean package" in a shell from Software/Java', jarPath);
+            if ~isfile(matlabJarPath)
+                error('Client:set_matlabJarPath','OpenAPI MATLAB generator jar file not found: %s, to build it run "mvn clean package" in a shell from Software/Java.', matlabJarPath);
             else
-                obj.jarPath = jarPath;
+                obj.matlabJarPath = matlabJarPath;
             end
         end
 
 
-        function set.nodePath(obj, nodePath)
+        function set.generatorJarPath(obj, generatorJarPath)
             arguments
                 obj (1,1) openapi.build.Client
-                nodePath string {mustBeTextScalar}
+                generatorJarPath string {mustBeTextScalar}
             end
-            if ispc()
-                warning('Client:set_nodePath','Setting the nodePath value currently has no effect on Windows systems');
+
+            if ~isfile(generatorJarPath)
+                error('Client:set_generatorJarPath','OpenAPI generator jar file not found: %s, to build it run "mvn clean package" in a shell from Software/Java.', generatorJarPath);
             else
-                if ~isfolder(nodePath)
-                    error('Client:set_npxPath','npxPath directory not found: %s', nodePath);
-                end
+                obj.generatorJarPath = generatorJarPath;
             end
-            obj.nodePath = nodePath;
         end
-
-
-        function set.npxPath(obj, npxPath)
-            arguments
-                obj (1,1) openapi.build.Client
-                npxPath string {mustBeTextScalar}
-            end
-            if ispc()
-                warning('Client:set_npxPath','Setting the npxPath value currently has no effect on Windows systems');
-            else
-                if ~isfolder(npxPath)
-                    error('Client:set_npxPath','npxPath directory not found: %s', npxPath);
-                end
-            end
-            obj.npxPath = npxPath;
-        end
-
+        
 
         function set.additionalArguments(obj, additionalArguments)
             arguments
@@ -289,15 +420,13 @@ classdef Client < openapi.build.Object
         end
 
 
-        function tf = checkDeps(obj)
+        function tf = checkJavaDeps(obj)
             mlTf = obj.checkMATLABVersion();
-            jarTf = obj.checkJar();
-            nodeTf = obj.checkNode();
-            npxTf = obj.checkNpx();
-            javaTf = obj.checkJavaVersion();
-            javacTf = obj.checkJavacVersion();
+            jarTf = openapi.internal.utils.checkMATLABJar();
+            javaTf = openapi.internal.utils.checkJavaVersion();
+            javacTf = openapi.internal.utils.checkJavacVersion();
 
-            tf = all([mlTf, jarTf, nodeTf, npxTf, javaTf, javacTf]);
+            tf = all([mlTf, jarTf, javaTf, javacTf]);
         end
     end
 
@@ -310,7 +439,12 @@ classdef Client < openapi.build.Object
             end
 
             if obj.logFid == 0
-                logPath = fullfile(obj.output, obj.packageName + "_build.log");
+                if isempty(obj.logPath)
+                    logPathFcn = fullfile(obj.output, obj.packageName + "_build.log");
+                else
+                    logPathFcn = obj.logPath;
+                end
+                   
                 if ~isfolder(obj.output)
                     if isfile(obj.output)
                         error('Client:log', 'Output directory is a file: %s', obj.output);
@@ -318,9 +452,9 @@ classdef Client < openapi.build.Object
                     mkdir(obj.output);
                     % Assumes subsequent client generation will not delete/overwrite the log file
                 end
-                [fid, errmsg] = fopen(logPath, 'wt+');
+                [fid, errmsg] = fopen(logPathFcn, 'wt+');
                 if fid < 3
-                    error('Client:log', 'Error opening log file: %s\n%s', logPath, errmsg);
+                    error('Client:log', 'Error opening log file: %s\n%s', logPathFcn, errmsg);
                 else
                     obj.logFid = fid;
                     fprintf(obj.logFid, '%s\n', text);
@@ -344,49 +478,7 @@ classdef Client < openapi.build.Object
             obj.logFid = 0;
         end
 
-
-        function tf = isCLIInstalled(obj)
-            npmCmdStr = createNpmCmdString(obj);
-            cmdStr = npmCmdStr + " list --depth 1 @openapitools/openapi-generator-cli"; % TODO add version constraints
-            [cmdStatus, ~, ~] = openapi.build.Client.wrappedSystem(cmdStr);
-
-            if cmdStatus == 0
-                tf = true;
-            else
-                tf = false;
-            end
-        end
-
-
-        function configCLI(obj, options)
-            % configCLI Installs
-            arguments
-                obj (1,1) openapi.build.Client
-                options.cliVersion string {mustBeTextScalar} = obj.cliVersion
-            end
-
-            if ~isCLIInstalled(obj)
-                npmCmdStr = obj.createNpmCmdString;
-                cmdStr = npmCmdStr + " install @openapitools/openapi-generator-cli"; % TODO add version constraints
-                obj.dispLog(['Installing CLI, executing command:', newline, char(cmdStr), newline]);
-                [cmdStatus, cmdOut, cmdStrExec] = openapi.build.Client.wrappedSystem(cmdStr);
-                if cmdStatus ~= 0
-                    error('Client:configCLI', 'Could not install openapi-generator-cli:\nExecuted: %s\nReturned: %s\n', cmdStrExec, cmdOut);
-                end
-            end
-            cliVer = obj.getGeneratorCliVersion;
-            if ~strcmp(cliVer, options.cliVersion)
-                npxCmdStr = obj.createNpxCmdString;
-                cmdStr = npxCmdStr + " @openapitools/openapi-generator-cli version-manager set " + options.cliVersion; % Current supported version
-                obj.dispLog(['Setting CLI version, executing command:', newline, char(cmdStr), newline]);
-                [cmdStatus, cmdOut, cmdStrExec] = openapi.build.Client.wrappedSystem(cmdStr);
-                if cmdStatus ~= 0
-                    error('Client:configCLI', 'Could not set openapi-generator-cli version:\nExecuted: %s\nReturned: %s\n', cmdStrExec, cmdOut);
-                end
-            end
-        end
-
-
+       
         function dispLog(obj, str)
             % Displays a string and also logs it
             arguments
@@ -399,106 +491,36 @@ classdef Client < openapi.build.Object
         end
 
 
-        function npmCmdStr = createNpmCmdString(obj)
-            if strlength(obj.nodePath) > 0
-                pathCmd = "export PATH=" + string(obj.nodePath) + ":$PATH; ";
-            else
-                pathCmd = "";
-            end
-            npmCmdStr = pathCmd + "npm ";
-        end
-
-
-        function npxCmdStr = createNpxCmdString(obj)
-            if strlength(obj.nodePath) > 0
-                pathCmd = "export PATH=" + string(obj.nodePath) + ":$PATH; ";
-            else
-                pathCmd = "";
-            end
-            if strlength(obj.npxPath) > 0
-                npxCmd = string(fullfile(obj.npxPath, 'npx'));
-            else
-                npxCmd = "npx "; % Note trailing space
-            end
-            npxCmdStr = pathCmd + npxCmd;
-        end
-
-
-        function cmdStr = createFileCmdString(obj)
-            npxCmdStr = obj.createNpxCmdString;
-            cmdStr = npxCmdStr + " @openapitools/openapi-generator-cli";
-            cmdStr = cmdStr + " generate --generator-key v3.0";
-            cmdStr = cmdStr + " --custom-generator " + '"' + obj.jarPath + '"';
-            cmdStr = cmdStr + " --config " + '"' + obj.configurationFile + '"';
-
-            if strlength(obj.additionalArguments) > 0
-                cmdStr = cmdStr + " " + obj.additionalArguments;
-            end
-        end
-
-
-        function cmdStr = createCLICmdString(obj)
-            npxCmdStr = obj.createNpxCmdString;
-            cmdStr = npxCmdStr + " @openapitools/openapi-generator-cli";
-            cmdStr = cmdStr + " --custom-generator " + '"' + obj.jarPath + '"';
-            cmdStr = cmdStr + " generate -g MATLAB";
-            cmdStr = cmdStr + " -i " + '"' + obj.inputSpec + '"';
-            cmdStr = cmdStr + " -o " + '"' + obj.output + '"';
-            cmdStr = cmdStr + " --package-name " + obj.packageName;
-            cmdStr = cmdStr + " -t " + '"' + obj.templateDir + '"';
-            cmdStr = cmdStr + obj.buildAdditionalPropertiesCLIEntry();
-
-            if obj.skipValidateSpec
-                cmdStr = cmdStr + " --skip-validate-spec";
-            end
-
-            cmdStr = cmdStr + obj.buildGlobalPropertiesCLIEntry();
-
-            if strlength(obj.additionalArguments) > 0
-                cmdStr = cmdStr + " " + obj.additionalArguments;
-            end
-        end
-
-
         function arg = buildAdditionalPropertiesCLIEntry(obj)
             arguments
                 obj (1,1) openapi.build.Client
+            end
+
+            if ~isempty(obj.objectParameters)
+                obj.additionalProperties('ObjectParams') = strjoin(vertcat(obj.objectParameters.keys, obj.objectParameters.values), '/');
             end
 
             crStr = obj.copyrightNotice;
 
             if strlength(crStr) > 0
                 % CLI escaping
-                crStr = strrep(crStr, "'", "");
-                crStr = strrep(crStr, '"', '');
-                % Some additional escaping required on Unix, where npx argument
-                % handling is inconsistent and poorly documented for cross
-                % platform use
-                if isunix
-                    crStr = strrep(crStr, ' ', '\ ');
-                    crStr = strrep(crStr, '(', '\(');
-                    crStr = strrep(crStr, ')', '\)');
-                end
-
-                if ispc
-                    obj.additionalProperties('copyrightNotice') = ['\"', char(crStr), '\"'];
-                else
-                    obj.additionalProperties('copyrightNotice') = ['"', char(crStr), '"'];
-                end
+                crStr = char(strrep(crStr, "'", ""));
+                crStr = char(strrep(crStr, """", ""));
+                crStr = char(strrep(crStr, "-", ""));
+                obj.additionalProperties('copyrightNotice') = ['"', char(crStr), '"'];
             end
 
-            if strlength(obj.openapiRoot) > 0
-                obj.additionalProperties('openapiRoot') = ['"', char(obj.openapiRoot), '"'];
+            if strlength(openapiRoot) > 0
+                obj.additionalProperties('openapiRoot') = ['"', char(openapiRoot), '"'];
             end
 
-            numProps = size(obj.additionalProperties,1);
-            if numProps > 0
+            if obj.additionalProperties.Count > 0
                 apKeys = keys(obj.additionalProperties);
                 apVals = values(obj.additionalProperties);
-                arg = ' --additional-properties=';
-                for n = 1:numProps
+                arg = ' --additional-properties ';
+                for n = 1:obj.additionalProperties.Count
                     arg = [arg, char(apKeys{n}), '=', char(apVals{n})]; %#ok<AGROW>
-                    if n < numProps
+                    if n < obj.additionalProperties.Count
                         arg = [arg, ',']; %#ok<AGROW>
                     end
                 end
@@ -513,11 +535,14 @@ classdef Client < openapi.build.Object
                 obj (1,1) openapi.build.Client
             end
 
+            if ~isempty(obj.objectParameters)
+                obj.additionalProperties('ObjectParams') = strjoin(vertcat(obj.objectParameters.keys, obj.objectParameters.values), '/');
+            end
             if strlength(obj.copyrightNotice) > 0
                 obj.additionalProperties('copyrightNotice') = char(obj.copyrightNotice);
             end
-            if strlength(obj.openapiRoot) > 0
-                obj.additionalProperties('openapiRoot') = char(obj.openapiRoot);
+            if strlength(openapiRoot) > 0
+                obj.additionalProperties('openapiRoot') = char(openapiRoot);
             end
         end
 
@@ -531,7 +556,7 @@ classdef Client < openapi.build.Object
             if numProps > 0
                 gpKeys = keys(obj.globalProperty);
                 gpVals = values(obj.globalProperty);
-                arg = ' --global-property=';
+                arg = ' --global-property ';
                 for n = 1:numProps
                     if ischar(gpVals{n}) || isStringScalar(gpVals{n})
                         if strlength(gpVals{n}) == 0
@@ -556,7 +581,7 @@ classdef Client < openapi.build.Object
 
         function tf = checkMATLABVersion(~)
             if verLessThan('MATLAB', '9.9') %#ok<VERLESSMATLAB>
-                warning('Client:checkMATLABVersion','MATLAB R2020b or later is required');
+                fprintf(2, 'MATLAB R2020b or later is required.\n');
                 tf = false;
             else
                 tf = true;
@@ -564,153 +589,31 @@ classdef Client < openapi.build.Object
         end
 
 
-        function tf = checkNpx(obj)
-            % Function to check if npx is installed
-            % Unset LD_LIBRARY_PATH in the system context to avoid
-            % potential glibc issue
-            tf = false;
-
-            % Set $PATH so other tools pick up path
-            if isunix
-                if strlength(obj.npxPath) > 0
-                    pathCmd = ['export PATH="', char(obj.npxPath), ':$PATH"; '];
-                else
-                    pathCmd = '';
-                end
-            else
-                pathCmd = '';
+        function tf = writeCLIConfigurationFile(obj)
+            if strlength(obj.outputConfigurationFile) < 1
+                error('Client:writeCLIConfigurationFile','Configuration file path not set.');
             end
-
-            % Append the executable to the directory
-            if strlength(obj.npxPath) > 0
-                npxCmd = char(fullfile(obj.npxPath, 'npx'));
-                if ~isfile(npxCmd)
-                    error('Client:checkNpx','npx command not found: %s', npxCmd)
-                end
-            else
-                npxCmd = 'npx';
-            end
-
-            % Build the command to pass to system wrapper
-            cmdStr = [pathCmd, npxCmd, ' --version'];
-
-            [cmdStatus, cmdOut, cmdStrExec] = openapi.build.Client.wrappedSystem(cmdStr);
-
-            if cmdStatus ~= 0
-                warning('Client:checkNpx','npx is required required\nExecuted: %s\nReturned: %s\nSee: https://github.com/npm/cli\n', cmdStrExec, cmdOut);
-            else
-                pat = digitsPattern + "." + digitsPattern + "." + digitsPattern;
-                if ~matches(strtrim(cmdOut), pat, 'IgnoreCase', true)
-                    warning('Client:checkNpx','Unexpected npx version output: %s', cmdOut);
-                else
-                    fields = split(strtrim(cmdOut), ".");
-                    firstVal = str2double(fields{1});
-                    secondVal = str2double(fields{2});
-                    thirdVal = str2double(fields{3});
-                    firstCutOff = 8; % 8.12.1
-                    secondCutOff = 12;
-                    thirdCutOff = 1;
-                    if firstVal < firstCutOff
-                        comp = -1;
-                    elseif firstVal == firstCutOff
-                        comp = 0;
-                    else
-                        comp = 1;
-                    end
-                    if comp == 0
-                        if secondVal < secondCutOff
-                            comp = -1;
-                        elseif secondVal == secondCutOff
-                            comp = 0;
-                        else
-                            comp = 1;
-                        end
-                    end
-                    if comp == 0
-                        if thirdVal < thirdCutOff
-                            comp = -1;
-                        elseif thirdVal == thirdCutOff
-                            comp = 0;
-                        else
-                            comp = 1;
-                        end
-                    end
-                    if comp < 0
-                        tf = false;
-                        warning('Client:checkNode','npx version 8.12.1 or later is required, found:\n%s\nSee: https://github.com/npm/cli\n', cmdOut);
-                    else
-                        tf = true;
-                    end
-                end
-            end
-        end
-
-
-        function tf = checkNode(obj)
-            % Function to check if node version >= v16.x is installed
-            tf = false;
-
-            % Set $PATH so other tools pick up path
-            if isunix
-                if strlength(obj.nodePath) > 0
-                    pathCmd = ['export PATH="', char(obj.nodePath), ':$PATH"; '];
-                else
-                    pathCmd = '';
-                end
-            else
-                pathCmd = '';
-            end
-
-            % Append the executable to the directory
-            if strlength(obj.nodePath) > 0
-                nodeCmd = char(fullfile(obj.nodePath, 'node'));
-                if ~isfile(nodeCmd)
-                    error('Client:checkNode','npx command not found: %s', nodeCmd)
-                end
-            else
-                nodeCmd = 'node';
-            end
-
-            % Build the command to pass to system wrapper
-            cmdStr = [pathCmd, nodeCmd, ' --version'];
-
-            [cmdStatus, cmdOut, cmdStrExec] = openapi.build.Client.wrappedSystem(cmdStr);
-            if cmdStatus ~= 0
-                warning('Client:checkNode','node version 16 or later is required\nExecuted: %s\nReturned: %s\nSee: https://nodejs.org/en\n', cmdStrExec, cmdOut);
-            else
-                pat = "v" + digitsPattern + "." + digitsPattern + "." + digitsPattern;
-                if ~matches(strtrim(cmdOut), pat, 'IgnoreCase', true)
-                    warning('Client:checkNode','Unexpected node version output: %s', cmdOut);
-                else
-                    cmdOutNew = strip(strtrim(cmdOut), 'left', 'v');
-                    fields = split(cmdOutNew, ".");
-                    majorVal = str2double(fields{1});
-                    if majorVal < 16
-                        warning('Client:checkNode','node version 16 or later is required:\n%s\nSee: https://nodejs.org/en\n', cmdOut);
-                    else
-                        tf = true;
-                    end
-                end
-            end
-        end
-
-
-        function tf = writeConfigurationFile(obj)
-            if strlength(obj.configurationFile) < 1
-                error('Client:writeConfigurationFile','Configuration file path not set');
-            end
-            fid = fopen(obj.configurationFile, 'w');
+            fid = fopen(obj.outputConfigurationFile, 'w');
             if fid < 3
-                error('Client:writeConfigurationFile','Error opening configuration file: %s', obj.configurationFile);
+                error('Client:writeCLIConfigurationFile','Error opening configuration file: %s', obj.outputConfigurationFile);
             end
 
             l1 = struct;
-            l1.schema = "./node_modules/@openapitools/openapi-generator-cli/config.schema.json";
+            l1.schema = "node_modules/@openapitools/openapi-generator-cli/config.schema.json";
             l1.spaces = 2;
             l1.generator_cli.version = obj.cliVersion;
             l1.generator_cli.generators.v30.generatorName = "MATLAB";
             l1.generator_cli.generators.v30.output = obj.output;
-            l1.generator_cli.generators.v30.inputSpec = obj.inputSpec;
+            if ~isempty(obj.inputSpecRootDirectory)
+                if ~isempty(obj.inputSpec)
+                    warning('client:InputSpecAndInputSpecRootDirectoryBothSet','Both inputSpec and inputSpecRootDirectory have been set. In this case inputSpec is ignored and only inputSpecRootDirectory is used.')
+                end
+                l1.generator_cli.generators.v30.inputSpecRootDirectory = obj.inputSpecRootDirectory;
+            elseif ~isempty(obj.inputSpec)
+                l1.generator_cli.generators.v30.inputSpec = obj.inputSpec;
+            else
+                error('client:NeitherInputSpecNorInputSpecRootDirectorySet','Neither inputSpec nor inputSpecRootDirectory have been set, at least one of these must be configured.')
+            end
             l1.generator_cli.generators.v30.packageName = obj.packageName;
             l1.generator_cli.generators.v30.skipValidateSpec = obj.skipValidateSpec;
             l1.generator_cli.generators.v30.templateDir = obj.templateDir;
@@ -721,7 +624,7 @@ classdef Client < openapi.build.Object
                 apVals = values(obj.additionalProperties);
                 for n = 1:size(obj.additionalProperties,1)
                     if ~isvarname(apKeys{n})
-                        error('Client:writeConfigurationFile','Unexpected invalid additionalProperties key: %s, consider adding an exception', apKeys{n});
+                        error('Client:writeCLIConfigurationFile','Unexpected invalid additionalProperties key: %s, consider adding an exception.', apKeys{n});
                     end
                     if ischar(apVals{n}) || isStringScalar(apVals{n})
                         if strcmp(apVals{n}, "''") || strcmp(apVals{n}, '""')
@@ -742,7 +645,7 @@ classdef Client < openapi.build.Object
                 gpVals = values(obj.globalProperty);
                 for n = 1:size(obj.globalProperty,1)
                     if ~isvarname(gpKeys{n})
-                        error('Client:writeConfigurationFile','Unexpected invalid global-property key: %s, consider adding an exception', gpKeys{n});
+                        error('Client:writeCLIConfigurationFile','Unexpected invalid global-property key: %s, consider adding an exception.', gpKeys{n});
                     end
                     if ischar(gpVals{n}) || isStringScalar(gpVals{n})
                         if strcmp(gpVals{n}, "''") || strcmp(gpVals{n}, '""')
@@ -764,168 +667,12 @@ classdef Client < openapi.build.Object
             jsonStr = strrep(jsonStr, '"v30"', '"v3.0"');
             jsonStr = strrep(jsonStr, '"global_property"', '"global-property"');
 
-            dispLog(obj, "Writing configuration file: " + obj.configurationFile);
+            dispLog(obj, "Writing configuration file: " + obj.outputConfigurationFile);
             dispLog(obj, jsonStr);
 
             fprintf(fid, "%s", jsonStr);
             fclose(fid);
             tf = true;
         end
-
-
-        function cliVer = getGeneratorCliVersion(obj)
-            npxCmdStr = obj.createNpxCmdString;
-            cmdStr = npxCmdStr + " @openapitools/openapi-generator-cli version";
-            obj.dispLog(['Getting CLI version, executing command:', newline, char(cmdStr), newline]);
-            [cmdStatus, cmdOut, cmdStrExec] = obj.wrappedSystem(cmdStr); %#ok<ASGLU>
-
-            if cmdStatus ~= 0
-                error('Client:getGeneratorCliVersion', 'Error getting CLI version: \n%s\n', cmdOut);
-            else
-                lines = split(cmdOut, newline);
-                if numel(lines) == 1
-                    cliVer = lines{1};
-                elseif numel(lines) > 1
-                    cliVer = lines{end-1};
-                else
-                    error('Client:getGeneratorCliVersion', 'Error getting CLI version: \n%s\n', cmdOut);
-                end
-
-                cliVer = strip(cliVer);
-                pat = digitsPattern + "." + digitsPattern + "." + digitsPattern;
-                if ~matches(cliVer, pat)
-                    error('Client:getGeneratorCliVersion', 'Error getting CLI version: \n%s\n', cmdOut);
-                end
-            end
-        end
-    end
-
-
-    methods (Static, Hidden)
-
-        function [status, cmdOut, cmdStr] = wrappedSystem(cmdStr)
-            % Wrap a system call in steps to improve reliability of call 3rd party packages
-            % Unset LD_LIBRARY_PATH in the system context to avoid potential glibc issue
-            % On macOS prepend /usr/local/bin in $PATH
-
-            arguments
-                cmdStr string {mustBeTextScalar}
-            end
-
-            % Assume char type from here
-            cmdStr = char(cmdStr);
-
-            if ispc
-                [status, cmdOut] = system(cmdStr);
-            elseif ismac
-                % prepend default npx location on macOS
-                [status, cmdOut] = system(['export PATH="/usr/local/bin:$PATH"; ', cmdStr]);
-            else
-                [status, cmdOut] = system(['export LD_LIBRARY_PATH=""; ', cmdStr]);
-            end
-        end
-
-
-        function tf = checkJar(obj) %#ok<INUSD>
-            % checkJar Checks for the presence to the required jar file
-
-            jarName = "MATLABClientCodegen-openapi-generator-" + openapi.build.Client.getJarVersion() + ".jar";
-            jarPath = fullfile(openapiRoot('lib', 'jar'), jarName);
-            if ~isfile(jarPath)
-                docPath = fullfile(openapiRoot( -2, 'Documentation', 'GettingStarted.md'));
-                warning('Client:checkJar','Required jar file not found: %s\nFor build instructions see: %s', jarPath, docPath);
-                tf = false;
-            else
-                tf = true;
-            end
-        end
-
-
-        function v = getJarVersion()
-            % getJarVersion Retrieve version from pom-file
-
-            pomFile = fullfile(openapiRoot( -1, 'Java'), 'pom.xml');
-            if ~isfile(pomFile)
-                error('Client:getJarVersion','Expected pom file not found: %s',pomFile);
-            end
-            X = xmlread(pomFile);
-            projNode = X.getElementsByTagName('project').item(0);
-            versionElement = projNode.getElementsByTagName('version').item(0);
-            templateVersion = versionElement.getTextContent();
-
-            v = string(templateVersion);
-        end
-
-
-        function tf = checkJavaVersion()
-            % checkJavaVersion returns true if Java 11 or greater is detected
-            % TODO implement an upper bound
-            cmdStr = "java -version";
-            [status, cmdOut] = system(cmdStr);
-            if status == 0
-                lines = split(cmdOut, newline);
-                if numel(lines) > 0
-                    pat = digitsPattern + "." + digitsPattern + ".";
-                    newStr = extract(lines{1}, pat);
-                    fields = split(newStr, '.');
-                    if numel(fields) >= 2
-                        if str2double(fields{1}) >= 11 % Not clear what upper bound is TBD
-                            tf = true;
-                        else
-                            warning('Client:checkJavaVersion','Java 11 or compatible is required, found: %s', lines{1});
-                            tf = false;
-                        end
-                    else
-                        warning('Client:checkJavaVersion','Java version could not be determined: %s', lines{1});
-                        tf = false;
-                    end
-                else
-                    warning('Client:checkJavaVersion','Java version could not be determined: %s', cmdOut);
-                    tf = false;
-                end
-            else
-                warning('Client:checkJavaVersion','Java version could not be determined, error running java -version: %s',cmdOut);
-                tf = false;
-            end
-        end
-
-        function tf = checkJavacVersion()
-            % checkJavacVersion returns true if Javac 11 or greater is detected
-            % TODO implement an upper bound
-            cmdStr = "javac -version";
-            [status, cmdOut] = system(cmdStr);
-            if status == 0
-                pat = digitsPattern + "." + digitsPattern + ".";
-                newStr = extract(cmdOut, pat);
-                fields = split(newStr, '.');
-                if numel(fields) >= 2
-                    if str2double(fields{1}) >= 11 % Not clear what upper bound is TBD
-                        tf = true;
-                    else
-                        warning('Client:checkJavacVersion','Javac 11 or compatible is required, found: %s', cmdOut);
-                        tf = false;
-                    end
-                else
-                    warning('Client:checkcJavaVersion','Javac version could not be determined: %s', cmdOut);
-                    tf = false;
-                end
-            else
-                warning('Client:checkJavacVersion','Javac version could not be determined, error running javac -version: %s',cmdOut);
-                tf = false;
-            end
-        end
-
-        function V = getPackageVersion()
-            % getPackageVersion Return version of the package from the VERSION file
-            % A character vector is returned
-            verFile = fullfile(openapiRoot(-2), 'VERSION');
-            if ~isfile(verFile)
-                V = '1.0.0';
-                warning('Client:getPackageVersion','VERSION file not found: %s, using version 1.0.0', verFile, V);
-            else
-                V = char(strip(string(fileread(verFile))));
-            end
-        end
-
     end
 end %class

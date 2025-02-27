@@ -2,7 +2,11 @@
 
 ## Generating a MATLAB client using a builder
 
-A builder class is provided to simplify the process of building a client, e.g.:
+A builder class is provided to simplify the process of building a client.
+At a high-level the MATLAB client provides an interface to the Java based generation code.
+Previously this approach used Node.js and `npx`, this is no longer the case.
+
+Usage example:
 
 ```matlab
 % Run startup to configure the package's MATLAB paths
@@ -36,7 +40,11 @@ Additional builder properties can be used to set non default properties:
 * templateDir: set the path to the Mustache files, e.g. if providing a customized version of those provided with the package.
 * jarPath: set the path to an alternative jar file, the default is `Software/MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar`.
 
-The builder will automatically install the `@openapitools/openapi-generator-cli` using `npx` if it is not already present.
+See [Generator Configuration Options](./Options.md) for a complete overview of all options.
+
+```{hint}
+If the API specification is spread across multiple separate files, instead of specifying `inputSpec` (which can only point to a single file), it is also possible to use `inputSpecRootDirectory` instead. This can point to a whole directory with YAML and JSON files and this will then generate a single MATLAB client which covers all APIs and Models from all files combined.
+```
 
 A build log file is produced in the output directory.
 
@@ -49,23 +57,13 @@ It can be enabled as follows. This can be useful when debugging or first evaluat
 c.skipValidateSpec = false;
 ```
 
-## node and npx configuration
-
-At a high-level the MATLAB client provides an interface to the node (Node.js) based openapitools frontend to the Java based generation code and npx is used to manage the execution of the node package. Thus both node and npx must be available, recent versions of node include npx.
-Particularly on Linux systems it is common for a system to have a default install of node which may be significantly older than user installed versions.
-To use a specific version of node e.g. to meet the version requirements the client properties `nodePath` and `npxPath` can be used to specify the directory paths containing the node and npx executables. E.g.:
-
-```matlab
-c.nodePath = '/home/username/.nvm/versions/node/v16.15.1/bin/'; % Optional, to use a non-system node install
-c.npxPath = '/home/username/.nvm/versions/node/v16.15.1/bin/';
-```
-
-Setting the nodePath or npxPath values currently has no effect on Windows systems.
-The `checkDeps()` method on the client can be used to check if the client's dependencies are met, in which case it returns `true` and otherwise `false`. This method is called when the `build` method is called.
-
 ## Using an openapitools.json file
 
-By default a configuration file, typically called called `openapitools.json`, is produced. This is populated by the builder and passed to the underlying tools. If command line invocation is used and if it does not already exist when the generator is invoked. A minimal generated configuration template is produced. Using a configuration file can be less error prone than the CLI based approach though they are equivalent. Storing the file in source control alongside code can be useful given the potential complexity of configurations. Furthermore it is easily overwritten accidentally and there are a great many potential configuration options that may be difficult to replicate if lost.
+By default a configuration file, called `openapitools.json`, is produced in the current directory. This is populated by the builder.
+An alternative name and path can be given by setting `outputConfigurationFile`.
+Using a configuration file can be less error prone than the CLI based approach though they are equivalent.
+Storing the file in source control alongside code can be useful given the potential complexity of configurations.
+Furthermore it is easily overwritten accidentally and there are a great many potential configuration options that may be difficult to replicate if lost.
 
 The following is a sample `openapitools.json` file, it is typically located in the working directory being used by the generator.
 The schema for this file can provide further details: [https://github.com/OpenAPITools/openapi-generator-cli/blob/master/apps/generator-cli/src/config.schema.json](https://github.com/OpenAPITools/openapi-generator-cli/blob/master/apps/generator-cli/src/config.schema.json)
@@ -98,12 +96,14 @@ If an alternative file is preferred or if the configuration is not to be used:
 
 ```matlab
 % Property to indicate that an alternative json file should be used
-c.configurationFile = '/my/alternative/path/openapitools.json';
+c.inputConfigurationFile = '/my/alternative/path/openapitools.json';
 ```
+
+Set a non default output location:
 
 ```matlab
 % Property to indicate that an openapitools.json file should be used
-c.useFileConfiguration = false;
+c.outputConfigurationFile = false;
 ```
 
 ## Package naming
@@ -123,12 +123,9 @@ c.copyrightNotice = "(c) 2023 My Company Name Inc.";
 
 The value will be inserted as a comment in the header of generated `api` and `model` code files. As the client passes the value as an argument to `npx` certain string processing rules are applied:
 
-* Parentheses, ( & ), will be escaped.
-* Spaces will be escaped.
-* Single and double quotes will be removed.
+* Single and double quotes and hyphens will be removed.
 
-The copyright symbol "©" is supported. Hyphens are supported.
-
+The copyright symbol "©" is supported.
 This method is appropriate for short, simple statements as shown in the example. If more extensive text or legal statements, e.g. licensing details, are required in the generated code, then careful modification of the `Software/Mustache/copyrightNotice.mustache` template file is the suggested approach. Comment symbols, `%`, should be prepended to any such text.
 
 ## Specifying properties
@@ -174,7 +171,7 @@ A log file is produced by the client containing generator output and other infor
 
 ## Generating a MATLAB client using the command line
 
-The following commands show how a MATLAB client can be generated from a given spec. Using the provided generator without invoking MATLAB. Note that using the MATLAB builder can help to provide the initial syntax.
+The following commands show how a MATLAB client can be generated from a given spec. Using the provided generator without invoking MATLAB. Note that using the MATLAB builder can help to provide the initial syntax. Here `npx` is used to call a frontend to the underlying Java library.
 
 ```bash
 # Change to the packages software directory
@@ -189,7 +186,13 @@ If not working in the package's `Software` directory, use full paths and add the
 -t "<package_directory>/Software/Mustache" --additional-properties openapiRoot="<package_directory>/Software/MATLAB
 ```
 
-Note, the `-i` argument can also point to a local spec file in `.yaml` or `.json` format.
+```{note}
+The `-i` argument can also point to a local spec file in `.yaml` or `.json` format instead of a http(s) URL.
+````
+
+```{hint}
+If the API specification is spread across multiple separate files, instead of specifying `-i` (which can only point to a single file), it is also possible to use `--input-spec-root-directory` instead. This can point to a whole directory with YAML and JSON files and this will then generate a single MATLAB client which covers all APIs and Models from all files combined.
+```
 
 By default the client will be generated in a the current directory in a subdirectory named `OpenAPIClient`. This can be changed using the `-o` flag as shown in the syntax above. Similarly, by default the generator creates a package named `OpenAPIClient` which can be changed with the `--package-name` flag.
 
@@ -199,8 +202,8 @@ An alternative Mustache files directory can be specified using the `-t` flag e.g
 
 If not running from the `Software` directory the location of the `Software/MATLAB` directory must be provided through `--additional-properties=openapiRoot=<location-of-Software/MATLAB>`, e.g. `--additional-properties=openapiRoot=/work/openapi/Software/MATLAB`. Without this the generator will not be able to find some of the helper MATLAB files which need to be included in the generated package. (When using the MATLAB Builder this option is set automatically).
 
-Finally it is possible to add another flag `-p AddOAuth=name` (where name can be chosen freely), this will then add authentication calls to *all* operations and generates skeleton [`requestAuth` and `getOAuthToken` code which can then be customized](CustomizingGeneratedCode.md#authentication) to add OAuth 2.0 authentication to *all* operations.
+See [Generator Configuration Options](./Options.md) for a complete overview of all, including a few more advanced, options.
 
-Ultimately npx invokes Java to run the code having created the appropriate input arguments, one can avoid using npx and use Java directly, using npx initially to get the basic form of the Java command and then adjusting this can be useful.
+Ultimately npx invokes Java to run the code having created the appropriate input arguments, one can avoid using Node.js package and use Java directly, using Node.js or the MATLAB client initially to get the basic form of the Java command and then adjusting this can be useful.
 
-[//]: #  (Copyright 2020-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2020-2025 The MathWorks, Inc.)

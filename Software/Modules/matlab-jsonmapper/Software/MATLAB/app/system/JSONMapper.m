@@ -3,16 +3,15 @@ classdef (Abstract) JSONMapper < handle
     % Derive MATLAB classes from this class to allow them to be
     % deserialized from JSON mapping the JSON fields to the class
     % properties. To allow proper nesting of object, derived objects must
-    % call the JSONMapper constructor from their constructor:
+    % call the initialize methods from their constructor:
     % 
     % function obj = myClass(s,inputs)
     %     arguments
     %         s {JSONMapper.ConstructorArgument} = []
     %         inputs.?myClass
     %     end
-    %     obj@JSONMapper(s,inputs);
+    %     obj = obj.initialize(s,inputs);
     % end
-    %
     % Make sure to update the class name (myClass in the example) in both
     % the function name as well as in the arguments block.
     %
@@ -32,15 +31,20 @@ classdef (Abstract) JSONMapper < handle
     %
     % JSONMapper Methods:
     %
-    %   fieldName      - allows property to be mapped to a JSON field with 
-    %                    different name
-    %   JSONArray      - specifies field is a JSON array
-    %   epochDatetime  - for datetime properties specifies in JSON the date
+    %   fieldName      - Allows property to be mapped to a JSON field with 
+    %                    different name.
+    %   JSONArray      - Specifies field is a JSON array
+    %   epochDatetime  - For datetime properties specifies in JSON the date
     %                    time is encoded as epoch. Must be the first
-    %                    attribute if used
-    %   stringDatetime - for datetime properties specifies in JSON the date
+    %                    attribute if used.
+    %   stringDatetime - For datetime properties specifies in JSON the date
     %                    time is encoded as string with a particular format.
     %                    Must be the first attribute if used.
+    %   discriminator  - Indicates that the property acts as a discriminator based
+    %                    upon which the JSON document can be deserialized to a more
+    %                    specific derived class.
+    %   doNotDecode    - For text properties specifies that the value should not
+    %                    be decoded using a JSON parser.
     
     % Copyright 2022-2023 The MathWorks, Inc.
 
@@ -53,6 +57,10 @@ classdef (Abstract) JSONMapper < handle
     end
     
     methods (Static)
+        function doNotDecode(~)
+            % doNotDecode No-Op function to skip parsing
+        end
+
         function fn = fieldName(~,fn)
             % FIELDNAME JSONMapper Annotation
             % This can be added to properties if the MATLAB property name
@@ -67,7 +75,6 @@ classdef (Abstract) JSONMapper < handle
             %
         end
 
-
         function JSONArray(~)
             % JSONARRAY JSONMapper Annotation
             % Specified that the JSON field is an array.
@@ -77,6 +84,19 @@ classdef (Abstract) JSONMapper < handle
             % has been annotated with this option.
         end
 
+        function info = discriminator(~,Value,Class)
+            % DISCRIMINATOR JSONMapper Annotation
+            % This indicates that the property is a discriminator. Provide
+            % a list of value to class mappings as input.
+            arguments
+                ~
+            end
+            arguments (Repeating)
+                Value string
+                Class string
+            end
+            info = JSONDiscriminator(Value,Class);
+        end
 
         function out = epochDatetime(in,options)
             % EPOCHDATETIME JSONMapper Annotation
@@ -211,19 +231,29 @@ classdef (Abstract) JSONMapper < handle
     
     methods
         function obj = JSONMapper(s,inputs)
-            % JSONMapper Constructor. Call this from
-            % derived classes constructors:
+            % JSONMapper Constructor. It is possible to call this from
+            % derived classes constructors, however in order to be able to
+            % build deeper class hierarchies it is recommended to call the
+            % initialize method instead.
             %
             % function obj = myClass(s,inputs)
             %     arguments
             %         s {JSONMapper.ConstructorArgument} = []
             %         inputs.?myClass
             %     end
-            %     obj@JSONMapper(s,inputs);
+            %     obj = obj.initialize(s,inputs);
             % end
             %
             % Make sure to update the class name (myClass in the example) 
             % in both the function name as well as in the arguments block.
+            if nargin==2
+                obj = obj.initialize(s,inputs);
+            end
+        end
+
+        function obj = initialize(obj,s,inputs)
+            % INITIALIZE call this from derived classes to properly
+            % initialize the class instance.
             
             % Ensure that MATLABProperties is initialized
             obj.MATLABProperties = JSONPropertyInfo.getPropertyInfo(obj);
@@ -238,7 +268,7 @@ classdef (Abstract) JSONMapper < handle
                     if (isa(s,'com.google.gson.JsonElement') || isstring(s) || ischar(s))
                         % Use the helper method to copy values from this
                         % JsonElement to properties of the object
-                        obj = obj.fromJSON(s);
+                        obj = obj.fromJSON(s,true);
                     else
                         error('JSONMapper:InvalidInput','%s constructor was called with an invalid input.',class(obj));
                     end
@@ -250,11 +280,15 @@ classdef (Abstract) JSONMapper < handle
                 for p = string(fieldnames(inputs))'
                     obj.(p) = inputs.(p);
                 end
-            end
+            end            
         end
 
-
-        function obj = fromJSON(obj,json)
+        function obj = fromJSON(obj,json,calledFromConstructor)
+            arguments
+                obj
+                json
+                calledFromConstructor = false
+            end
             try
                 % FROMJSON deserializes object from JSON format. 
                 % Can deserialize whole hierarchies of objects if all classes
@@ -264,6 +298,10 @@ classdef (Abstract) JSONMapper < handle
                 %   obj = myClass;
                 %   obj.fromJSON('{"answer": 42}')
                 
+                if isempty(obj)
+                    error('JSONMapper:fromJSON:emptyObject', 'Unexpected empty object argument.');
+                end
+
                 % If input is char/string, parse it as json, when working with
                 % nested objects, this can also be a com.google.gson.JsonObject
                 % or JsonArray.
@@ -277,7 +315,7 @@ classdef (Abstract) JSONMapper < handle
                 if isstring(json) || ischar(json)
                     json = com.google.gson.JsonParser().parse(json);
                 end
-                
+
                 % Ensure input is always an array
                 if (~json.isJsonArray())
                     j = com.google.gson.JsonArray();
@@ -287,20 +325,77 @@ classdef (Abstract) JSONMapper < handle
                 
                 % For all elements in the JSON array
                 N = json.size();
-
+                
                 % For an empty array
                 if N == 0
                     obj = obj.empty;
+                    return
                 end
 
+
+                % Check whether there is a discriminator
+                if any([obj(1).MATLABProperties.isDiscriminator])
+                    % If so, verify whether it is filled out for all array
+                    % elements and get the values
+                    vals = string.empty(0,N);
+                    discriminatorProperty = obj(1).MATLABProperties([obj(1).MATLABProperties.isDiscriminator]);
+                    propName = discriminatorProperty.jName;
+                    
+                    for arrayIndex=1:N
+                        curElement = json.get(arrayIndex-1);
+                        if curElement.has(propName)
+                            % Store the value
+                            vals(arrayIndex) = string(curElement.get(propName).getAsString);
+                        else
+                            % If at least one of the array elements does
+                            % not even have the discriminator property
+                            % just stop
+                            warning('JSONMapper:discriminator:missing','Class `%s` has a discriminator but value was not set (for at least one elements in the array). Returning as base class.',class(obj));
+                            vals = string.empty;
+                            break
+                        end
+                    end                    
+                    % If they are all the same
+                    if length(unique(vals))==1 %#ok<ISCL>
+                        discriminatorInfo = discriminatorProperty.discriminatorInfo;
+                        % And they match a configured child class
+                        for i=1:length(discriminatorInfo)
+                            if startsWith(discriminatorInfo(i).Value,vals(1))
+                                if ~calledFromConstructor || strcmp(discriminatorInfo(i).Class,class(obj))
+                                    obj = eval(discriminatorInfo(i).Class);
+                                else
+                                     warning('JSONMapper:discriminator:calledfromconstructor', ...
+                                         ['Provided JSON data can theoretically be deserialized to a more specific child class `%s`.\n' ...
+                                          'But this is not possible when deserializing through the constructor.\n' ...
+                                          'Deserializing data as base class `%s`.\n' ...
+                                          '\n' ...
+                                          'Consider using\n' ...
+                                          '\n' ...
+                                          '  %s().fromJSON(data)\n' ...
+                                          '\ninstead. Or use the constructor of the child type directly:\n' ...
+                                          '\n' ...
+                                          '  %s(data)\n'],...
+                                          discriminatorInfo(i).Class,class(obj),class(obj),discriminatorInfo(i).Class);
+                                end
+                                break;
+                            end
+                        end
+                    else
+                        if ~isempty(vals)
+                            warning('JSONMapper:discriminator:heterogeneous','Heterogeneous arrays are not supported, returning as base type `%s`',class(obj))                        
+                        end
+                    end
+                end
+                      
+                
+                % Process the fields for all array elements
                 for arrayIndex=1:N
-    
+
                     % Get the current JSON element from the array
                     curElement = json.get(arrayIndex-1);
-    
+
                     % For each property in the MATLAB class
                     for currProp = obj(1).MATLABProperties
-                        
                         % Check whether property is also present in JSON and
                         % not explicitly null
                         if curElement.has(currProp.jName) && ~curElement.get(currProp.jName).isJsonNull
@@ -322,7 +417,7 @@ classdef (Abstract) JSONMapper < handle
                                 case {?int8,?uint8,?int16,?uint16,?int32,?uint32}
                                     obj(arrayIndex).(currProp.mName) = getScalarOrArray(curVal,'long');
                                 case {?string,?char}
-                                    obj(arrayIndex).(currProp.mName) = getScalarOrArray(curVal,'string');
+                                    obj(arrayIndex).(currProp.mName) = getScalarOrArray(curVal,'string',doNotDecode=currProp.doNotDecode);
                                 case {?int64}
                                     obj(arrayIndex).(currProp.mName) = arrayfun(@(x)sscanf(char(x),'%ld'), getScalarOrArray(curVal,'string'));
                                 case {?uint64}
@@ -344,14 +439,14 @@ classdef (Abstract) JSONMapper < handle
                                         kv = it.next;
                                         map(char(kv.getKey)) = char(kv.getValue.getAsString());
                                     end
-                                    obj(arrayIndex).(currProp.mName) = map;                                    
+                                    obj(arrayIndex).(currProp.mName) = map;
                                 case {?meta.class} % freeform object, decode as struct
                                     obj(arrayIndex).(currProp.mName) = jsondecode(char(curVal.toString()));
                                 otherwise
                                     if isenum(obj(1).(currProp.mName))
                                         obj(arrayIndex).(currProp.mName) = arrayfun(@(x)obj(arrayIndex).(currProp.mName).fromJSON(x),getScalarOrArray(curVal,'string'));
                                     else
-                                        obj(arrayIndex).(currProp.mName) = curVal;
+                                        obj(arrayIndex).(currProp.mName) = feval(currProp.dataType.Name).fromJSON(curVal);
                                     end
                             end
                         else
@@ -421,7 +516,7 @@ classdef (Abstract) JSONMapper < handle
                             jObject.add(currProp.jName,getJSONScalarOrArray(obj(arrayIndex).(currProp.mName),currProp.isArray));
                         case {?uint64}
                             v = obj(arrayIndex).(currProp.mName);
-                            if length(v) == 1 && ~currProp.isArray
+                            if length(v) == 1 && ~currProp.isArray %#ok<ISCL>
                                 val = java.math.BigInteger(sprintf('%lu',v));
                             else
                                 val = javaArray('java.math.BigInteger',length(v));
@@ -478,15 +573,16 @@ classdef (Abstract) JSONMapper < handle
             end
         end
 
-
-        function json = getPayload(obj,requiredProperties,optionalProperties)
+        function json = getPayload(obj,requiredProperties,optionalProperties,raw)
             % GETPAYLOAD JSON encodes the object taking into account
             % required and optional properties.
             %
             % Verifies that required properties have indeed been set.
             % Includes optional properties in the output. All other
             % properties are not included in the output.
-
+            if nargin<4
+                raw = false;
+            end
             
             % Actually first simply encode the whole thing
             json = jsonencode(obj,true);
@@ -529,15 +625,52 @@ classdef (Abstract) JSONMapper < handle
                 end
             end
             % JSON encode the object
-            json = char(json.toString());
+            if ~raw
+                json = char(json.toString());
+            end
+        end
+
+        function json = getArrayPayload(obj,requiredProperties,optionalProperties)
+            % GETARRAYPAYLOAD JSON Encodes a scalar object or an array of
+            % objects into a JSON *array*.
+            %
+            % The method works similar to getPayload only it also works for
+            % arrays of objects and it also forces a scalar object to
+            % become a JSON array.
+
+            % Start a JSON array
+            arr = com.google.gson.JsonArray();
+            % Go through the array of object individually and use
+            % getPayload to encode them. Then add them to the array
+            for i=1:length(obj)
+                arr.add(obj(i).getPayload(requiredProperties,optionalProperties,true));
+            end
+            % Return the array as JSON encoded string
+            json = char(arr.toString());
+        end
+
+        function nameMap = getMATLAB2JSONNameMap(obj)
+            % GETMATLAB2JSONNAMEMAP Maps MATLAB field names to the corresponding JSON names
+            % Returns a containers.Map.
+            jNames = [obj.MATLABProperties.jName];
+            mNames = [obj.MATLABProperties.mName];
+            nameMap = containers.Map(mNames, jNames);
+        end
+
+        function nameMap = getJSON2NATLABNameMap(obj)
+            % GETJSON2NATLABNAMEMAP Maps JSON field names to the corresponding MATLAB names
+            % Returns a containers.Map.
+            jNames = [obj.MATLABProperties.jName];
+            mNames = [obj.MATLABProperties.mName];
+            nameMap = containers.Map(jNames, mNames);
         end
     end
 end
 
 function out = getJSONScalarOrArray(val,forceArray)
-    % GETJSONSCALARORARRAY helper function to ensure values are serialized
+    % GETJSONSCALARORARRAY Helper function to ensure values are serialized
     % as an array if required.
-    if forceArray && ~isa(val,'com.google.gson.JsonArray') && length(val) == 1
+    if forceArray && ~isa(val,'com.google.gson.JsonArray') && length(val) == 1 %#ok<ISCL>
         out = com.google.gson.JsonArray();
         out.add(JSONMapper.MATLABGSON.toJsonTree(val));
     else
@@ -545,38 +678,45 @@ function out = getJSONScalarOrArray(val,forceArray)
     end
 end
 
-function val = getScalarOrArray(curVal,type)
-    % GETSCALARORARRAY helper function which can return MATLAB datatypes
+function val = getScalarOrArray(curVal,type,options)
+    % GETSCALARORARRAY Helper function which can return MATLAB datatypes
     % from an JsonArray as well as JsonObject.
-
-
-    if curVal.isJsonArray()
-        switch type
-            case 'double'
-                t = java.lang.Class.forName('[D');
-            case 'long'
-                t = java.lang.Class.forName('[J');
-            case 'string'
-                t = java.lang.Class.forName('[Ljava.lang.String;');
-            case 'bool'
-                t = java.lang.Class.forName('[Z');
-        end
-    else
-        switch type
-            case 'double'
-                t = java.lang.Double.TYPE;
-            case 'long'
-                t = java.lang.Long.TYPE;
-            case 'string'
-                t = java.lang.Class.forName('java.lang.String');
-            case 'bool'
-                t = java.lang.Boolean.TYPE;
-        end
+    
+    arguments
+        curVal,
+        type string {mustBeTextScalar, mustBeNonzeroLengthText}
+        options.doNotDecode (1,1) logical = false
     end
-    val = JSONMapper.MATLABGSON.fromJson(curVal,t);
+
+    if options.doNotDecode
+        val = curVal.toString();
+    else
+        if curVal.isJsonArray()
+            switch type
+                case 'double'
+                    t = java.lang.Class.forName('[D');
+                case 'long'
+                    t = java.lang.Class.forName('[J');
+                case 'string'
+                    t = java.lang.Class.forName('[Ljava.lang.String;');
+                case 'bool'
+                    t = java.lang.Class.forName('[Z');
+            end
+        else
+            switch type
+                case 'double'
+                    t = java.lang.Double.TYPE;
+                case 'long'
+                    t = java.lang.Long.TYPE;
+                case 'string'
+                    t = java.lang.Class.forName('java.lang.String');
+                case 'bool'
+                    t = java.lang.Boolean.TYPE;
+            end
+        end
+        val = JSONMapper.MATLABGSON.fromJson(curVal,t);
+    end
     if type == "string"
         val = string(val);
     end
-
 end
-
