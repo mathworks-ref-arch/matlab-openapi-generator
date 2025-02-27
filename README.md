@@ -13,7 +13,7 @@ MATLAB® Generator *for OpenAPI™* provides a generator to enable generation of
 * Java Development Kit (JDK) 11 or compatible.
 * [Maven](https://maven.apache.org/) 3.6 or greater.
 * [OpenAPITools openapi-generator](https://github.com/openapitools/openapi-generator), downloaded by `setup.m`.
-* Node.js is required only is using the unit test suite.
+* Node.js is required only if using the unit test suite or using `npx` at the command line.
 
 ## Introduction
 
