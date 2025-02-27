@@ -1,0 +1,37 @@
+function startup(varargin)
+    % STARTUP Script to add paths to the MATLAB path
+    % This script will add the paths below the root directory into the MATLAB
+    % path.
+
+    % Copyright 2021-2024 The MathWorks
+
+    % If deployed in a .ctf or .exe do not do anything in startup.m & return
+    if isdeployed() || ismcc()
+        return;
+    end
+
+    displayBanner('Adding %<<PROJECTFULLNAME>>% paths');
+
+    % Set up the paths to add to the MATLAB path
+    softwareMATLABDir = fileparts(mfilename('fullpath'));
+    
+    appDir = fullfile(softwareMATLABDir, "app");
+    if isfolder(appDir)
+        addpath(genpath(appDir));
+        gitlabIgnoreDir = fullfile(softwareMATLABDir, "app", "system", ".openapi-generator");
+        if isfolder(gitlabIgnoreDir)
+            rmpath(gitlabIgnoreDir);
+        end
+    else
+        fprintf(2, "Software/MATLAB/app directory not found, skipping addpath()\n");
+    end
+   
+    disp('%<<PROJECTFULLNAME>>% Ready');
+end
+
+
+function displayBanner(appStr)
+    % Helper function to create a banner
+    disp(appStr);
+    disp(repmat('-',1,numel(appStr)));
+end

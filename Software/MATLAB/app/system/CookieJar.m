@@ -30,6 +30,15 @@ classdef CookieJar < handle
         function obj = CookieJar(path)
             if nargin == 0
                 path = prefdir;
+            else
+                % For other paths ensure it actually exists
+                if ~isfolder(path)
+                    if isfile(path)
+                        error('Specified cookie directory conflicts with an existing file of the same name.');
+                    else
+                        mkdir(path);
+                    end
+                end
             end
             % CookieJar Constructor
             obj.path = path;

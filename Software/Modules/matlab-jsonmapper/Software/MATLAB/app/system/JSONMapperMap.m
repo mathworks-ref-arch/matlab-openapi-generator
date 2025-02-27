@@ -23,7 +23,6 @@ classdef JSONMapperMap < handle
                     obj.map(varargin{i}) = varargin{i+1};
                 end
             end
-
         end
 
         function B = subsref(obj,S)
@@ -33,6 +32,7 @@ classdef JSONMapperMap < handle
             % containers.Map
             B = subsref(obj.map,S);
         end
+        
         function obj = subsasgn(obj,S,B)
             % SUBSASGN Assign or update a key-value pair in the map.
 
@@ -60,8 +60,33 @@ classdef JSONMapperMap < handle
             end
             fprintf('JSONMapperMap with the following key-value pairs:\n\n');
             for k = obj.map.keys
-                fprintf('\t%10s : %s\n',k{1},obj.map(k{1}));
+                v = obj.map(k{1});
+                if ischar(v) || isstring(v)
+                    fprintf('\t%10s : %s\n',k{1},v);
+                else
+                    if isnumeric(v) || isstring(v) || ischar(v)
+                        fprintf('\t%10s : %s\n',k{1},string(v));
+                    else
+                        fprintf('\t%10s : <not displayed>\n',k{1});
+                    end
+                end
             end
+        end
+
+        function vals = toKeyValuePairCell(obj)
+            % TOKEYVALUEPAIRCELL Returns a cell array of key value pairs
+            vals = vertcat(keys(obj.map),values(obj.map));
+            vals = vals(:)';
+        end
+
+        function k = keys(obj)
+            % KEYS Returns the keys for the inner map
+            k = keys(obj.map);
+        end
+
+        function v = values(obj)
+            % VALUES Returns the values for the inner map
+            v = values(obj.map);
         end
     end
 end

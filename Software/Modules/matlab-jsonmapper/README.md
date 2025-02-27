@@ -4,9 +4,9 @@ Provides JSON serialization and deserialization of MATLAB class object hierarchi
 
 ## Requirements
 
-### MathWorks Products (http://www.mathworks.com)
+### MathWorks Products [(https://www.mathworks.com)](https://www.mathworks.com)
 
-* MATLAB R2020a or newer
+* MATLAB R2020b or newer.
 
 ## Introduction
 
@@ -60,11 +60,11 @@ JSONMapper.
 Annotations can be added to properties as "validation functions".
 
 | Annotation     | Description |
-|----------------|------------------------------------------------------------------|
-| fieldName      | allows property to be mapped to a JSON field with different name |
-| JSONArray      | specifies field is a JSON array |
-| epochDatetime  | for datetime properties specifies in JSON the date time is encoded as epoch. Must be the first attribute if used |
-| stringDatetime | for datetime properties specifies in JSON the date time is encoded as string with a particular format. Must be the first attribute if used. |
+|----------------|-------------------------------------------------------------------|
+| fieldName      | Allows property to be mapped to a JSON field with different name. |
+| JSONArray      | Specifies field is a JSON array. |
+| epochDatetime  | For datetime properties specifies in JSON the date time is encoded as epoch. Must be the first attribute if used. |
+| stringDatetime | For datetime properties specifies in JSON the date time is encoded as string with a particular format. Must be the first attribute if used. |
 
 Please see the [documentation](Documentation/README.md) for more information.
 
@@ -79,6 +79,6 @@ https://www.mathworks.com/products/reference-architectures/request-new-reference
 
 ## Support
 
-Email: mwlab@mathworks.com
+Email: <mwlab@mathworks.com>
 
-[//]: #  (Copyright 2022-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2022-2024 The MathWorks, Inc.)

@@ -1,16 +1,33 @@
 # Customizing Generated Code
 
-After the MATLAB code has been generated it may be necessary to customize the generated code. For example, the package only supports `application/json` and `application/x-www-form-urlencoded` body parameter inputs and `application/json` body replies. If some operations in the API only support other types e.g. `application/xml` the generated code will have to be manually modified to make these calls possible. See the [Unsupported Content-Type](#unsupported-content-type) section below.
+After the MATLAB code has been generated it may be necessary to customize the generated code. The following describes tips to help in doing so and typical points within the generated code where modifications might be made.
 
-Also, when it comes to authentication, Basic or Digest authentication should work by default (as long as the correct `matlab.net.http.Credentials` are provided to the client object). API Key based authentication should work as well (if the correct `apiKey` is set on the client object). However, *proper* oAuth authentication may need customization. See the [Authentication](#authentication) section below to learn more about how the generated classes work with authentication and what customizations may be needed.
-
-Lastly, the `BaseClient` is generated with `preSend` and `postSend` methods which will be called by all operations right before and after sending their requests. By default these methods do not actually do anything but they can be [customized](#presend-and-postsend-methods).
+## Hints
 
 ```{hint}
-Generated models derived from a `JSONMapper` base class and the properties in the Model classes are "annotated" using `JSONMapper` "annotations". See [References/JSONMapper](JSONMapper.md) to learn more about this class.
+Generated models derive from a `JSONMapper` base class and the properties in the Model classes are "annotated" using `JSONMapper` "annotations". See [References/JSONMapper](JSONMapper.md) to learn more about this class.
 ```
 
+```{hint}
+For common functionality consider changing the `BaseClient` to that changes propagate to all derived API classes.
+```
+
+```{hint}
+If changing the `preSend`, `postSend` or `BaseClient` call a function perhaps in separate namespace rather than several lines of code, [https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html](https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html) so that added code is more distinct from the generated code and reinserting just one line of code adds back functionality making diffs or merges simpler.
+```
+
+## Source control
+
+Before modifying the code it is strongly advised to use source control of some form so if the code is regenerated later changes are not lost and changes can be checked against generated code.
+Source controlling the source spec and any build scripts is also recommended so that changes to them can be recorded over time also. This provides an exact means of recording what version of a spec generated what version of a client and potentially recreating it if necessary. This package notes the version of the package used to generate code as a comment in the code itself.
+
+## Selective generation
+
+The generator takes standard openapi-tools arguments that would allow generation of the APIs or the Models or subsets. This is mostly useful if editing the spec itself or if it is known that a only specific part of a spec has changed. One can use a `.openapi-generator-ignore` file to define files to not regenerate.
+
 ## Unsupported Content-Type
+
+The package only supports `application/json` and `application/x-www-form-urlencoded` body parameter inputs and `application/json` body replies. If some operations in the API only support other types e.g. `application/xml` the generated code will have to be manually modified to make these calls possible.
 
 Each and every method/operation will check the in- and output content-types if there are any. For example the `addPet` method for the Pet Store v3 example will contain code like the following:
 
@@ -37,6 +54,8 @@ When manually adding support for other content-types for specific operations, ma
 ## Authentication
 
 In OpenAPI 3, the spec can declare various named authentication methods. And then, for each separate operation, it can specify whether it requires authentication at all, and if so, which of the named methods are supported.
+
+Basic or Digest authentication should work by default (as long as the correct `matlab.net.http.Credentials` are provided to the client object). API Key based authentication should work as well (if the correct `apiKey` is set on the client object). However, *proper* oAuth authentication may need customization. See the [Authentication](#authentication) section below to learn more about how the generated classes work with authentication and what customizations may be needed.
 
 For the *entire* package exactly *one* `requestAuth` method is generated and it is part of the generated `<PackageName>.BaseClient` class. All the API classes derive from this `BaseClient` class. The `requestAuth` method will contain a `switch, case, otherwise` statement to handle the various authentication mechanisms based on their name. For example for the Pet Store v3 example, it will look like the following:
 
@@ -65,7 +84,7 @@ end
 Each operation which requires authentication will call this method before making its actual request. The `requestAuth` method then updates the request or HTTPOptions with the relevant settings and returns the updated request/options as output.
 
 ```{hint}
-Not all specs follow this approach strictly. For example, in some cases where *all* operations require the same authentication, some specs may not list the supported authentication methods on a per operation basis. In that case, the generator will *not* generate calls to `requestAuth` in the operation methods. In such cases, consider using [`preSend`](#presend) to authenticate the requests before they are made.
+Not all specs follow this approach strictly. For example, in some cases where *all* operations require the same authentication, some specs may not list the supported authentication methods on a per operation basis. In that case, the generator will *not* generate calls to `requestAuth` in the operation methods. In such cases, consider using the [`AddOAuth` option](./Options.md#addoauth) when generating the client or use [`preSend`](#presend) to authenticate the requests before they are made.
 ```
 
 ```{note}
@@ -124,7 +143,7 @@ As indicated in the comments of this code, this is really just template code whi
 
 ## preSend and postSend methods
 
-The `BaseClient` class is generated with the following two methods:
+The `BaseClient` is generated with `preSend` and `postSend` methods which will be called by all operations right before and after sending their requests. By default these methods do not actually do anything but they can be [customized](#presend-and-postsend-methods). The `BaseClient` class `preSend` and `postSend` methods:
 
 ```matlab
 function [request, httpOptions, uri] = preSend(obj, operationId, request, httpOptions, uri) %#ok<INUSL> 
@@ -163,7 +182,7 @@ By default the generated `preSend` method does not do anything but it offers an 
 
 The `preSend` method can be customized if *all or at least most* requests need some customization before being send. For example, a header field could be added.
 
-Further, some APIs require authentication on *all* operations and then do not specify on a *per operation* basis that they require authentication. In that case it is possible to add the authentication in `preSend`, note however that it is also possible to use the [`-p AddOAuth=name` option](BuildClient.md#generating-a-matlab-client-using-the-command-line) for this.
+Further, some APIs require authentication on *all* operations and then do not specify on a *per operation* basis that they require authentication. In that case it is possible to add the authentication in `preSend`, note however that it is also possible to use the [`AddOAuth` option](./Options.md#addoauth) for this.
 
 ```{note}
 If only a few specific operations need customization it makes more sense to edit their methods in the API classes directly rather than handling this in `preSend`.
@@ -187,4 +206,4 @@ client.globalProperty = "models=""User:Pet"""      % Generate the User and Pet m
 client.globalProperty = "skipFormModel = false"    % Generate for OAS3 and ver < v5.x using the form parameters in "requestBody"
 ```
 
-[//]: #  (Copyright 2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2023-2024 The MathWorks, Inc.)

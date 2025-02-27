@@ -49,7 +49,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 public class MATLABClientCodegenGenerator extends DefaultCodegen implements CodegenConfig {
   String ADD_AUTH = "AddOAuth";
-
+  String OBJECT_PARAMS = "ObjectParams";
+  
   // source folder where to write the files
   protected String sourceFolder = "src";
   protected String apiVersion = "1.0.0";
@@ -83,6 +84,13 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
     return "MATLAB";
   }
 
+  private String ensureNotEmpty(String val) {
+    if (val.isBlank()) {
+      return "EMPTY_STRING";
+    }
+    return val;
+  }
+
 
   private String[] supportedEnumNameExtensions = {"x-enumNames"};
 
@@ -101,9 +109,9 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
       HashMap<String, Object> enumVal = new HashMap<String, Object>();
       enumVal.put("baseName", vals.get(i));
       if (nameList!=null) {
-        enumVal.put("name", toVarName(nameList.get(i)));
+        enumVal.put("name", ensureNotEmpty(toVarName(nameList.get(i))));
       } else {
-        enumVal.put("name", toVarName(vals.get(i).toString()));
+        enumVal.put("name", ensureNotEmpty(toVarName(vals.get(i).toString())));
       }
       
       allEnumValues.add(enumVal);
@@ -280,21 +288,20 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
     }
     additionalProperties.put(CodegenConstants.TEMPLATE_DIR, templateDir);
 
-    /* Hardcoded object Params for initial testing */
-    /*
-     CodegenParameter p = new CodegenParameter(); p.baseType = "string"; p.paramName = "subscriptionId";
-    objectParams.add(p);
-    p = new CodegenParameter(); p.baseType = "string"; p.paramName = "workspaceName";
-    objectParams.add(p);
-    p = new CodegenParameter(); p.baseType = "string"; p.paramName = "resourceGroupName";
-    objectParams.add(p);
-    p = new CodegenParameter(); p.baseType = "string"; p.paramName = "api_version";
-    objectParams.add(p);
-
-    if (!objectParams.isEmpty()) {
-      additionalProperties.put("objectParams",objectParams);
+    /* Handle Object Params */
+    if (additionalProperties.containsKey(OBJECT_PARAMS)) {    
+      String paramString = (String) additionalProperties.get(OBJECT_PARAMS);
+      String[] params = paramString.split("\\/");
+      for (int i = 0; i < params.length; i++) {
+        CodegenParameter cp = new CodegenParameter();
+        cp.paramName = params[i++];
+        cp.baseType = params[i];
+        objectParams.add(cp);
+      }
+      if (!objectParams.isEmpty()) {
+        additionalProperties.put("objectParams",objectParams);
+      }
     }
-    */
 
     // Should only fall back to here if running from outside /Software or
     // /Software/Mustache is missing
@@ -350,8 +357,11 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
       fullfile(jsonmapperRoot , "app" , "system" , "JSONMapperMap.m"), 
       fullfile(outputPackageRoot, "JSONMapperMap.m")));
     supportingFiles.add(new SupportingFile(
+      fullfile(jsonmapperRoot , "app" , "system" , "JSONDiscriminator.m"), 
+      fullfile(outputPackageRoot, "JSONDiscriminator.m")));
+    supportingFiles.add(new SupportingFile(
       fullfile(jsonmapperRoot , "app" , "system" , "JSONPropertyInfo.m"), 
-      fullfile(outputPackageRoot, "JSONPropertyInfo.m")));  
+      fullfile(outputPackageRoot, "JSONPropertyInfo.m")));
     // Set jsonmapperPackage which can be used in mustache templates to determine in which package it was placed
     additionalProperties.put("jsonmapperPackage",packageName);
 
@@ -399,7 +409,7 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
         // Replace JSONEnum|JSONMapper|JSONPropertyInfo with packaged names
         // (Except of course when in classdef definition or as constructor name)
         contents = FileUtils.readFileToString(file,"UTF-8");
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile("(?<!(classdef|function|error|warning).*)(JSONMapper|JSONPropertyInfo)");
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile("(?<!(classdef|function|error|warning).*)(JSONMapper|JSONPropertyInfo|JSONDiscriminator)");
         java.util.regex.Matcher m = p.matcher(contents);
         contents = m.replaceAll(additionalProperties.get("jsonmapperPackage") + ".$2");
         FileUtils.write(file,contents,"UTF-8");
@@ -457,6 +467,7 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
 
     legacyDiscriminatorBehavior = false;
     useOneOfInterfaces = true;
+    supportsInheritance = true;
 
     // set the folder here
     // assumes execution is relative to the Software folder
@@ -723,9 +734,9 @@ public class MATLABClientCodegenGenerator extends DefaultCodegen implements Code
       name.replaceAll("-", "_");
     }
 
-    if (!name.equals(origName)) {
-      System.out.println("Warning: Model name changed from: " + origName + " to: " + name);
-    }
+    // if (!name.equals(origName)) {
+    //   System.out.println("Warning: Model name changed from: " + origName + " to: " + name);
+    // }
 
     name = truncateto63(name);
 

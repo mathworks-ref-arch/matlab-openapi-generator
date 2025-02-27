@@ -36,7 +36,7 @@ release = u''
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['myst_parser', 'sphinx_rtd_theme']
+extensions = ['myst_parser', 'sphinx_rtd_theme', 'sphinx_design', 'sphinx_copybutton', 'sphinxcontrib.mermaid']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -194,3 +194,6 @@ epub_title = project
 epub_exclude_files = ['search.html']
 
 myst_heading_anchors = 5
+
+# enable field lists for nicely documented properties
+myst_enable_extensions = ['fieldlist']

@@ -194,12 +194,12 @@ classdef {{classname}} < {{packageName}}.BaseClient
                 "{{name}}",...{{/required}}{{/vars}}
             ];{{^required}}
             if isfield(optionals,"{{paramName}}"){{/required}}
-            {{^required}}  {{/required}}request.Body(1).Payload = {{^required}}optionals.{{/required}}{{paramName}}.getPayload(requiredProperties,optionalProperties);{{^required}}
+            {{^required}}  {{/required}}request.Body(1).Payload = {{^required}}optionals.{{/required}}{{paramName}}.get{{#isArray}}Array{{/isArray}}Payload(requiredProperties,optionalProperties);{{^required}}
             else
               request.Body(1).Payload = "{}";
             end{{/required}}{{/bodyParam}}
 
-            {{^formParams}}% No form body parameters{{/formParams}}{{#formParams}}{{#-first}}%Set form Body
+            {{^formParams}}% No form body parameters{{/formParams}}{{#formParams}}{{#-first}}% Set form Body
             params = matlab.net.QueryParameter.empty;{{/-first}}{{#required}}
             params(end+1) = matlab.net.QueryParameter("{{baseName}}", {{>paramName}});{{/required}}{{^required}}
             if isfield(optionals, "{{paramName}}"), params(end+1) = matlab.net.QueryParameter("{{baseName}}", optionals.{{paramName}}); end{{/required}}{{#-last}}

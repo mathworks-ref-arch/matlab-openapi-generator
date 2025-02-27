@@ -360,6 +360,10 @@ p = PetStore.models.Pet('{"name": "Foo"}',"name","Bar");
 
 The final Pet instance will have `name` = `"Bar"` and not `"Foo"`.
 
+### Model inheritance
+
+In the example discussed on this documentation page, there is no inheritance between models and there is no polymorphism in the operations. These feature may be used in more complex services though and this will influence model behavior. If working with such services/specs, see [](./InheritanceAndPolymorphism.md) for more information.
+
 ## Example method call with model as input
 
 So finally to call the `addPet` operation with a `Pet` as input:

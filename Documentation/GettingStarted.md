@@ -4,21 +4,48 @@ This package supports OpenAPI 3.0. OpenAPI was formerly known as Swagger and sti
 
 Consider installing the [Swagger UI](SwaggerUI.md) package to help displaying and interacting with the spec. This is useful when comparing the generated code with expected behavior.
 
-It is assumed that Maven, Node, npx/npm and a JDK are installed and configured per [requirements](../README.md).
+It is assumed that Maven, and a JDK are installed and configured per [requirements](../README.md).
 
-## Install OpenAPI generator
+## Required Java libraries
 
-The easiest way to run the code generator is through the `openapi-generator-cli` and the easiest way to run this is through `npx` which should be part of a standard Node.js installation. `npx` will automatically offer to download the tool if it is not yet available locally.
+Two Java libraries are required by this package. The following steps describe how they can be provisioned.
+
+### Installing the OpenAPI generator library
+
+The OpenAPI Tools generator Java library is required, this can be downloaded from Maven or the `Software/MATLAB/setup.m` command can be used to do so. This is used to build the MATLAB specific generator in the next step. A `generatorVersion` can be specified if required.
+
+```matlabsession
+>> setup
+
+MATLAB Generator for OpenAPI setup
+----------------------------------
+
+This package requires a library provided by the OpenAPI Tools project.
+Project details and the associated license can be found here:
+  https://github.com/OpenAPITools/openapi-generator
+
+The version of this library used by default is: 7.10.0
+This is defined in the file: /home/username/package_directory/Software/Java/pom.xml
+This is used to build the MATLAB specific generator.
+
+Download required OpenAPI generator jar file, version: 7.10.0? Y/N [Y]: y
+Downloading: https://search.maven.org/remotecontent?filepath=org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar
+
+Setup complete.
+To use the package run: startup
+```
+
+If not using `setup.m` `npx` can be used with the `openapi-generator-cli`. `npx` should be part of a standard Node.js installation. `npx` will automatically offer to download the tool if it is not yet available locally.
 
 To ensure the correct version of the actual code generator JAR-files are available, it is recommended to use the following before running actual code generation:
 
 ```bash
-npx @openapitools/openapi-generator-cli version-manager set 6.6.0
+npx @openapitools/openapi-generator-cli version-manager set 7.1.0
 ```
 
-## Building MATLAB code generation jar
+### Building MATLAB code generation jar
 
-This step is builds Java code that defines how to generate MATLAB client code. this jar together with generic functionality in OpenAPITools package generate the end-product MATLAB code. The resulting jar file is: ```<package_directory>/matlab-openapi-codegen/Software/MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar```
+This step builds Java code that defines how to generate MATLAB client code. This jar together with generic functionality in the OpenAPITools package generate the end-product MATLAB code. The resulting jar file is: ```<package_directory>/matlab-openapi-codegen/Software/MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar```
 
 ```bash
 cd <package_directory>/Software/Java
@@ -45,14 +72,14 @@ If not working in the package's `Software` directory, use full paths and add the
 -t "<package_directory>/Software/Mustache" --additional-properties openapiRoot="<package_directory>/Software/MATLAB
 ```
 
-Alternatively, if MATLAB Generator *for OpenAPI* has been added to the MATLAB path, the MATLAB client can also be generated inside MATLAB using:
+Alternatively from within MATLAB, after running `startup.m`, the MATLAB client can also be generated using:
 
 ```matlab
 c = openapi.build.Client(inputSpec="http://localhost:3000/api-json", packageName="Test", output="TestClient");
 c.build
 ```
 
-See the [Build Client](BuildClient.md) file for more details and command options.
+See the [Build Client](BuildClient.md) file for more details and command options for this approach.
 
 ## Verify the generated code in MATLAB
 
@@ -102,4 +129,4 @@ If during customization of the code, additional dependencies were introduced, en
 
 The [Build Generator](BuildGenerator.md) file provides some detail on how to build the underlying generator code used by this package, this is unlikely to be necessary.
 
-[//]: #  (Copyright 2020-2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2020-2025 The MathWorks, Inc.)

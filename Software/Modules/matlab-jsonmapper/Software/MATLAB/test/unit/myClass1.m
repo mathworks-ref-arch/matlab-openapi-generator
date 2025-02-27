@@ -15,13 +15,19 @@ classdef myClass1 < JSONMapper
         c char
         dtp datetime {JSONMapper.epochDatetime}
         dts datetime {JSONMapper.stringDatetime(dts,'yyyy-MM-dd')}
-        m containers.Map
+        m containers.Map %#ok<MCHDT>
         mc myClass1
         e myEnum
+        j string {JSONMapper.doNotDecode}
     end
     methods
-        function obj = myClass1(varargin)
-            obj@JSONMapper(varargin{:});
+        function obj = myClass1(s,inputs)
+            %obj@JSONMapper(varargin{:});
+            arguments
+                s {JSONMapper.ConstructorArgument} = []
+                inputs.?myClass1
+            end
+            obj = obj.initialize(s,inputs);
         end
     end
 end

@@ -15,6 +15,7 @@ caption: Code Generation
 ---
 BuildClient
 CustomizingGeneratedCode
+Options
 ```
 
 ```{toctree}
@@ -39,6 +40,7 @@ maxdepth: 1
 caption: References
 ---   
 FAQ
+InheritanceAndPolymorphism
 JSONMapper
 BuildGenerator
 SwaggerUI

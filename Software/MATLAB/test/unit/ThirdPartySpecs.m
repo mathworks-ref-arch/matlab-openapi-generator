@@ -31,6 +31,7 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
             c.inputSpec = specPath;
             c.output = fullfile(tmpFolder,"Airflow");
             c.additionalArguments = "--skip-validate-spec";
+            c.copyrightNotice = '(c) 2025 "My Pretent" Copyright Notice';
             c.build;
             testCase.verifyTrue(isfile(fullfile(c.output, [char(c.packageName),'_build.log'])));
 
@@ -81,7 +82,7 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
             c.packageName = "Petstore";
             c.inputSpec = specPath;
             c.output = fullfile(tmpFolder,"Petstore");
-            c.additionalArguments = "--skip-validate-spec";
+            % c.additionalArguments = "--skip-validate-spec";
             c.build;
 
             testCase.verifyClass(c,'openapi.build.Client');
@@ -250,6 +251,48 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
             testCase.verifyTrue(isfile(fullfile(c.output, [char(c.packageName),'_build.log'])));
 
             testCase.verifyTrue(c.verifyPackage('mode', 'nonStrict'));
+        end
+
+        function testSnowflake(testCase)
+            % This tests generates a client based on API specs for
+            % Snowflake. The Snowflake spec is spread across mulitple
+            % different files. This allows testing inputSpecRootDirectory.
+            disp('Running testSnowflake');
+            % Clone the Snowflake repo, this checkout a specific revision
+            % which has been verfied to not contain any issues in the spec
+            % itself.
+            tempSpec = tempname;
+            mkdir(tempSpec)
+            removeSnowflake = onCleanup(@()rmdir(tempSpec,"s"));            
+            cmd = sprintf([ ...
+                'cd %s' ...
+                ' && git clone --depth=1 https://github.com/snowflakedb/snowflake-rest-api-specs.git' ...
+                ' && cd snowflake-rest-api-specs' ...
+                ' && git fetch --depth=1 origin dc5da9f0a8423c34e306ed821fa04250a5c15dd0' ...
+                ' && git checkout dc5da9f0a8423c34e306ed821fa04250a5c15dd0'], ...
+                tempSpec);
+            [status,log] = system(cmd);
+            testCase.assertEqual(status,0,log);
+            specPath = fullfile(tempSpec,'snowflake-rest-api-specs','releases','8.40','specifications');
+            
+            if strcmpi(getenv('OPENAPI_KEEP_OUTPUT'), 'true')
+                tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Snowflake', ['Snowflake-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
+                fprintf("Saving output to: %s\n", tmpFolder);
+            else
+                tmpFolder = createTemporaryFolder(testCase);
+            end
+
+            c = openapi.build.Client;
+            c.packageName = "Snowflake";
+            c.inputSpecRootDirectory = specPath;
+            c.output = fullfile(tmpFolder,"Snowflake");
+            c.additionalArguments = "--skip-validate-spec";
+            c.build;
+
+            testCase.verifyClass(c,'openapi.build.Client');
+            testCase.verifyTrue(isfile(fullfile(c.output, [char(c.packageName),'_build.log'])));
+
+            testCase.verifyTrue(c.verifyPackage('mode', 'nonStrict'));            
         end
     end
 end

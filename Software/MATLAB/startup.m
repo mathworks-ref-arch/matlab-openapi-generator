@@ -1,20 +1,33 @@
-function startup(varargin)
+function startup(options)
     %% STARTUP - Script to add my paths to MATLAB path
     % This script will add the paths below the root directory into the MATLAB
     % path. You may modify undesired path
     % filter to your desire.
 
-    % Copyright 2020-2022 The MathWorks, Inc.
+    % Copyright 2020-2024 The MathWorks, Inc.
+
+    arguments
+        options.setup (1,1) logical = false
+        options.generatorJarPath string {mustBeTextScalar, mustBeNonzeroLengthText}
+        options.verbose (1,1) logical = true
+    end
 
     % If deployed in a .ctf or .exe do not do anything in startup.m & return
     if isdeployed() || ismcc()
         return;
     end
 
-    displayBanner('Adding MATLAB Generator for OpenAPI paths');
+    printBanner('MATLAB Generator for OpenAPI');
 
-    if verLessThan('matlab','9.9')
+    if verLessThan('matlab','9.9') %#ok<VERLESSMATLAB>
         error('openapi:version','MATLAB Release R2020b or newer is required');
+    end
+
+    if options.setup
+        % If in setup mode stop here as the package is not configured and continue with installation
+        printBanner("Running Startup - Setup mode", leadingNewline=false);
+    else
+        printBanner("Running Startup", leadingNewline=false);
     end
 
     %% Set up the paths to add to the MATLAB path
@@ -29,31 +42,91 @@ function startup(varargin)
         ...fullfile(here,'lib'),false;...
         ...fullfile(here,'config'),false;...
         };
-
-    %% Add the framework to the path
+    % Add the framework to the path
     iAddFilteredFolders(rootDirs);
 
+    % Add JSONMapper
     jsonMapperDir = fullfile(fileparts(here), 'Modules', 'matlab-jsonmapper');
     jsonMapperStartup = fullfile(jsonMapperDir, 'Software', 'MATLAB', 'startup.m');
     if isfile(jsonMapperStartup)
-        % We have a module with a startup
-        run(jsonMapperStartup);
+        run(jsonMapperStartup); % We have a module with a startup
     else
         warning("openapi:startup", "JSONMapper startup.m not found: %s, check the submodule has been recursively cloned", jsonMapperStartup);
     end
 
-
-    % Check for generator jar file
-    jarName = "MATLABClientCodegen-openapi-generator-" + openapi.build.Client.getJarVersion() + ".jar";
-    jarPath = fullfile(openapiRoot('lib', 'jar'), jarName);
-    if ~isfile(jarPath)
-        docPath = fullfile(openapiRoot( -2, 'Documentation', 'GettingStarted.md'));
-        warning('Client:checkJar','Required jar file not found: %s\nFor build instructions see: %s', jarPath, docPath);
-    else
-        fprintf("Generator jar file found: %s\n", jarPath);
+    if options.setup
+        return;
     end
 
+    printBanner('Checking for required jar files', leadingNewline=false);
+    % Check for matlab jar file
+    checkMATLABJar(verbose=options.verbose);
+
+    % Check for generator jar file
+    if isfield(options, "generatorJarPath")
+        checkGeneratorJar(generatorJarPath=options.generatorJarPath, verbose=options.verbose);
+    else
+        checkGeneratorJar(verbose=options.verbose);
+    end
+
+    fprintf("Ready\n");
 end
+
+
+function tf = checkMATLABJar(options)
+    arguments
+        options.verbose (1,1) logical = true
+    end
+
+    jarName = "MATLABClientCodegen-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
+    jarPath = fullfile(openapiRoot('lib', 'jar'), jarName);
+    if ~isfile(jarPath)
+        fprintf(2, 'Required MATLAB generator jar file not found:\n  %s\nFor build instructions see: %s\n',...
+            jarPath, openapi.internal.utils.editLink(openapiRoot( -2, 'Documentation', 'GettingStarted.md')));
+        tf = false;
+    else
+        if options.verbose
+            fprintf("MATLAB generator jar file found:\n  %s\n", jarPath);
+        end
+        tf = true;
+    end
+end
+
+
+function checkGeneratorJar(options)
+    % Assumes names of the form Software/MATLAB/lib/jar/openapi-generator-6.6.0.jar
+    % unless specified as an option.
+    arguments
+        options.generatorJarPath string {mustBeTextScalar, mustBeNonzeroLengthText}
+        options.verbose (1,1) logical = true
+    end
+
+    if isfield(options, "generatorJarPath")
+        if isfile(options.generatorJarPath)
+            if options.verbose
+                fprintf("Generator jar file found:\n  %s\n", options.generatorJarPath);
+            end
+        else
+            fprintf(2, "Required generator jar file not found:\n  %s\n", options.generatorJarPath);
+        end
+    else
+        jarDir = openapiRoot("lib", "jar");
+        pomGenVersion = openapi.internal.utils.getGeneratorJarVersion();
+        if ~isempty(pomGenVersion)
+            generatorJarPath = fullfile(jarDir, "openapi-generator-cli-" + pomGenVersion + ".jar");
+            if isfile(generatorJarPath)
+                if options.verbose
+                    fprintf("Generator jar file found:\n  %s\n", generatorJarPath);
+                end
+            else
+                fprintf(2, "Required generator jar file not found:\n  %s\n", generatorJarPath);
+                fprintf(2, "Run setup.m to download the required file. For instructions see:\n%s\n",...
+                    openapi.internal.utils.editLink(openapiRoot( -2, 'Documentation', 'GettingStarted.md')));
+            end
+        end
+    end
+end
+
 
 %% iAddFilteredFolders Helper function to add all folders to the path
 function iAddFilteredFolders(rootDirs)
@@ -64,12 +137,10 @@ function iAddFilteredFolders(rootDirs)
         if rootDirs{pCount,2}
             % recursively add all paths
             rawPath=genpath(rootDir);
-
             if ~isempty(rawPath)
                 rawPathCell=textscan(rawPath,'%s','delimiter',pathsep);
                 rawPathCell=rawPathCell{1};
             end
-
         else
             % Add only that particular directory
             rawPath = rootDir;
@@ -105,8 +176,8 @@ function iAddFilteredFolders(rootDirs)
             end
         end
     end
-
 end
+
 
 function iSafeAddToPath(pathStr)
     % Helper function to add to MATLAB path.
@@ -118,6 +189,7 @@ function iSafeAddToPath(pathStr)
         fprintf('Skipping: %s\n',pathStr);
     end
 end
+
 
 function iSafeAddToJavaPath(pathStr) %#ok<DEFNU>
     % Helper function to add to the Dynamic Java classpath
@@ -138,9 +210,15 @@ function iSafeAddToJavaPath(pathStr) %#ok<DEFNU>
     end
 end
 
-function displayBanner(appStr)
-    % Helper function to create a banner
-    disp(appStr);
-    disp(repmat('-',1,numel(appStr)));
-end
 
+function printBanner(str, options)
+    arguments
+        str string {mustBeTextScalar, mustBeNonzeroLengthText}
+        options.leadingNewline (1,1) logical = true
+    end
+
+    if options.leadingNewline
+        fprintf("\n");
+    end
+    disp([char(str), newline,repmat('-',1,strlength(str))]);
+end

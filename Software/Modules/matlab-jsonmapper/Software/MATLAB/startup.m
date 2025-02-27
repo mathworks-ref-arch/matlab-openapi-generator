@@ -1,11 +1,17 @@
-function startup
+function startup(options)
     % STARTUP Script to add paths to the MATLAB path
     % This script will add the paths below the root directory into the MATLAB
     % path.
 
-    % Copyright 2021-2023 The MathWorks
+    % Copyright 2021-2024 The MathWorks
 
-    displayBanner('Adding JSONMapper paths');
+    arguments
+        options.verbose (1,1) logical = true
+    end
+
+    if options.verbose
+        displayBanner('Adding JSONMapper paths');
+    end
 
     if verLessThan('matlab','9.9')
         error('jsonmapper:version','MATLAB Release R2020b or newer is required');
@@ -21,12 +27,20 @@ function startup
         ...fullfile(here,'script'),false;...
         ...fullfile(here,'sys','modules'),false;...
         };
-    iAddFilteredFolders(rootDirs);
+    iAddFilteredFolders(rootDirs, verbose=options.verbose);
+    if options.verbose
+        fprintf("\n");
+    end
 end
 
 %% iAddFilteredFolders Helper function to add all folders to the path
-function iAddFilteredFolders(rootDirs)
+function iAddFilteredFolders(rootDirs, options)
     % Loop through the paths and add the necessary subfolders to the MATLAB path
+    arguments
+        rootDirs string
+        options.verbose (1,1) logical = true
+    end
+
     for pCount = 1:size(rootDirs,1)
 
         rootDir=rootDirs{pCount,1};
@@ -63,32 +77,44 @@ function iAddFilteredFolders(rootDirs)
                     sfprjFilteredPath{pCount},...
                     rtwFilteredPath{pCount}];
                 if isempty(filterCheck)
-                    iSafeAddToPath(rawPathCell{pCount});
+                    iSafeAddToPath(rawPathCell{pCount}, verbose=options.verbose);
                 else
                     % ignore
                 end
             end
         else
-            iSafeAddToPath(rawPathCell{pCount});
+            iSafeAddToPath(rawPathCell{pCount}, verbose=options.verbose);
         end
-
     end
-
 end
 
-function iSafeAddToPath(pathStr)
+function iSafeAddToPath(pathStr, options)
     % Helper function to add to MATLAB path.
+    arguments
+        pathStr string {mustBeTextScalar}
+        options.verbose (1,1) logical = true
+    end
+
     % Add to path if the file exists
     if exist(pathStr,'dir')
-        fprintf('Adding: %s\n',pathStr);
+        if options.verbose
+            fprintf('Adding: %s\n',pathStr);
+        end
         addpath(pathStr);
     else
-        fprintf('Skipping: %s\n',pathStr);
+        if options.verbose
+            fprintf('Skipping: %s\n',pathStr);
+        end
     end
 end
 
-function iSafeAddToJavaPath(pathStr) %#ok<DEFNU>
+function iSafeAddToJavaPath(pathStr, options) %#ok<DEFNU>
     % Helper function to add to the Dynamic Java classpath
+    arguments
+        pathStr string {mustBeTextScalar}
+        options.verbose (1,1) logical = true
+    end
+
     % Check the current java path
     jPaths = javaclasspath('-dynamic');
 
@@ -96,13 +122,19 @@ function iSafeAddToJavaPath(pathStr) %#ok<DEFNU>
     if isfolder(pathStr) || isfile(pathStr)
         jarFound = any(strcmpi(pathStr, jPaths));
         if ~isempty(jarFound)
-            fprintf('Adding: %s\n',pathStr);
+            if options.verbose
+                fprintf('Adding: %s\n',pathStr);
+            end
             javaaddpath(pathStr);
         else
-            fprintf('Skipping: %s\n',pathStr);
+            if options.verbose
+                fprintf('Skipping: %s\n',pathStr);
+            end
         end
     else
-        fprintf('Skipping: %s\n',pathStr);
+        if options.verbose
+            fprintf('Skipping: %s\n',pathStr);
+        end
     end
 end
 
