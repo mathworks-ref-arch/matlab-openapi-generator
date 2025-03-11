@@ -37,6 +37,7 @@ function jarPath = downloadGeneratorJar(version, options)
         if options.verbose
             fprintf("Downloading: %s\n", jarURL)
         end
+        if ~isfolder(options.destinationDir); mkdir(options.destinationDir); end
         websave(jarPath, jarURL, options.weboptions);
     end
 end
