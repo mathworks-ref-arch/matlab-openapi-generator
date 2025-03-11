@@ -1,6 +1,11 @@
 # MATLAB Generator *for OpenAPI*
 
-## Version 2.1.0 (February 25th 2024)
+## Version 2.1.1 (March 11th 2025)
+
+* Improved semantic version handling
+* Bug fix to setup download jar step
+
+## Version 2.1.0 (February 25th 2025)
 
 * Added support for generation based on a directory of several specs
 * Added optional GitLab integration

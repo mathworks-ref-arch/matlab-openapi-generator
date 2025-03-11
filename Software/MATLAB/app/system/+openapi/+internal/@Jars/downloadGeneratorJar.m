@@ -7,7 +7,7 @@ function jarPath = downloadGeneratorJar(version, options)
     % Example:
     %   jarPath = openapi.internal.Jars.downloadGeneratorJar("6.6.0")
 
-    %  (c) 2024 MathWorks, Inc.
+    %  (c) 2024-2025 MathWorks, Inc.
 
     arguments
         version string {mustBeTextScalar, mustBeNonzeroLengthText}
@@ -36,6 +36,14 @@ function jarPath = downloadGeneratorJar(version, options)
         jarPath = fullfile(options.destinationDir, queryFields(end));
         if options.verbose
             fprintf("Downloading: %s\n", jarURL)
+        end
+        if ~isfolder(options.destinationDir)
+            [status, msg] = mkdir(options.destinationDir);
+            if status ~= 1
+                error("Directory creation failed for: %s\nMessage: %s", options.destinationDir, msg);
+            else
+                fprintf("Created directory: %s\n", options.destinationDir);
+            end
         end
         websave(jarPath, jarURL, options.weboptions);
     end

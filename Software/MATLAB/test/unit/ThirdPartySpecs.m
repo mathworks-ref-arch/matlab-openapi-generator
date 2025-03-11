@@ -255,11 +255,11 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
 
         function testSnowflake(testCase)
             % This tests generates a client based on API specs for
-            % Snowflake. The Snowflake spec is spread across mulitple
+            % Snowflake. The Snowflake spec is spread across multiple
             % different files. This allows testing inputSpecRootDirectory.
             disp('Running testSnowflake');
             % Clone the Snowflake repo, this checkout a specific revision
-            % which has been verfied to not contain any issues in the spec
+            % which has been verified to not contain any issues in the spec
             % itself.
             tempSpec = tempname;
             mkdir(tempSpec)
