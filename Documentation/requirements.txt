@@ -1,6 +1,8 @@
-myst-parser==2.0.0
-Sphinx==6.2.1
-sphinx-rtd-theme==1.2.2
-sphinx_design==0.4.1
+myst-parser==4.0.1
+Sphinx==7.4.7
+sphinx-rtd-theme==3.0.2
+sphinx_design==0.6.1
 sphinx-copybutton==0.5.2
-sphinxcontrib-mermaid==0.9.2
+sphinxcontrib-mermaid==1.0.0
+sphinxcontrib-matlabdomain==0.22.1
+sphinx-new-tab-link==0.8.0

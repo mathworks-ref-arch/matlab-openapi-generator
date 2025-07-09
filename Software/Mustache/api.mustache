@@ -99,29 +99,7 @@ classdef {{classname}} < {{packageName}}.BaseClient
 
     {{#operation}}
         function [code, result, response] = {{operationId}}(obj{{#requiredParams}}{{^vendorExtensions.x-is-object-param}}, {{paramName}}{{/vendorExtensions.x-is-object-param}}{{/requiredParams}}{{#optionalParams}}{{#-first}}, optionals{{/-first}}{{/optionalParams}})
-            % {{operationId}} {{#summary}}{{{summary}}}{{/summary}}{{^summary}}No summary provided{{/summary}}
-            % {{#notes}}{{{.}}}{{/notes}}{{^notes}}No description provided{{/notes}}{{#externalDocs}}
-            %
-            % Online documentation: <a href="{{url}}">{{description}}</a>{{/externalDocs}}
-            %
-            % {{^requiredParams}}No required parameters{{/requiredParams}}{{#requiredParams}}{{#-first}}Required parameters:{{/-first}}{{^vendorExtensions.x-is-object-param}}
-            %   {{paramName}} - {{#description}}{{{.}}}{{/description}}{{^description}}No description provided{{/description}}, Type: {{dataType}}{{#dataFormat}}, Format: {{.}}{{/dataFormat}}{{>bodyrequiredoptional}}{{/vendorExtensions.x-is-object-param}}{{/requiredParams}}
-            %
-            % {{^optionalParams}}No optional parameters{{/optionalParams}}{{#optionalParams}}{{#-first}}Optional name-value parameters:{{/-first}}{{^vendorExtensions.x-is-object-param}}
-            %   {{paramName}} - {{#description}}{{{.}}}{{/description}}{{^description}}No description provided{{/description}}, Type: {{dataType}}{{#dataFormat}}, Format: {{.}}{{/dataFormat}}{{>bodyrequiredoptional}}{{/vendorExtensions.x-is-object-param}}{{/optionalParams}}
-            %
-            % Responses:
-            {{#responses}}
-            %   {{code}}: {{#message}}{{{message}}}{{/message}}
-            {{/responses}}
-            {{^responses}}
-            %    No response expected
-            {{/responses}}
-            %
-            % Returns: {{#isArray}}Array of {{/isArray}}{{#returnProperty.isFreeFormObject}}FreeFormObject{{/returnProperty.isFreeFormObject}}{{^returnProperty.isFreeFormObject}}{{returnBaseType}}{{/returnProperty.isFreeFormObject}}
-            %
-            % See Also: {{modelPackage}}.{{#returnProperty.isFreeFormObject}}FreeFormObject{{/returnProperty.isFreeFormObject}}{{^returnProperty.isFreeFormObject}}{{returnBaseType}}{{/returnProperty.isFreeFormObject}}
-
+            {{>operation_help_text}}
             arguments
               obj {{apiPackage}}.{{classname}}{{#requiredParams}}{{^vendorExtensions.x-is-object-param}}
               {{paramName}} {{>paramtype}}{{/vendorExtensions.x-is-object-param}}{{/requiredParams}}{{#optionalParams}}{{^vendorExtensions.x-is-object-param}}
@@ -180,7 +158,7 @@ classdef {{classname}} < {{packageName}}.BaseClient
             uri.EncodedPath = uri.EncodedPath + "{{path}}";
 
             {{^pathParams}}% No path parameters{{/pathParams}}{{#pathParams}}{{#-first}}% Substitute path parameters{{/-first}}
-            uri.Path(uri.Path == "{" + "{{baseName}}" +"}") = {{>paramName}};{{/pathParams}}
+            uri.Path = replace(uri.Path, "{" + "{{baseName}}" + "}", {{>paramName}});{{/pathParams}}
 
             {{^queryParams}}% No query parameters{{/queryParams}}{{#queryParams}}{{#-first}}% Set query parameters{{/-first}}{{#required}}
             uri.Query(end+1) = matlab.net.QueryParameter("{{baseName}}", {{>paramName}}{{#isCollectionFormatMulti}}, matlab.net.ArrayFormat.repeating{{/isCollectionFormatMulti}});{{/required}}{{^required}}

@@ -248,7 +248,9 @@ classdef (Abstract) BaseClient < handle & matlab.mixin.CustomDisplay
                     case 'cookies'
                         obj.cookies.load(settings.cookies.path);
                     otherwise
-                        obj.(f) = settings.(f);
+                        if isprop(obj, f)
+                            obj.(f) = settings.(f);
+                        end
                 end
             end
         end

@@ -22,7 +22,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['Airflow-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -49,7 +51,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Databricks', ['Jobs-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -76,7 +80,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             c.packageName = "Petstore";
@@ -102,7 +108,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'mlflow', ['mlflowAws-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -129,7 +137,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'mlflow', ['mlflowAzure-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -156,7 +166,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'mlflow', ['mlflowgeneric-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -183,7 +195,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Databricks', ['ClusterPolicy-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -210,7 +224,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Redis', ['Redis-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -237,7 +253,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Redis', ['Redis-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;
@@ -279,7 +297,9 @@ classdef ThirdPartySpecs < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', 'Snowflake', ['Snowflake-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
 
             c = openapi.build.Client;

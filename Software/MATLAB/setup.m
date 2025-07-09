@@ -5,7 +5,7 @@ function setup(options)
     %
     % A named argument: generatorVersion can be provided to request a
     % specific version of the OpenAPI Tools generator be used.
-    % The default is defined in Software/Java/pom.xml, e.g. "7.1.0".
+    % The default is defined in Software/Java/pom.xml, e.g. "7.13.0".
     % This is the recommended version.
     %
     % If an alternative version is used the MATLAB specific generator
@@ -13,7 +13,7 @@ function setup(options)
     %
     % Optional named arguments:
     %   generatorVersion  A string representing the version of the OpenAPI Tools
-    %                     generator jar package, e.g.:  "7.10.0"
+    %                     generator jar package, e.g.:  "7.13.0"
     %
     %            verbose  A logical flag to enable additional output.
     %                     The default is true.
@@ -26,6 +26,10 @@ function setup(options)
     end
 
     startup(setup=true);
+
+    warning("openapi:setup:deprecated","Note that it is no longer necessary to run this setup function.\n" + ...
+            "The required JAR-file is now downloaded as part of the Maven build process.\n" + ...
+            "This function may be removed in future versions of the package.")
 
     printBanner("MATLAB Generator for OpenAPI setup");
     fprintf("\n");
@@ -84,7 +88,7 @@ function tf = checkMATLABJar(options)
         options.verbose (1,1) logical = true
     end
 
-    jarName = "MATLABClientCodegen-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
+    jarName = "MATLAB-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
     jarPath = fullfile(openapiRoot('lib', 'jar'), jarName);
     if ~isfile(jarPath)
         fprintf(2, 'Required MATLAB generator jar file not found:\n  %s\nFor build instructions see: %s\n',...

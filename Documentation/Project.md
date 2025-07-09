@@ -5,7 +5,7 @@ quickly generate a client for a given spec and optional store the results in
 GitLab™. This can provide a quick starting point for more specific customization
 of a client.
 
-## Example
+## Examples
 
 By default a project name and a spec path or URL are sufficient to create a project.
 
@@ -13,6 +13,13 @@ By default a project name and a spec path or URL are sufficient to create a proj
 projectBaseName = "GitLab"
 spec = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/api/openapi/openapi.yaml"
 p = openapi.auto.Project(projectBaseName, spec)
+```
+
+```matlab
+projectBaseName = "GitLab"
+spec = "c:\openapi\openapi.yaml"
+clientArgs = {"copyrightNotice", " (c) 2025 Example.com"}
+p = openapi.auto.Project(projectBaseName, spec, additionalClientArguments=clientArgs)
 ```
 
 > Use `doc openapi.auto.Project` for a description to the supported optional arguments.

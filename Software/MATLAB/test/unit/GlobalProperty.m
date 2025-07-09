@@ -7,7 +7,7 @@ classdef GlobalProperty < matlab.unittest.TestCase
 
     methods (TestClassSetup)
     end
-
+    
     methods (Test)
         function testModelsOnly(testCase)
             disp('Running testModelsOnly');
@@ -15,7 +15,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             gp = containers.Map({'models'},{''});
@@ -42,7 +44,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             c.globalProperty = containers.Map({'apis'},{""}); % Generate only apis
@@ -61,7 +65,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             gp = containers.Map({'models', 'apis'},{'', ''});
@@ -87,7 +93,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             c.globalProperty = containers.Map({'models','supportingFiles'},{'', ''}); % Generate models and supporting files
@@ -106,7 +114,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             c.globalProperty = containers.Map({'models'},{"User:Pet"});      % Generate the User and Pet models only
@@ -125,7 +135,9 @@ classdef GlobalProperty < matlab.unittest.TestCase
                 tmpFolder = fullfile(tempdir, 'OpenAPITests', ['PetStore-', char(datetime('now', 'Format','yyyyMMdd''T''HHmmss'))]);
                 fprintf("Saving output to: %s\n", tmpFolder);
             else
-                tmpFolder = createTemporaryFolder(testCase);
+                tmpFolder = tempname;
+                mkdir(tmpFolder);
+                oc = onCleanup(@()rmdir(tmpFolder,"s"));
             end
             c = openapi.build.Client;
             c.globalProperty = containers.Map({'skipFormModel'}, {"false"});    % Generate for OAS3 and ver < v5.x using the form parameters in "requestBody"

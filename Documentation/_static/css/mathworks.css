@@ -1,5 +1,8 @@
 /* Customizations */
-/* Copyright (c) 2020 MathWorks, Inc. */
+/* Copyright (c) 2020-2023 MathWorks, Inc. */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 div.wy-side-nav-search {
   background-color: #0076a8;
 }
@@ -12,52 +15,95 @@ h1 {
     background-position: right bottom;
     background-repeat: no-repeat;
     background-size: 58px;
-    color: #c45400;
-    font: normal normal 22px/1.136 Arial,Helvetica,sans-serif;
+    color: #c05708;
+    font-weight: 400;
+    font-family: "Roboto",sans-serif;
 }
 
-articleBody span.caption-text {
+.h2,h2 {
     padding-top: 5px;
     margin-bottom: 8px;
     color: #404040;
-    font: normal bold 17px/1.35 Arial, Helvetica, sans-serif;
+    font-weight: 700;
     border-bottom: 1px solid #ccc;
+    font-family: "Roboto",sans-serif;
 }
 
-h2, .h2 {
+.h3,h3 {
     padding-top: 5px;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+    color: #c05708;
+    font-weight: 700;
+    border-bottom: none;
+    font-family: "Roboto",sans-serif;
+}
+
+.h4,h4 {
+    padding-top: 5px;
+    margin-bottom: 5px;
+    color: #3c3c3c;
+    font-weight: 700;
+    font-family: "Roboto",sans-serif;
+}
+
+.h5,h5 {
+    margin-bottom: 0;
+    color: #3c3c3c;
+    font-weight: 400;
+    font-family: "Roboto",sans-serif;
+}
+
+.h6,h6 {
     margin-bottom: 8px;
-    color: #404040;
-    font: normal bold 17px/1.35 Arial, Helvetica, sans-serif;
-    border-bottom: 1px solid #ccc;
+    font-style: italic;
+    font-weight: 400;
+    font-family: "Roboto",sans-serif;
 }
 
-h3 {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font: normal bold 16px/1.35 Arial, Helvetica, sans-serif;
-    font-weight: bold;
+h2+h3 {
+    margin-top: 0;
+    color: #c05708
 }
 
-h4 {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font: normal bold 15px/1.35 Arial, Helvetica, sans-serif;
-    font-weight: bold;
+body, p, html.writer-html5 .rst-content table.docutils td>p,html.writer-html5 .rst-content table.docutils th>p {
+    font-family: "Roboto","Lato",sans-serif;
+    color: #212121;
 }
 
-/*
-body {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #333;
-    background-color: #fff;
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: normal;
 }
-*/
+
+.wy-table-responsive {
+    margin-bottom: 24px;
+    max-width: 100%;
+    overflow: visible;
+}
+
+.wy-nav-content {
+    min-width: 100%;
+    width: 100%;
+}
+
+.wy-nav-content a {
+    color: #0076a8;
+}
+
+.wy-nav-content a:hover {
+    text-decoration: underline;
+    color: #004b87;
+}
+
+.wy-nav-content a:visited {
+    color: #004b87;
+    text-decoration: none
+}
+
+.rst-content code, .rst-content tt, code {
+    font-size: 90%;
+}
+
+.rst-content div[class^=highlight] pre {
+    font-size: 14.4px;
+}

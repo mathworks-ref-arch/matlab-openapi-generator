@@ -1,5 +1,30 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 3.0.0 (July 9th 2025)
+
+* **Breaking Change**: The MATLAB Client Generator previously named `MATLAB` was renamed to `matlab-client` (this brings the MATLAB Client generator better in line with other OpenAPI generator names, which by convention are in  kebab-case, and makes a clearer distinction between the Client generator and the newly introduced Server generator which is named `matlab-server`). When generating clients using `openapi.build.Client` inside MATLAB, no changes are required, the builder has been updated to reflect this change. However, if calling generator from the command line using `npx @openapitools/openapi-generator-cli` (or by invoking the generator through `java` directly) make sure to update the command line arguments, replace `-g MATLAB` (or `--generator MATLAB`) with `-g matlab-client` (or `--generator matlab-client`).
+
+* **Breaking Change**:  The name of the MATLAB Generator JAR-file was changed from `MATLABClientCodegen-openapi-generator-0.0.1.jar` to `MATLAB-openapi-generator-3.0.0.jar` to better reflect the version of the generator and to reflect that it no longer supports generating clients only; it now also supports server stub generation. When generating clients using `openapi.build.Client` inside MATLAB, no changes are required, the builder has been updated to reflect this change. However, if calling generator from the command line using `npx` make sure to update the `--custom-generator` command line arguments.
+
+* **Major New Feature**: Added a MATLAB server generator `matlab-server`. It generates skeleton code which is designed to be deployed to [MATLAB Production Server](https://www.mathworks.com/help/compiler_sdk/mps.html) or as [Microservice](https://www.mathworks.com/help/compiler_sdk/microservice.html) and makes use of the [Custom Routes and Payloads](https://www.mathworks.com/help/mps/custom-routes-and-payloads.html) feature.
+
+* Updated listed system requirements for the client generator to MATLAB R2021a or newer. Previous versions of the package accidentally _incorrectly_ listed R2020b as minimum supported version. This is not necessarily a breaking change in this particular package update since older versions of the package were already not (fully) compatible with MATLAB R2020b. Note that the server generator supports release R2023b or newer as it depends on various newer MATLAB Production Server and MATLAB features.
+
+* When `JAVA_HOME` is set `openapi.build.Client` and `openapi.build.Server` now specifically use `java` from the specified `JAVA_HOME`. I.e. if `JAVA_HOME` is set, `fullfile(getenv("JAVA_HOME"),"bin","java")` is called whenever `java` needs to run. If `JAVA_HOME` is unset, they simply continue to call `java` (which requires `java` to be on the `PATH`).
+
+* It is no longer necessary to run `setup` to download the OpenAPI Generator CLI JAR-file (or to manually download it). The required JAR-file is now downloaded by Maven as part of the build process of the MATLAB Generator JAR-file. `setup` is still provided for backwards compatibility but may be removed in future versions of the package.
+
+* The Maven Java build is no longer configured to specifically build the Java code as _Java 11 binaries_. Instead it simply allows the compiler to use its own default binary target. This for example enables support for Java 21 (which actually no longer supports producing Java 11 binaries). Note that the minimum supported Java version is still Java 11.
+
+* Updated default generator Java library to v7.13.0.
+
+* Publishing HTML rendered version of the package documentation to GitHub pages.
+
+## Version 2.1.2 (March 18th 2025)
+
+* Added support for path entries with subfields e.g. /{name}:myaction
+* Allow JSON settings file to have entries that are not base client properties
+
 ## Version 2.1.1 (March 11th 2025)
 
 * Improved semantic version handling

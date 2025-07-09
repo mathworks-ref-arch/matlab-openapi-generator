@@ -19,8 +19,8 @@ function startup(options)
 
     printBanner('MATLAB Generator for OpenAPI');
 
-    if verLessThan('matlab','9.9') %#ok<VERLESSMATLAB>
-        error('openapi:version','MATLAB Release R2020b or newer is required');
+    if verLessThan('matlab','9.10') %#ok<VERLESSMATLAB>
+        error('openapi:version','MATLAB Release R2021a or newer is required');
     end
 
     if options.setup
@@ -78,7 +78,7 @@ function tf = checkMATLABJar(options)
         options.verbose (1,1) logical = true
     end
 
-    jarName = "MATLABClientCodegen-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
+    jarName = "MATLAB-openapi-generator-" + openapi.internal.utils.getMATLABJarVersion() + ".jar";
     jarPath = fullfile(openapiRoot('lib', 'jar'), jarName);
     if ~isfile(jarPath)
         fprintf(2, 'Required MATLAB generator jar file not found:\n  %s\nFor build instructions see: %s\n',...

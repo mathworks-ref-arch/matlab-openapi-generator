@@ -117,7 +117,10 @@ function [tf, reportOut] = verifyPackage(directory, options)
                     if strcmpi(options.mode, "nonStrict")
                         % Tolerable case for non strict
                         % Don't set tf to true so as to not overwrite a previous problem
-                        if strcmp(releaseInfo.Release, 'R2023a') && contains(report(m).message, "'empty' is referenced but is not a property, method, or event name defined in this class.")
+                        if verLessThan('matlab','9.12') && contains(report(m).message, "If you intend to specify expression precedence, use parentheses () instead of brackets [].")
+                            fprintf('Ignoring known issue in R2021a/b linting, line: %d\n', report(m).line);
+                            NignoredMessages = NignoredMessages + 1;
+                        elseif strcmp(releaseInfo.Release, 'R2023a') && contains(report(m).message, "'empty' is referenced but is not a property, method, or event name defined in this class.")
                             fprintf('Ignoring known issue in R2023a linting, line: %d\n', report(m).line);
                             NignoredMessages = NignoredMessages + 1;
                         elseif contains(report(m).message, "A Code Analyzer message was once suppressed here, but the message is no longer generated.")

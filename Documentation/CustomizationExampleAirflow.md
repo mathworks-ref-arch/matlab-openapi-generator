@@ -40,7 +40,7 @@ To accomplish this, two main changes are needed:
 
 ## Type Mapping
 
-Adding the type mapping is easy. In `MATLABClientCodegenGenerator.java` there already is a `typeMapping` map with various types in it, and we just have to add one more:
+Adding the type mapping is easy. In `MATLABCodegen.java` there already is a `typeMapping` map with various types in it, and we just have to add one more:
 
 ```diff
      typeMapping.put("DateTime", "datetime");
@@ -78,7 +78,7 @@ Now, there are two more things we need to do, to make this modified template wor
 
 2.  We need to add property `vendorExtensions.x-isUnzonedTime` = `true`.
 
-This can be accomplished in the `postProcessModelProperty` method of `MATLABClientCodegenGenerator.java`:
+This can be accomplished in the `postProcessModelProperty` method of `MATLABCodegen.java`:
 
 ```diff
    @Override
@@ -100,4 +100,4 @@ This can be accomplished in the `postProcessModelProperty` method of `MATLABClie
 
 Finally, [recompile the JAR-file](GettingStarted.md#building-matlab-code-generation-jar) and then [generate the MATLAB code](GettingStarted.md#building-matlab-client-code) using this modified generator.
 
-[//]: #  (Copyright 2023 The MathWorks, Inc.)
+[//]: #  (Copyright 2023-2025 The MathWorks, Inc.)

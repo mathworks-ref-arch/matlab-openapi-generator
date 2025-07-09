@@ -1,0 +1,22 @@
+% {{operationId}} {{#summary}}{{{summary}}}{{/summary}}{{^summary}}No summary provided{{/summary}}
+            % {{#notes}}{{{.}}}{{/notes}}{{^notes}}No description provided{{/notes}}{{#externalDocs}}
+            %
+            % Online documentation: <a href="{{url}}">{{description}}</a>{{/externalDocs}}
+            %
+            % {{^requiredParams}}No required parameters{{/requiredParams}}{{#requiredParams}}{{#-first}}Required parameters:{{/-first}}{{^vendorExtensions.x-is-object-param}}
+            %   {{paramName}} - {{#description}}{{{.}}}{{/description}}{{^description}}No description provided{{/description}}, Type: {{dataType}}{{#dataFormat}}, Format: {{.}}{{/dataFormat}}{{>bodyrequiredoptional}}{{/vendorExtensions.x-is-object-param}}{{/requiredParams}}
+            %
+            % {{^optionalParams}}No optional parameters{{/optionalParams}}{{#optionalParams}}{{#-first}}Optional name-value parameters:{{/-first}}{{^vendorExtensions.x-is-object-param}}
+            %   {{paramName}} - {{#description}}{{{.}}}{{/description}}{{^description}}No description provided{{/description}}, Type: {{dataType}}{{#dataFormat}}, Format: {{.}}{{/dataFormat}}{{>bodyrequiredoptional}}{{/vendorExtensions.x-is-object-param}}{{/optionalParams}}
+            %
+            % Responses:
+            {{#responses}}
+            %   {{code}}: {{#message}}{{{message}}}{{/message}}
+            {{/responses}}
+            {{^responses}}
+            %    No response expected
+            {{/responses}}
+            %
+            % Returns: {{#isArray}}Array of {{/isArray}}{{#returnProperty.isFreeFormObject}}FreeFormObject{{/returnProperty.isFreeFormObject}}{{^returnProperty.isFreeFormObject}}{{returnBaseType}}{{/returnProperty.isFreeFormObject}}
+            %
+            % See Also: {{modelPackage}}.{{#returnProperty.isFreeFormObject}}FreeFormObject{{/returnProperty.isFreeFormObject}}{{^returnProperty.isFreeFormObject}}{{returnBaseType}}{{/returnProperty.isFreeFormObject}}

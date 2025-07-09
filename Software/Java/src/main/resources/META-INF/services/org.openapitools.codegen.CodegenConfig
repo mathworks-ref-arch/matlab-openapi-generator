@@ -1,1 +1,2 @@
-com.mathworks.codegen.MATLABClientCodegenGenerator
+com.mathworks.codegen.MATLABClientCodegen
+com.mathworks.codegen.MatlabServerCodegen

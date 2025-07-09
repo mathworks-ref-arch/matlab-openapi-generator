@@ -2,7 +2,7 @@ classdef Project < handle
     % Project Class to represent a project to be created using the OpenAPI
     % generator and populated into a git repository.
     % Currently only GitLab is supported
-    % 
+    %
     % Required arguments:
     %   projectShortName :  A short name for the project ideally a single
     %                       word. This name is optionally used to create
@@ -18,7 +18,7 @@ classdef Project < handle
     %                       default this value is a lowercase normalized
     %                       version of the projectShortName.
     %
-    %   projectFullName :   A longer name for the project, by default 
+    %   projectFullName :   A longer name for the project, by default
     %                       "MATLAB interface for [projectShortName]" is used.
     %   outputDirectory: An alternative output directory.
     %
@@ -51,12 +51,17 @@ classdef Project < handle
     %                   to false HTTPS is used, the default is true.
     %
     %
-    % Example:
+    % Examples:
     %   projectBaseName = "GitLab"
     %   spec = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/api/openapi/openapi.yaml"
     %   p = openapi.auto.Project(projectBaseName, spec)
+    %
+    %   projectBaseName = "GitLab"
+    %   spec = "c:\openapi\openapi.yaml"
+    %   clientArgs = {"copyrightNotice", " (c) 2025 Example.com"}
+    %   p = openapi.auto.Project(projectBaseName, spec, additionalClientArguments=clientArgs)
 
-    %  2024 MathWorks, Inc.
+    %  (c) 2024-2025 MathWorks, Inc.
 
     properties
         projectFullName string    % e.g. MATLAB interface for Birds
@@ -156,7 +161,7 @@ classdef Project < handle
             elseif options.createGitRepo
                 gitCreateTf = obj.createLocalGitRepo(); %#ok<NASGU>
             end
-            
+
             fprintf("Project creation complete\n");
             fprintf("Local path: %s\n", obj.path);
             fprintf("To start run: %s\n\n", fullfile(obj.path, "Software", "MATLAB", "startup.m"));
@@ -171,7 +176,7 @@ classdef Project < handle
 
             % Assume failure
             gitLabCreateTf = false;
-            
+
             [gitLabCreateProjectTf, gitlabResponse] = obj.createGitLabProjectAPICall();
             if ~gitLabCreateProjectTf
                 if isfield(gitlabResponse.Body.Data, "message") && isstruct(gitlabResponse.Body.Data.message) > 0 && ...
@@ -186,7 +191,7 @@ classdef Project < handle
                 if (isfield(gitlabResponse.Body.Data, "web_url") && strlength(gitlabResponse.Body.Data.web_url) > 0) &&...
                         (isfield(gitlabResponse.Body.Data, "ssh_url_to_repo") && strlength(gitlabResponse.Body.Data.ssh_url_to_repo) > 0) &&...
                         (isfield(gitlabResponse.Body.Data, "http_url_to_repo") && strlength(gitlabResponse.Body.Data.http_url_to_repo) > 0)
-                    
+
                     % Create a local repo to push to the project
                     gitCreateTf = obj.createLocalGitRepo();
                     if ~gitCreateTf
@@ -233,7 +238,7 @@ classdef Project < handle
                 pathFields = split(options.path, "/");
                 for n = 1:numel(pathFields)
                     endPoint.Path(end+1) = pathFields(n);
-                end                
+                end
             else
                 if isfield(obj.settings, "gitLabUsername") &&...
                         (ischar(obj.settings.gitLabUsername) || isStringScalar(obj.settings.gitLabUsername)) &&...
@@ -259,9 +264,9 @@ classdef Project < handle
             end
 
             if isfield(obj.settings, "gitLabEndpoint") &&...
-                (ischar(obj.settings.gitLabEndpoint) || isStringScalar(obj.settings.gitLabEndpoint)) &&...
-                strlength(obj.settings.gitLabEndpoint) > 0
-            
+                    (ischar(obj.settings.gitLabEndpoint) || isStringScalar(obj.settings.gitLabEndpoint)) &&...
+                    strlength(obj.settings.gitLabEndpoint) > 0
+
                 endPoint = matlab.net.URI(obj.settings.gitLabEndpoint);
                 url = "git@" + string(endPoint.EncodedAuthority) + ":";
             else
@@ -339,7 +344,7 @@ classdef Project < handle
                 fprintf(2, "git commit failed\n");
                 return;
             end
-            
+
             tf = true;
             fprintf("Local Git repository creation complete\n");
         end
@@ -356,7 +361,7 @@ classdef Project < handle
                 options.webURL string {mustBeTextScalar, mustBeNonzeroLengthText} = obj.getDefaultGitLabSSHURL
                 options.useSSH (1,1) logical = true
             end
-            
+
             tf = false;
             if ~isunix
                 fprintf("Automatic upload is currently enabled on Linux and macOS\n");
@@ -366,7 +371,7 @@ classdef Project < handle
             end
 
             fprintf("Uploading project directory: %s to:\n    %s\n", obj.path, options.webURL);
-            
+
             % Repo already init'd
             % % Consider MATLAB's built in git init in >=24a (g3389057)
             % cmd = sprintf("cd %s;   git init --initial-branch=main", obj.path);
@@ -375,7 +380,7 @@ classdef Project < handle
             %     fprintf(2, "git init failed, skipping upload\n");
             %     return;
             % end
-            
+
             if options.useSSH
                 cmd = sprintf("cd %s; git remote add origin %s", obj.path, options.sshURL);
             else
@@ -412,7 +417,7 @@ classdef Project < handle
             tf = true;
             fprintf("Upload to GitLab complete\n");
         end
-        
+
 
         function addDocumentationDir(obj)
             % addDocumentationDir Creates top-level Documentation directory in the project
@@ -474,12 +479,26 @@ classdef Project < handle
 
             client.output = fullfile(obj.path, "Software", "MATLAB", "app", "system");
 
-            if isfield(options, "additionalClientArguments")
-                client.additionalArguments = options.additionalClientArguments;
-            end
-
             if isfield(obj.settings, "copyrightNotice")
                 client.copyrightNotice = sprintf("%% (c) %d %s", year(datetime("now")), obj.settings.copyrightNotice);
+            end
+
+            if isfield(options, "additionalClientArguments")
+                if mod(numel(options.additionalClientArguments), 2) ~= 0
+                    fprintf(2, "Expected additionalClientArguments to be a cell array of key value pairs.\n");
+                else
+                    for n = 1:2:numel(options.additionalClientArguments)
+                        if ~isprop(client, options.additionalClientArguments{n})
+                            if ischar(options.additionalClientArguments{n}) || isStringScalar(options.additionalClientArguments{n})
+                                fprintf(2, "additionalClientArguments client property not found: %s\n", options.additionalClientArguments{n});
+                            else
+                                fprintf(2, "additionalClientArguments client property not found, position: %d\n", n);
+                            end
+                        else
+                            client.(options.additionalClientArguments{n}) = options.additionalClientArguments{n+1};
+                        end
+                    end
+                end
             end
         end
 
@@ -564,8 +583,8 @@ classdef Project < handle
             if startsWith(inputSpec, "http")
                 specURL = matlab.net.URI(inputSpec);
                 filename = specURL.Path(end);
-                if ~(endsWith(lower(filename), ".json") || endsWith(lower(filename), ".yaml"))
-                    fprintf(2, "Warning, spec file not of type .json or .yaml: %s", specURL.EncodedURI);
+                if ~(endsWith(lower(filename), ".json") || endsWith(lower(filename), ".yaml") || endsWith(lower(filename), ".yml"))
+                    fprintf(2, "Warning, spec file not of type .json, .yml or .yaml: %s", specURL.EncodedURI);
                 end
                 localSpec = fullfile(openAPIDir, filename);
                 websave(localSpec, inputSpec);
@@ -662,7 +681,7 @@ classdef Project < handle
                 fprintf("Writing top level README.md\n");
                 fprintf(fid, "# %s\n\n", obj.projectFullName);
                 fprintf(fid, "## Requirements\n\n");
-                fprintf(fid, "* MATLAB R2020b or later\n\n");
+                fprintf(fid, "* MATLAB R2021a or later\n\n");
                 fprintf(fid, "## Introduction\n\n");
                 fprintf(fid, "## Documentation\n\n");
                 fprintf(fid, "Please see the `Documentation` directory for more information\n\n");
@@ -679,7 +698,7 @@ classdef Project < handle
 
         function addReleasenotes(obj, version)
             % addReleasenotes Adds a top-level RELEASENOTES.md file with an initial entry
-            
+
             arguments
                 obj (1,1) openapi.auto.Project
                 version string {mustBeTextScalar, mustBeNonzeroLengthText}

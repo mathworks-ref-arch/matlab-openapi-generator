@@ -18,7 +18,7 @@
 
 # -- Project information -----------------------------------------------------
 project = u'MATLAB Generator for OpenAPI'
-copyright = u'2022, MathWorks, Inc.'
+copyright = u'2022-2025, MathWorks, Inc.'
 author = u'MathWorks'
 
 # The short X.Y version
@@ -36,11 +36,20 @@ release = u''
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['myst_parser', 'sphinx_rtd_theme', 'sphinx_design', 'sphinx_copybutton', 'sphinxcontrib.mermaid']
+extensions = ['myst_parser', 'sphinx_rtd_theme', 'sphinx_design', 'sphinx_copybutton', 'sphinxcontrib.mermaid','sphinxcontrib.matlab','sphinx.ext.intersphinx','sphinx_new_tab_link']
+primary_domain = "mat"
+intersphinx_mapping =  {
+    'matlab': ("https://www.mathworks.com/help/releases/R2025a/matlab", "mathworks/matlab.inv"),
+    'compiler': ("https://www.mathworks.com/help/releases/R2025a/compiler", "mathworks/compiler.inv"),
+    'compiler_sdk': ("https://www.mathworks.com/help/releases/R2025a/compiler_sdk", "mathworks/compiler_sdk.inv")
+}
+add_function_parentheses = False
+
+copybutton_exclude = '.linenos, .gp'
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #

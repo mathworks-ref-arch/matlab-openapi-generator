@@ -38,7 +38,7 @@ c.build;
 Additional builder properties can be used to set non default properties:
 
 * templateDir: set the path to the Mustache files, e.g. if providing a customized version of those provided with the package.
-* jarPath: set the path to an alternative jar file, the default is `Software/MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar`.
+* jarPath: set the path to an alternative jar file, the default is `Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar`.
 
 See [Generator Configuration Options](./Options.md) for a complete overview of all options.
 
@@ -177,7 +177,7 @@ The following commands show how a MATLAB client can be generated from a given sp
 # Change to the packages software directory
 cd <package_dir>/Software
 
-npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar generate -g MATLAB -i http://localhost:3000/api-json -o TestClient --package-name Test
+npx @openapitools/openapi-generator-cli --custom-generator MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar generate -g matlab-client -i http://localhost:3000/api-json -o TestClient --package-name Test
 ```
 
 If not working in the package's `Software` directory, use full paths and add the following additional arguments:

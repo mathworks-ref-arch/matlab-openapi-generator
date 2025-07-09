@@ -1,4 +1,4 @@
-# Generator Configuration Options
+# Client Generator Configuration Options
 
 There are various options which must be passed to the generator, for example to specify which OpenAPI to generate a client for. And there are additional optional options to customize the behavior of the generator. The following page gives a complete overview of all options and how these can be specified:
 
@@ -72,10 +72,10 @@ Example:
 % Set the property after initialization
 client = openapi.build.Client();
 % Only if necessary, normally the default value is correct
-client.templateDir = "/some/alternative/location/MATLABClientCodegen-openapi-generator-0.0.1.jar";
+client.templateDir = "/some/alternative/location/MATLAB-openapi-generator-3.0.0.jar";
 
 % Or, set during initialization
-client = openapi.build.Client(templateDir="/some/alternative/location/MATLABClientCodegen-openapi-generator-0.0.1.jar")
+client = openapi.build.Client(templateDir="/some/alternative/location/MATLAB-openapi-generator-3.0.0.jar")
 ```
 
 ````
@@ -94,7 +94,7 @@ Specified through the `--custom-generator` parameter
 Example:
 
 ```console
-npx @openapitools/openapi-generator-cli generate ... --custom-generator /some/location/Software/MATLAB/lib/jar/MATLABClientCodegen-openapi-generator-0.0.1.jar
+npx @openapitools/openapi-generator-cli generate ... --custom-generator /some/location/Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar
 ```
 ````
 `````
@@ -139,7 +139,7 @@ Specified through the `-g` parameter
 Example:
 
 ```console
-npx @openapitools/openapi-generator-cli generate ... -g MATLAB
+npx @openapitools/openapi-generator-cli generate ... -g matlab-client
 ```
 ````
 `````

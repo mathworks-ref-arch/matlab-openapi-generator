@@ -1,4 +1,4 @@
-# Customizing Generated Code
+# Customizing Generated Client Code
 
 After the MATLAB code has been generated it may be necessary to customize the generated code. The following describes tips to help in doing so and typical points within the generated code where modifications might be made.
 

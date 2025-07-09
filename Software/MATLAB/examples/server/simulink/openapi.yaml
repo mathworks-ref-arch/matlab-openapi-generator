@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: MATLAB Simulation Server
+  description: Run simulations of various Simulink models
+  version: 0.1.0
+
+servers:
+  - url: http://localhost:9910/openapi-example
+    description: Local Testing MATLAB Production Server
+
+paths:
+  /sim/mass-spring-damper:
+    post:
+      operationId: SimMassSpringDamper
+      tags: [Simulation]
+      summary: Mass Spring Damper Model
+      description: |
+        Run a simulation of the following Simulink Model:
+
+        ![](https://www.mathworks.com/help/examples/simulinkcompiler/win64/DeployingASimulationAppUsingSimulinkCompilerExample_01.png)
+
+        The mass-spring-damper model consists of discrete mass nodes distributed 
+        throughout an object and interconnected via a network of springs and dampers. 
+        This model is well-suited for modeling object with complex material 
+        properties such as non-linearity and elasticity.
+
+        The model is parameterized using the following four tunable parameters which can be specified in the API call:
+        * Mass - `m`.
+        * Spring stiffness - `k`.
+        * Damping - `b`.
+        * Initial position - `x0`.
+
+        The model has an `External Force` input signal. The input signal can be randomly generated as part of the simulation run.
+        Alternatively, it is possible to provide an exact input signal as part of the API request.
+
+        The model has two actual outputs `Position` and `Velocity` and since `Acceleration` is logged, it is returned as well. Further,
+        when working with a randomly generated input signal, the input signal which was generated is returned as well.
+
+        Finally, it is possible to specify the stop time of the model.
+      requestBody:
+        required: true
+        description: Request Body for Simulating the mass spring damper model
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MassSpringDamperRequest"
+      responses:
+        "200":
+          description: Results of the simulation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MassSpringDamperResponse"
+        "400":
+          description: The operations was called incorrectly by the client
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: An error occurred in the MATLAB code or simulation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    MassSpringDamperRequest:
+      description: Request body for the Mass Spring Damper Model
+      type: object
+      properties:
+        parameters:
+          $ref: "#/components/schemas/MassSpringDamperParameters"
+        inputs:
+          $ref: "#/components/schemas/MassSpringDamperInput"
+        stopTime:
+          description: Simulate the model until this specified stop time
+          default: 20
+          type: number
+          format: double
+      required:
+        - parameters
+        - inputs
+    MassSpringDamperParameters:
+      description: Tunable Parameters for the Mass Spring Damper Model
+      type: object
+      properties:
+        m:
+          description: mass (kg)
+          type: number
+          format: double
+        k:
+          description: Stiffness (N/m)
+          type: number
+          format: double
+        b:
+          description: Damping (N/m/s)
+          type: number
+          format: double
+        x0:
+          description: Initial Position (m)
+          default: 0
+          type: number
+          format: double
+      required:
+        - m
+        - k
+        - b
+    MassSpringDamperInput:
+      description: Model Input Signal for the Mass Spring Damper Model
+      type: object
+      properties:
+        inputType:
+          type: string
+      required:
+        - inputType
+      discriminator:
+        propertyName: inputType
+    MassSpringDamperRandomInput:
+      description: Parameters for generating a random input signal for the Mass Spring Damper Model
+      allOf:
+        - $ref: "#/components/schemas/MassSpringDamperInput"
+        - type: object
+          properties:
+            maxMagnitude:
+              description: Max maxMagnitude (N)
+              type: number
+              format: double
+            inputChangeInterval:
+              description: Input Change Interval (s)
+              type: number
+              format: double
+            seed:
+              description: Random Stream Seed
+              default: 0
+              type: number
+              format: double
+          required:
+            - maxMagnitude
+            - inputChangeInterval
+    MassSpringDamperExactInput:
+      description: An exact model input signal for the Mass Spring Damper Model
+      allOf:
+        - $ref: "#/components/schemas/MassSpringDamperInput"
+        - type: object
+          properties:
+            F:
+              description: Force (N)
+              $ref: "#/components/schemas/SimulinkTimeSeries"
+          required:
+            - t
+            - F
+    SimulinkTimeSeries:
+      description: |
+        A Simulink Signal specified in the form of a Time vector specifying at which exact points in time the samples are specified
+        and a Data vector representing the signal samples at the specified times.
+      type: object
+      properties:
+        Time:
+          description: Time values
+          type: array
+          items:
+            type: number
+            format: double
+        Data:
+          description: Sample data
+          type: array
+          items:
+            type: number
+            format: double
+    MassSpringDamperResponse:
+      description: Output signals of the model and if a randomly generated input signal was used, also the input signal
+      type: object
+      properties:
+        F:
+          description: Input force (only returned if working with a randomly generated input)
+          $ref: "#/components/schemas/SimulinkTimeSeries"
+        a:
+          description: Acceleration
+          $ref: "#/components/schemas/SimulinkTimeSeries"
+        v:
+          description: Velocity
+          $ref: "#/components/schemas/SimulinkTimeSeries"
+        x:
+          description: Position
+          $ref: "#/components/schemas/SimulinkTimeSeries"
+      required:
+        - a
+        - v
+        - x
+    ErrorResponse:
+      description: An object containing the error message if an error has occurred
+      type: object
+      properties:
+        error_message:
+          type: string
+
+

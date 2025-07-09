@@ -3,17 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openapitools</groupId>
-    <artifactId>MATLABClientCodegen-openapi-generator</artifactId>
+    <artifactId>MATLAB-openapi-generator</artifactId>
     <packaging>jar</packaging>
-    <name>MATLABClientCodegen-openapi-generator</name>
-    <version>0.0.1</version>
+    <name>MATLAB-openapi-generator</name>
+    <version>3.0.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openapi-generator-version>7.10.0</openapi-generator-version>
-         <!--<maven-plugin-version>1.0.0</maven-plugin-version>-->
+        <openapi-generator-version>7.13.0</openapi-generator-version>
         <junit-version>4.13.2</junit-version>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <build>
         <plugins>
@@ -110,10 +107,30 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <!-- <source>1.8</source>
-                    <target>1.8</target> -->
-                    <release>11</release>
+
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.openapitools</groupId>
+                                    <artifactId>openapi-generator-cli</artifactId>
+                                    <version>${openapi-generator-version}</version>
+                                    <outputDirectory>../MATLAB/lib/jar</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

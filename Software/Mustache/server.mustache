@@ -1,0 +1,52 @@
+{{! Copyright notice should not propagate to generated code, as it applies to this mustache file}}
+{{! Copyright 2025 The MathWorks, Inc.}}
+function response = server(request)
+    persistent app
+    if isempty(app)
+        % If it has not been set yet (i.e. on the first run), create the
+        % instance
+        app = mws.Application();
+        
+        % Add the actual routes for the API
+        {{#apiInfo}}
+        {{#apis}}
+        %% {{classname}}
+        % {{{operationTagDescription}}}
+        {{#operations}}
+        {{#operation}}
+        app.{{vendorExtensions.x-matlab-method}}("{{basePathWithoutHost}}{{path}}",@{{apiPackage}}.{{classname}}.{{operationId}});
+        {{/operation}}
+        {{/operations}}
+        {{/apis}}
+        {{/apiInfo}}
+
+        % Add an endpoint which also simply serves the OpenAPI spec
+        app.get("{{basePathWithoutHost}}/openapi{format}",@openApiSpec);
+
+        % Optional, add a SwaggerUI endpoint.
+        %   To add a SwaggerUI endpoint to the server. Create a directory
+        %   named swagger in the same directory as this file and "install"
+        %   SwaggerUI in it, see https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md#plain-old-htmlcssjs-standalone
+        %   Then uncomment the lines below.
+        % app.use("{{basePathWithoutHost}}/swagger",mws.Static.newHandler( ...
+        %     LocalPath=fullfile(fileparts(mfilename("fullpath")),"swagger"),...
+        %     MountPath="{{basePathWithoutHost}}/swagger"));
+   
+    end
+    
+    % Let the Application class handle the raw custom payload
+    response = app.handleRequest(request);
+end
+
+function openApiSpec(req,res,~)
+    % Handler which serves the OpenAPI spec
+    if req.Params.format == "" || req.Params.format == "-json" || req.Params.format == ".json"
+        res.Set("Content-Type", "application/json");
+        res.Send(fileread(fullfile(fileparts(mfilename("fullpath")),"openapi.json")));
+    elseif req.Params.format == "-yaml" || req.Params.format == ".yaml"
+        res.Set("Content-Type", "application/x-yaml");
+        res.Send(fileread(fullfile(fileparts(mfilename("fullpath")),"openapi.yaml")));
+    else
+        res.SendStatus(404);
+    end
+end
