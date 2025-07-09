@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inheritance and Polymorphism &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="JSONMapper" href="JSONMapper.html" />
+    <link rel="prev" title="Frequently Asked Questions" href="FAQ.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Inheritance and Polymorphism</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inheritance-and-polymorphism">
+<h1>Inheritance and Polymorphism<a class="headerlink" href="#inheritance-and-polymorphism" title="Link to this heading"></a></h1>
+<p>OpenAPI supports various forms of inheritance and polymorphism.</p>
+<p>For example in the following spec:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.0.3&quot;</span>
+<span class="nt">info</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test</span><span class="nv"> </span><span class="s">API&quot;</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<span class="nt">servers</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://localhost/test&quot;</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">/operation1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tags</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test</span>
+<span class="w">      </span><span class="nt">requestBody</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WithBaseProperty&#39;</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">200</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WithBaseProperty&#39;</span>
+<span class="w">  </span><span class="nt">/operation2</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tags</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test</span>
+<span class="w">      </span><span class="nt">requestBody</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/BaseObject&#39;</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">200</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/BaseObject&#39;</span>
+<span class="w">  </span><span class="nt">/operation3</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tags</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test</span>
+<span class="w">      </span><span class="nt">requestBody</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">oneOf</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FirstDerivedObject&#39;</span><span class="w">                </span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/SecondDerivedObject&#39;</span><span class="w">   </span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">200</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">success</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">oneOf</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FirstDerivedObject&#39;</span><span class="w">                </span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/SecondDerivedObject&#39;</span><span class="w">                     </span>
+<span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schemas</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">WithBaseProperty</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">TheProperty</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/BaseObject&#39;</span>
+<span class="w">    </span><span class="nt">BaseObject</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">        </span><span class="nt">objectType</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">      </span><span class="nt">discriminator</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">propertyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">objectType</span>
+<span class="w">    </span><span class="nt">FirstDerivedObject</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/BaseObject&#39;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">FirstProperty</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">    </span><span class="nt">SecondDerivedObject</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/BaseObject&#39;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">SecondProperty</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+</pre></div>
+</div>
+<p>There is an object hierarchy:</p>
+<pre  class="mermaid">
+        classDiagram
+    class WithBaseProperty{
+        BaseObject TheProperty
+    }
+    class BaseObject {
+        string name
+        string objectType ~discriminator~
+    }
+    class FirstDerivedObject {
+        string FirstProperty
+    }
+    class SecondDerivedObject {
+        string SecondProperty
+    }
+    WithBaseProperty --&gt; BaseObject
+    BaseObject &lt;|-- FirstDerivedObject
+    BaseObject &lt;|-- SecondDerivedObject
+    </pre><p>To summarize:</p>
+<ul>
+<li><p>There is a <code class="docutils literal notranslate"><span class="pre">WithBaseProperty</span></code> object where one of its properties <code class="docutils literal notranslate"><span class="pre">TheProperty</span></code> contains a <code class="docutils literal notranslate"><span class="pre">BaseObject</span></code>.</p></li>
+<li><p>There are two classes which derive from <code class="docutils literal notranslate"><span class="pre">BaseObject</span></code>: <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> and <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BaseObject</span></code> has a discriminator property <code class="docutils literal notranslate"><span class="pre">objectType</span></code> this helps in determining whether a JSON representation is actually trying to represent a <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> or a <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code>. I.e. the JSON representation of a <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> would be:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w">                      </span><span class="c1">// Just an example value</span>
+<span class="w">    </span><span class="nt">&quot;objectType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FirstDerivedObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Literally this value to specify the subtype</span>
+<span class="w">    </span><span class="nt">&quot;FirstProperty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hello&quot;</span><span class="w">            </span><span class="c1">// Just an example value</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And for <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="w">                       </span><span class="c1">// Just an example value</span>
+<span class="w">    </span><span class="nt">&quot;objectType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SecondDerivedObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Literally this value to specify the subtype</span>
+<span class="w">    </span><span class="nt">&quot;SecondProperty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;World&quot;</span><span class="w">            </span><span class="c1">// Just an example value</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>For this example, the generator will also really generate a <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code> MATLAB class (which derives from <code class="docutils literal notranslate"><span class="pre">JSONMapper</span></code>) and two child classes <code class="docutils literal notranslate"><span class="pre">myPackage.models.FirstDerivedObject</span></code> and <code class="docutils literal notranslate"><span class="pre">myPackage.models.SecondDerivedObject</span></code> which derive from <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code>.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">myPackage.models.WithBaseProperty</span></code> the <code class="docutils literal notranslate"><span class="pre">TheProperty</span></code> property will be of type <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code> which means in that in practice it can hold a  <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code> but also a <code class="docutils literal notranslate"><span class="pre">myPackage.models.FirstDerivedObject</span></code> or <code class="docutils literal notranslate"><span class="pre">myPackage.models.SecondDerivedObject</span></code>.</p>
+<p>When working with <code class="docutils literal notranslate"><span class="pre">/operation1</span></code> above, which expects a <code class="docutils literal notranslate"><span class="pre">WithBaseProperty</span></code> as input, ensure the right class is used for <code class="docutils literal notranslate"><span class="pre">TheProperty</span></code> depending on how the method is to be called. If the specific call you are trying to make requires a <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code>, ensure you also really use that MATLAB type:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myPackage</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">WithBaseProperty</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="n">TheProperty</span><span class="p">=</span><span class="n">myPackage</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">FirstDerivedObject</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">        </span><span class="n">objectType</span><span class="p">=</span><span class="s">&quot;FirstDerivedObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">        </span><span class="n">FirstProperty</span><span class="p">=</span><span class="s">&quot;Hello&quot;</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">...</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Or if the call requires a <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code>:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myPackage</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">WithBaseProperty</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="n">TheProperty</span><span class="p">=</span><span class="n">myPackage</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">SecondDerivedObject</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">        </span><span class="n">objectType</span><span class="p">=</span><span class="s">&quot;SecondDerivedObject&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">        </span><span class="n">SecondProperty</span><span class="p">=</span><span class="s">&quot;World&quot;</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">...</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>Further, the generated code should also be able to automatically return the correct (most specific) type when a reply is received. For example if <code class="docutils literal notranslate"><span class="pre">/operation1</span></code> returns the following JSON document</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;TheProperty&quot;</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;objectType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SecondDerivedObject&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;SecondProperty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bar&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The generated MATLAB client should be able to return a <code class="docutils literal notranslate"><span class="pre">myPackage.models.WithBaseProperty</span></code> instance where <code class="docutils literal notranslate"><span class="pre">TheProperty</span></code> contains a <code class="docutils literal notranslate"><span class="pre">myPackage.models.SecondDerivedObject</span></code> object with the <code class="docutils literal notranslate"><span class="pre">SecondProperty</span></code> filled out (and not a <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code> in which the <code class="docutils literal notranslate"><span class="pre">SecondProperty</span></code> value would have been lost).</p>
+<p>Similarly for <code class="docutils literal notranslate"><span class="pre">/operation2</span></code> it is possible to call the generated <code class="docutils literal notranslate"><span class="pre">operation2Post</span></code> method with either a <code class="docutils literal notranslate"><span class="pre">myPackage.models.FirstDerivedObject</span></code> or <code class="docutils literal notranslate"><span class="pre">myPackage.models.SecondDerivedObject</span></code> (or <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code>) as input, depending on what you are trying to achieve. And the generated method should also be able to really return <code class="docutils literal notranslate"><span class="pre">myPackage.models.FirstDerivedObject</span></code> or <code class="docutils literal notranslate"><span class="pre">myPackage.models.SecondDerivedObject</span></code> specifically (or <code class="docutils literal notranslate"><span class="pre">myPackage.models.BaseClass</span></code> if <code class="docutils literal notranslate"><span class="pre">objectType</span></code> was missing or invalid in the response).</p>
+<p><code class="docutils literal notranslate"><span class="pre">/operation2</span></code> and <code class="docutils literal notranslate"><span class="pre">/operation3</span></code> try to convey the same message in that both operations accept a <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> or <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code> as input and both can return a <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> or <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code> as output. However because the exact definitions differ, one through defining a class hierarchy and one through using <code class="docutils literal notranslate"><span class="pre">oneOf</span></code>, the generated code will also be different for <code class="docutils literal notranslate"><span class="pre">/operation2</span></code> and <code class="docutils literal notranslate"><span class="pre">/operation3</span></code>.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">oneOf</span></code> approach, a new class is generated which is in fact the <em>union</em> of <code class="docutils literal notranslate"><span class="pre">FirstDerivedObject</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">SecondDerivedObject</span></code>. So this will be an object with properties <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">objectType</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">FirstProperty</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">SecondProperty</span></code>. Then depending on what call you are trying to make when calling <code class="docutils literal notranslate"><span class="pre">operation3Post</span></code> you choose which of these properties to fill-out and which to simply leave unset. Similarly the output will have all four fields as properties but only the relevant ones will be filled-out. Model classes generated for <code class="docutils literal notranslate"><span class="pre">oneOf</span></code> will have an extra method <code class="docutils literal notranslate"><span class="pre">getSpecificClass</span></code> which can be called in a second step to get an instance of the more specific class, discarding the irrelevant fields.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="FAQ.html" class="btn btn-neutral float-left" title="Frequently Asked Questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JSONMapper.html" class="btn btn-neutral float-right" title="JSONMapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

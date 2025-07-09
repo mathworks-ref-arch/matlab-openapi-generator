@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building MATLAB Client Code &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Customizing Generated Client Code" href="CustomizingGeneratedCode.html" />
+    <link rel="prev" title="Getting Started" href="GettingStarted.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Building MATLAB Client Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-a-matlab-client-using-a-builder">Generating a MATLAB client using a builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spec-validation">Spec validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-an-openapitools-json-file">Using an openapitools.json file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-naming">Package naming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyright-notice-insertion">Copyright notice insertion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specifying-properties">Specifying properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generator-debug-flags">Generator debug flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ancillary-files">Ancillary files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openapi-generator-ignore">.openapi-generator-ignore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-log">Build log</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-a-matlab-client-using-the-command-line">Generating a MATLAB client using the command line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Building MATLAB Client Code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-matlab-client-code">
+<h1>Building MATLAB Client Code<a class="headerlink" href="#building-matlab-client-code" title="Link to this heading"></a></h1>
+<section id="generating-a-matlab-client-using-a-builder">
+<h2>Generating a MATLAB client using a builder<a class="headerlink" href="#generating-a-matlab-client-using-a-builder" title="Link to this heading"></a></h2>
+<p>A builder class is provided to simplify the process of building a client.
+At a high-level the MATLAB client provides an interface to the Java based generation code.
+Previously this approach used Node.js and <code class="docutils literal notranslate"><span class="pre">npx</span></code>, this is no longer the case.</p>
+<p>Usage example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Run startup to configure the package&#39;s MATLAB paths</span>
+<span class="nb">cd</span><span class="w"> </span><span class="n">Software</span><span class="o">/</span><span class="n">MATLAB</span>
+<span class="nb">startup</span>
+
+<span class="c">% Create a builder object</span>
+<span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">;</span>
+
+<span class="c">% Set the package name, defaults to &quot;OpenAPIClient&quot;</span>
+<span class="n">c</span><span class="p">.</span><span class="n">packageName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;myPkg&quot;</span><span class="p">;</span>
+
+<span class="c">% Set the path to the spec., this may also be a HTTP URL</span>
+<span class="n">c</span><span class="p">.</span><span class="n">inputSpec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/home/username/git/openapicodegen/Software/mySpec.yaml&quot;</span><span class="p">;</span>
+
+<span class="c">% Set a directory where the results will be stored</span>
+<span class="n">c</span><span class="p">.</span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/home/username/git/openapicodegen/myClient&quot;</span><span class="p">;</span>
+
+<span class="c">% Pass a string containing some optional additional arguments to the openapi-generator-cli</span>
+<span class="n">c</span><span class="p">.</span><span class="n">additionalArguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;--my_extra_argument&quot;</span><span class="p">;</span>
+
+<span class="c">% Insert a copyright notice in generated code</span>
+<span class="n">c</span><span class="p">.</span><span class="n">copyrightNotice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%% (c) %d My Company Name Inc.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">year</span><span class="p">(</span><span class="nb">datetime</span><span class="p">(</span><span class="s">&quot;now&quot;</span><span class="p">)));</span>
+
+<span class="c">% Trigger the build process</span>
+<span class="n">c</span><span class="p">.</span><span class="n">build</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Additional builder properties can be used to set non default properties:</p>
+<ul class="simple">
+<li><p>templateDir: set the path to the Mustache files, e.g. if providing a customized version of those provided with the package.</p></li>
+<li><p>jarPath: set the path to an alternative jar file, the default is <code class="docutils literal notranslate"><span class="pre">Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar</span></code>.</p></li>
+</ul>
+<p>See <a class="reference internal" href="Options.html"><span class="std std-doc">Generator Configuration Options</span></a> for a complete overview of all options.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If the API specification is spread across multiple separate files, instead of specifying <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> (which can only point to a single file), it is also possible to use <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> instead. This can point to a whole directory with YAML and JSON files and this will then generate a single MATLAB client which covers all APIs and Models from all files combined.</p>
+</div>
+<p>A build log file is produced in the output directory.</p>
+</section>
+<section id="spec-validation">
+<h2>Spec validation<a class="headerlink" href="#spec-validation" title="Link to this heading"></a></h2>
+<p>In general specs rarely completely pass validation despite being functional. With this in mind spec validation is <em>disabled</em> by default.
+It can be enabled as follows. This can be useful when debugging or first evaluating a new spec. This package is not intended as a spec validation or writing tool.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">.</span><span class="n">skipValidateSpec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="using-an-openapitools-json-file">
+<h2>Using an openapitools.json file<a class="headerlink" href="#using-an-openapitools-json-file" title="Link to this heading"></a></h2>
+<p>By default a configuration file, called <code class="docutils literal notranslate"><span class="pre">openapitools.json</span></code>, is produced in the current directory. This is populated by the builder.
+An alternative name and path can be given by setting <code class="docutils literal notranslate"><span class="pre">outputConfigurationFile</span></code>.
+Using a configuration file can be less error prone than the CLI based approach though they are equivalent.
+Storing the file in source control alongside code can be useful given the potential complexity of configurations.
+Furthermore it is easily overwritten accidentally and there are a great many potential configuration options that may be difficult to replicate if lost.</p>
+<p>The following is a sample <code class="docutils literal notranslate"><span class="pre">openapitools.json</span></code> file, it is typically located in the working directory being used by the generator.
+The schema for this file can provide further details: <a class="reference external" href="https://github.com/OpenAPITools/openapi-generator-cli/blob/master/apps/generator-cli/src/config.schema.json" rel="noreferrer" target="_blank">https://github.com/OpenAPITools/openapi-generator-cli/blob/master/apps/generator-cli/src/config.schema.json</a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;spaces&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6.6.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;generatorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MATLAB&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/tmp/Airflow&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;inputSpec&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/username/git/openapicodegen/Software/MATLAB/test/fixtures/ApacheAirflow_v1.yaml&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;packageName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Airflow&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;skipValidateSpec&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;openapiRoot&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/username/git/openapicodegen/Software/MATLAB&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;copyrightNotice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;% (c) 2023 Example Company&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;templateDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/home/username/git/openapicodegen/Software/Mustache&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If an alternative file is preferred or if the configuration is not to be used:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Property to indicate that an alternative json file should be used</span>
+<span class="n">c</span><span class="p">.</span><span class="n">inputConfigurationFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;/my/alternative/path/openapitools.json&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Set a non default output location:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Property to indicate that an openapitools.json file should be used</span>
+<span class="n">c</span><span class="p">.</span><span class="n">outputConfigurationFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="package-naming">
+<h2>Package naming<a class="headerlink" href="#package-naming" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">packageName</span></code> property will be used to create a top-level package directory, i.e. a “+ directory”, for this reason it must comply with naming requirements.
+If the provided value does not meet the requirements it may be changed automatically and a warning will be displayed.</p>
+<p>For more details see: <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html" rel="noreferrer" target="_blank">https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html</a> &amp; <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/matlab.lang.makevalidname.html" rel="noreferrer" target="_blank">https://www.mathworks.com/help/matlab/ref/matlab.lang.makevalidname.html</a>.</p>
+</section>
+<section id="copyright-notice-insertion">
+<h2>Copyright notice insertion<a class="headerlink" href="#copyright-notice-insertion" title="Link to this heading"></a></h2>
+<p>A Copyright notice can be automatically inserted into generated code. To do so prior to calling the client’s <code class="docutils literal notranslate"><span class="pre">build</span></code> method set the client’s <code class="docutils literal notranslate"><span class="pre">copyrightNotice</span></code> property, e.g.:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">.</span><span class="n">copyrightNotice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;(c) 2023 My Company Name Inc.&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The value will be inserted as a comment in the header of generated <code class="docutils literal notranslate"><span class="pre">api</span></code> and <code class="docutils literal notranslate"><span class="pre">model</span></code> code files. As the client passes the value as an argument to <code class="docutils literal notranslate"><span class="pre">npx</span></code> certain string processing rules are applied:</p>
+<ul class="simple">
+<li><p>Single and double quotes and hyphens will be removed.</p></li>
+</ul>
+<p>The copyright symbol “©” is supported.
+This method is appropriate for short, simple statements as shown in the example. If more extensive text or legal statements, e.g. licensing details, are required in the generated code, then careful modification of the <code class="docutils literal notranslate"><span class="pre">Software/Mustache/copyrightNotice.mustache</span></code> template file is the suggested approach. Comment symbols, <code class="docutils literal notranslate"><span class="pre">%</span></code>, should be prepended to any such text.</p>
+</section>
+<section id="specifying-properties">
+<h2>Specifying properties<a class="headerlink" href="#specifying-properties" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">globalProperties</span></code> and <code class="docutils literal notranslate"><span class="pre">additionalProperties</span></code> can be specified as follows:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">.</span><span class="n">globalProperties</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">containers.Map</span><span class="p">({</span><span class="s">&#39;skipFormModel&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;debugOpenAPI&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nb">false</span><span class="p">,</span><span class="nb">true</span><span class="p">});</span>
+<span class="n">c</span><span class="p">.</span><span class="n">additionalProperties</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">containers.Map</span><span class="p">({</span><span class="s">&#39;myKey&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;myValue&#39;</span><span class="p">});</span>
+</pre></div>
+</div>
+</section>
+<section id="generator-debug-flags">
+<h2>Generator debug flags<a class="headerlink" href="#generator-debug-flags" title="Link to this heading"></a></h2>
+<p>The following Java flags can be set to obtain additional debugging information during the code generation process:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-DdebugModels</span></code> output models passed to the template engine</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DdebugOperations</span></code> output operations passed to the template engine</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DdebugSwagger</span></code> output the OpenAPI Specification</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DdebugSupportingFiles</span></code> output supporting files info</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-DinvokerPackage</span></code> invoking package name</p></li>
+</ul>
+<p>To easiest way to set these <em>Java</em> flags while working with <code class="docutils literal notranslate"><span class="pre">openapi-generator-cli</span></code> is by setting them through environment variable <code class="docutils literal notranslate"><span class="pre">JAVA_TOOL_OPTIONS</span></code>, i.e. before using <code class="docutils literal notranslate"><span class="pre">openapi-generator-cli</span></code>, in the same shell on Linux first use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_TOOL_OPTIONS</span><span class="o">=</span>-DdebugModels
+</pre></div>
+</div>
+<p>or on Windows:</p>
+<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span><span class="k">set</span> <span class="nv">JAVA_TOOL_OPTIONS</span><span class="p">=</span>-DdebugModels
+</pre></div>
+</div>
+</section>
+<section id="ancillary-files">
+<h2>Ancillary files<a class="headerlink" href="#ancillary-files" title="Link to this heading"></a></h2>
+<section id="openapi-generator-ignore">
+<h3>.openapi-generator-ignore<a class="headerlink" href="#openapi-generator-ignore" title="Link to this heading"></a></h3>
+<p>A <code class="docutils literal notranslate"><span class="pre">.openapi-generator-ignore</span></code> file can be used to prevent files from being overwritten by the generator, for example if they have been customized in some way. A template version fo the file with detailed usage information is generated by the generator if the file does not already exist. This is can be thought of as being similar to a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> or <code class="docutils literal notranslate"><span class="pre">.dockerignore</span></code> file. If the file is not used it can be safely removed or ignored.</p>
+</section>
+<section id="build-log">
+<h3>Build log<a class="headerlink" href="#build-log" title="Link to this heading"></a></h3>
+<p>A log file is produced by the client containing generator output and other information, it is stored in the package output directory as <code class="docutils literal notranslate"><span class="pre">PACKAGE-NAME_build.log</span></code>. It should be reviewed for detailed information on the generation process.</p>
+</section>
+</section>
+<section id="generating-a-matlab-client-using-the-command-line">
+<h2>Generating a MATLAB client using the command line<a class="headerlink" href="#generating-a-matlab-client-using-the-command-line" title="Link to this heading"></a></h2>
+<p>The following commands show how a MATLAB client can be generated from a given spec. Using the provided generator without invoking MATLAB. Note that using the MATLAB builder can help to provide the initial syntax. Here <code class="docutils literal notranslate"><span class="pre">npx</span></code> is used to call a frontend to the underlying Java library.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change to the packages software directory</span>
+<span class="nb">cd</span><span class="w"> </span>&lt;package_dir&gt;/Software
+
+npx<span class="w"> </span>@openapitools/openapi-generator-cli<span class="w"> </span>--custom-generator<span class="w"> </span>MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar<span class="w"> </span>generate<span class="w"> </span>-g<span class="w"> </span>matlab-client<span class="w"> </span>-i<span class="w"> </span>http://localhost:3000/api-json<span class="w"> </span>-o<span class="w"> </span>TestClient<span class="w"> </span>--package-name<span class="w"> </span>Test
+</pre></div>
+</div>
+<p>If not working in the package’s <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory, use full paths and add the following additional arguments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-t<span class="w"> </span><span class="s2">&quot;&lt;package_directory&gt;/Software/Mustache&quot;</span><span class="w"> </span>--additional-properties<span class="w"> </span><span class="nv">openapiRoot</span><span class="o">=</span><span class="s2">&quot;&lt;package_directory&gt;/Software/MATLAB</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-i</span></code> argument can also point to a local spec file in <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">.json</span></code> format instead of a http(s) URL.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If the API specification is spread across multiple separate files, instead of specifying <code class="docutils literal notranslate"><span class="pre">-i</span></code> (which can only point to a single file), it is also possible to use <code class="docutils literal notranslate"><span class="pre">--input-spec-root-directory</span></code> instead. This can point to a whole directory with YAML and JSON files and this will then generate a single MATLAB client which covers all APIs and Models from all files combined.</p>
+</div>
+<p>By default the client will be generated in a the current directory in a subdirectory named <code class="docutils literal notranslate"><span class="pre">OpenAPIClient</span></code>. This can be changed using the <code class="docutils literal notranslate"><span class="pre">-o</span></code> flag as shown in the syntax above. Similarly, by default the generator creates a package named <code class="docutils literal notranslate"><span class="pre">OpenAPIClient</span></code> which can be changed with the <code class="docutils literal notranslate"><span class="pre">--package-name</span></code> flag.</p>
+<p>The generation process can produce a great deal of log output thus redirecting output to a file is recommended so the file can be more easily searched using a text editor if the output is redirected: <code class="docutils literal notranslate"><span class="pre">...</span> <span class="pre">--package-name</span> <span class="pre">Test</span> <span class="pre">&gt;</span> <span class="pre">log.txt</span></code></p>
+<p>An alternative Mustache files directory can be specified using the <code class="docutils literal notranslate"><span class="pre">-t</span></code> flag e.g.: <code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">/home/username/MyMustacheFiles</span></code>, this can be useful if experimenting with alternative templates while retaining defaults.</p>
+<p>If not running from the <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory the location of the <code class="docutils literal notranslate"><span class="pre">Software/MATLAB</span></code> directory must be provided through <code class="docutils literal notranslate"><span class="pre">--additional-properties=openapiRoot=&lt;location-of-Software/MATLAB&gt;</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">--additional-properties=openapiRoot=/work/openapi/Software/MATLAB</span></code>. Without this the generator will not be able to find some of the helper MATLAB files which need to be included in the generated package. (When using the MATLAB Builder this option is set automatically).</p>
+<p>See <a class="reference internal" href="Options.html"><span class="std std-doc">Generator Configuration Options</span></a> for a complete overview of all, including a few more advanced, options.</p>
+<p>Ultimately npx invokes Java to run the code having created the appropriate input arguments, one can avoid using Node.js package and use Java directly, using Node.js or the MATLAB client initially to get the basic form of the Java command and then adjusting this can be useful.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="GettingStarted.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CustomizingGeneratedCode.html" class="btn btn-neutral float-right" title="Customizing Generated Client Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

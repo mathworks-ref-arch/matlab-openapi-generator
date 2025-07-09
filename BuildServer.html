@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building MATLAB Server Code &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Server Request and Response Classes" href="ServerRequestResponse.html" />
+    <link rel="prev" title="Advanced Example: Customizing the Generator (for Apache Airflow)" href="CustomizationExampleAirflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Building MATLAB Server Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#server-stub-generation">Server stub generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#server-implementation">Server implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#server-m">server.m</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#routes-json">routes.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#myserver-models">+MyServer/+models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#myserver-impl">+MyServer/+impl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#buildfile-m">buildfile.m</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#server-testing">Server testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#server-deployment">Server deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-archive">Building the archive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archive-deployment">Archive deployment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Building MATLAB Server Code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-matlab-server-code">
+<h1>Building MATLAB Server Code<a class="headerlink" href="#building-matlab-server-code" title="Link to this heading"></a></h1>
+<p>The Server stub generator generates code which can eventually be deployed as MATLAB Compiler SDK Microservices or to MATLAB Production Server. The code it generates is compatible with the <a class="reference external" href="https://www.mathworks.com/help/releases/R2024b/mps/custom-routes-and-payloads.html" rel="noreferrer" target="_blank">Custom Routes and Payloads feature</a> of MATLAB Compiler SDK Microservices and MATLAB Production Server.</p>
+<section id="server-stub-generation">
+<h2>Server stub generation<a class="headerlink" href="#server-stub-generation" title="Link to this heading"></a></h2>
+<p>To generate the server stubs from inside MATLAB, use for example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Run startup to configure the package&#39;s MATLAB paths</span>
+<span class="nb">cd</span><span class="w"> </span><span class="n">Software</span><span class="o">/</span><span class="n">MATLAB</span>
+<span class="nb">startup</span>
+
+<span class="c">% Create a builder object</span>
+<span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Server</span><span class="p">;</span>
+
+<span class="c">% Set the package name, defaults to &quot;OpenAPIServer&quot;</span>
+<span class="n">c</span><span class="p">.</span><span class="n">packageName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;MyServer&quot;</span><span class="p">;</span>
+
+<span class="c">% Set the path to the spec., this may also be a HTTP(S) URL</span>
+<span class="n">c</span><span class="p">.</span><span class="n">inputSpec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;openapi.yaml&quot;</span><span class="p">;</span>
+
+<span class="c">% Set a directory where the results will be stored</span>
+<span class="n">c</span><span class="p">.</span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MyServer&quot;</span><span class="p">);</span>
+
+<span class="c">% Insert a copyright notice in generated code</span>
+<span class="n">c</span><span class="p">.</span><span class="n">copyrightNotice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%% (c) %d My Company Name Inc.&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">year</span><span class="p">(</span><span class="nb">datetime</span><span class="p">(</span><span class="s">&quot;now&quot;</span><span class="p">)));</span>
+
+<span class="c">% Trigger the build process</span>
+<span class="n">c</span><span class="p">.</span><span class="n">build</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This should produce a directory <code class="docutils literal notranslate"><span class="pre">MyServer</span></code> containing:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">server.m</span></code> the main entry-point for the server, defining all the routes and handling requests.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">routes.json</span></code> a MATLAB Production Server custom routes configuration file which maps all requests to the main <code class="docutils literal notranslate"><span class="pre">server.m</span></code> entrypoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buildfile.m</span></code> a <a class="reference external" href="https://www.mathworks.com/help/matlab/build-automation.html" rel="noreferrer" target="_blank">MATLAB Build Tool</a> build file which can help in creating the CTF-archive and packaging into Microservice Docker images.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+MyServer/+models</span></code> a directory containing model classes for the request and response payloads.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+MyServer/+impl</span></code> a directory containing the server stub implementations of the server endpoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+MyServer/+mws</span></code> a directory containing additional code which eases working with the Custom Routes and Payloads feature. This code does not have to be modified/customized.</p></li>
+</ul>
+<p>The produced server code should then be further customized and implemented to handle the actual business logic of the server. The <code class="docutils literal notranslate"><span class="pre">+MyServer/+impl</span></code> directory contains the stub implementations that should be updated with the actual server-side logic.</p>
+</section>
+<section id="server-implementation">
+<h2>Server implementation<a class="headerlink" href="#server-implementation" title="Link to this heading"></a></h2>
+<p>To implement the server-side logic, the generated code inside the <code class="docutils literal notranslate"><span class="pre">+MyServer/+impl</span></code> directory <strong>must</strong> be customized, it really only contains stub implementations with some <em>examples</em> on how to access the function “inputs” and produce the correct “outputs”. Other parts of the generated code should typically not have to be changed but can still be customized depending on your use-case. The sections below discuss the different parts of the code and how they can be customized/implemented.</p>
+<p>If you do not make any changes to the generated code, the server should technically still be able to run, all generated code <em>should</em> be valid MATLAB code; all methods will simply return <code class="docutils literal notranslate"><span class="pre">501</span> <span class="pre">-</span> <span class="pre">Not</span> <span class="pre">Implemented</span></code> though. If you encounter a situation in which <em>truly invalid</em> (e.g. syntactically incorrect) code is generated, please <a class="reference external" href="https://github.com/mathworks-ref-arch/matlab-openapi-generator/issues" rel="noreferrer" target="_blank">submit a GitHub issue</a>.</p>
+<section id="server-m">
+<h3>server.m<a class="headerlink" href="#server-m" title="Link to this heading"></a></h3>
+<p>Typically <code class="docutils literal notranslate"><span class="pre">server.m</span></code> does not have to be modified. However it can be customized if you want to add additional endpoints to the server which are not part of the actual spec. Or when small changes are made to the  spec you can choose to manually update the code instead of regenerating it from scratch entirely.</p>
+<p><code class="docutils literal notranslate"><span class="pre">server.m</span></code> will have a structure similar to the following:</p>
+<p>Overall it is a <a class="reference external" href="https://www.mathworks.com/help/mps/server/use-web-handler-for-custom-routes-and-custom-payloads.html#mw_0756f11a-ac9b-47ec-9cea-8e69239907b1" rel="noreferrer" target="_blank">Custom Routes and Payloads Web Request handler</a> which accepts a request structure as input and returns a response structure as output:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>response<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">server</span><span class="p">(</span>request<span class="p">)</span>
+</pre></div>
+</div>
+<p>Then instead of immediately trying to handle the raw request it creates an <code class="docutils literal notranslate"><span class="pre">MyServer.mws.Application</span></code> instance. This is a helper class which abstracts away some of the common request and response handling logic which are needed for all operations. This helper class only has to be created and configured once, and can then be reused for all consecutive requests. Therefore a <code class="docutils literal notranslate"><span class="pre">persistent</span></code> variable is used which is only instantiated when it has not been set yet, i.e. it is empty:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="k">persistent</span><span class="w"> </span><span class="n">app</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="w">        </span><span class="c">% If it has not been set yet (i.e. on the first run), create the</span>
+<span class="w">        </span><span class="c">% instance</span>
+<span class="w">        </span><span class="n">app</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyServer</span><span class="p">.</span><span class="n">mws</span><span class="p">.</span><span class="n">Application</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This helper class also allows defining the routes inside code rather than a separate configuration file. This for example also makes it easier for the helper class to parse <a class="reference external" href="https://spec.openapis.org/oas/v3.0.3.html#parameter-object" rel="noreferrer" target="_blank">path parameters</a> from the URLs in a consistent and reusable way without needing a lot of duplicate code inside the operation specific handlers themselves. For example, for the <a class="reference external" href="https://github.com/swagger-api/swagger-petstore" rel="noreferrer" target="_blank">Petstore example</a>, the following routes are added:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">        </span><span class="c">% Add the actual routes for the API</span>
+<span class="w">        </span><span class="c">%% Pet</span>
+<span class="w">        </span><span class="c">% Everything about your Pets</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;/v3/pet&quot;</span><span class="p">,@</span><span class="n">MyServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Pet</span><span class="p">.</span><span class="n">addPet</span><span class="p">);</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">del</span><span class="p">(</span><span class="s">&quot;/v3/pet/{petId}&quot;</span><span class="p">,@</span><span class="n">MyServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Pet</span><span class="p">.</span><span class="n">deletePet</span><span class="p">);</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;/v3/pet/findByStatus&quot;</span><span class="p">,@</span><span class="n">MyServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Pet</span><span class="p">.</span><span class="n">findPetsByStatus</span><span class="p">);</span>
+<span class="w">        </span>…
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">app.post(&quot;/v3/pet&quot;,&#64;MyServer.impl.Pet.addPet);</span></code> for example defines that when a POST request is made to path <code class="docutils literal notranslate"><span class="pre">/v3/pet</span></code><a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, the <code class="docutils literal notranslate"><span class="pre">MyServer.impl.Pet.addPet</span></code> method should be called to further handle this specific request. And <code class="docutils literal notranslate"><span class="pre">app.del(&quot;/v3/pet/{petId}&quot;,&#64;MyServer.impl.Pet.deletePet);</span></code> defines that a DELETE request to <code class="docutils literal notranslate"><span class="pre">/v3/pet/{petId}</span></code> (where <code class="docutils literal notranslate"><span class="pre">{petId}</span></code> is such an aforementioned path parameter) should be handled by the <code class="docutils literal notranslate"><span class="pre">MyServer.impl.Pet.deletePet</span></code> method.</p>
+<p>The routes definitions are grouped by the <code class="docutils literal notranslate"><span class="pre">tags</span></code> in the OpenAPI spec. Similarly the actual handler methods are organized in classes whose names are based on the same tags. For example, all operations with the <code class="docutils literal notranslate"><span class="pre">pet</span></code> tag are handled by the <code class="docutils literal notranslate"><span class="pre">MyServer.impl.Pet</span></code> class. And all operations with the <code class="docutils literal notranslate"><span class="pre">store</span></code> tag are handled by the <code class="docutils literal notranslate"><span class="pre">MyServer.impl.Store</span></code> class:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">        </span>…
+<span class="w">        </span><span class="c">%% Store</span>
+<span class="w">        </span><span class="c">% Operations about user</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">del</span><span class="p">(</span><span class="s">&quot;/v3/store/order/{orderId}&quot;</span><span class="p">,@</span><span class="n">MyServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Store</span><span class="p">.</span><span class="n">deleteOrder</span><span class="p">);</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;/v3/store/inventory&quot;</span><span class="p">,@</span><span class="n">MyServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Store</span><span class="p">.</span><span class="n">getInventory</span><span class="p">);</span>
+<span class="w">        </span>…
+</pre></div>
+</div>
+<p>After all the operations which were defined in the spec, one more endpoint is added which hosts the OpenAPI specification itself:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">        </span>…
+<span class="w">        </span><span class="c">% Add an endpoint which also simply serves the OpenAPI spec</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;/v3/openapi{format}&quot;</span><span class="p">,@</span><span class="n">openApiSpec</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The handler for this (i.e. the <code class="docutils literal notranslate"><span class="pre">openApiSpec</span></code> function) is found at the very bottom of <code class="docutils literal notranslate"><span class="pre">server.m</span></code>.</p>
+<p>And then as final (optional) route, the code also shows how to add a SwaggerUI endpoint to the server, which would allow visualizing and interacting with the API directly in the browser:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">        </span><span class="c">% Optional, add a SwaggerUI endpoint.</span>
+<span class="w">        </span><span class="c">%   To add a SwaggerUI endpoint to the server. Create a directory</span>
+<span class="w">        </span><span class="c">%   named swagger in the same directory as this file and &quot;install&quot;</span>
+<span class="w">        </span><span class="c">%   SwaggerUI in it, see https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md#plain-old-htmlcssjs-standalone</span>
+<span class="w">        </span><span class="c">%   Then uncomment the lines below.</span>
+<span class="w">        </span><span class="c">%app.use(&quot;/v3/swagger&quot;,mws.Static.newHandler( ...</span>
+<span class="w">        </span><span class="c">%    LocalPath=fullfile(fileparts(mfilename(&quot;fullpath&quot;)),&quot;swagger&quot;),...</span>
+<span class="w">        </span><span class="c">%    MountPath=&quot;/v3/swagger&quot;));</span>
+</pre></div>
+</div>
+<p>As the code documents, this would require you to create a directory named <code class="docutils literal notranslate"><span class="pre">swagger</span></code> in which you will have to place the SwaggerUI files. The easiest most straightforward option is to make use of the <a class="reference external" href="https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md#unpkg" rel="noreferrer" target="_blank">unpkg approach</a> where you just have to create a single <code class="docutils literal notranslate"><span class="pre">index.html</span></code> in the <code class="docutils literal notranslate"><span class="pre">swagger</span></code> directory and where further dependencies are then loaded from <a class="reference external" href="https://unpkg.com/" rel="noreferrer" target="_blank">unpkg</a>. If you would like to host these dependencies yourself, use the <a class="reference external" href="https://github.com/swagger-api/swagger-ui/blob/HEAD/docs/usage/installation.md#plain-old-htmlcssjs-standalone" rel="noreferrer" target="_blank">Plain old HTML/CSS/JS (Standalone) approach</a>. For both approaches update the HTML code such that it point to the endpoint which hosts the OpenAPI specification, i.e. in the example above <code class="docutils literal notranslate"><span class="pre">/v3/openapi.json</span></code> or <code class="docutils literal notranslate"><span class="pre">/v3/openapi.yaml</span></code>.</p>
+<p>If you want to add any further additional routes which are not directly part of the spec, this would then be the place to do so.</p>
+<p>After all the route definitions, the one-time initialization ends:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="k">end</span>
+</pre></div>
+</div>
+<p>And then the final line of the main <code class="docutils literal notranslate"><span class="pre">server</span></code> function, calls the <code class="docutils literal notranslate"><span class="pre">handleRequest</span></code> method on this (now fully configured) helper class to handle the incoming request and produce the response:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c">% Let the Application class handle the raw custom payload</span>
+<span class="w">    </span><span class="n">response</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">app</span><span class="p">.</span><span class="n">handleRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>This part of the code will be run every single time a request is made to any endpoint of the API.</p>
+<p>Finally, at the very bottom of <code class="docutils literal notranslate"><span class="pre">server.m</span></code> we then also find the implementation of the <code class="docutils literal notranslate"><span class="pre">openApiSpec</span></code> function, which is used to handle the request to the <code class="docutils literal notranslate"><span class="pre">/v3/openapi{format}</span></code> endpoint. This endpoint serves the OpenAPI specification itself, either in JSON or YAML format:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="nf">openApiSpec</span><span class="p">(</span>req,res,~<span class="p">)</span>
+…
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="routes-json">
+<h3>routes.json<a class="headerlink" href="#routes-json" title="Link to this heading"></a></h3>
+<p>Given the design of <code class="docutils literal notranslate"><span class="pre">server.m</span></code> above, i.e. with that helper class, there is really just one single entrypoint for the entire API. So, the <a class="reference external" href="https://www.mathworks.com/help/mps/server/use-web-handler-for-custom-routes-and-custom-payloads.html#mw_1c57566a-9876-44ca-9f07-f67709bfb3f1" rel="noreferrer" target="_blank">URL Routes</a> configuration file just needs to define one single route which maps all request (on a specific base-path) to <code class="docutils literal notranslate"><span class="pre">server.m</span></code>. So the generated <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> will typically look something like:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">&quot;pathmap&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">           </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/v3/.*&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;webhandler&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">               </span><span class="nt">&quot;component&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Test&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;server&quot;</span>
+<span class="w">           </span><span class="p">}</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="myserver-models">
+<h3>+MyServer/+models<a class="headerlink" href="#myserver-models" title="Link to this heading"></a></h3>
+<p>Typically the generated models do not have to be manually modified but they can for example be manually updated if the spec changes and you do not want to fully regenerate the code from scratch. If you do want to customize the models, it is recommended to first <a class="reference internal" href="JSONMapper.html"><span class="std std-doc">read up on the JSONMapper class</span></a> which the models derive from.</p>
+<p>To learn more about how to work with the generated models as-is, you can <a class="reference internal" href="BasicUsage.html#models"><span class="std std-ref">refer to the Basic Usage section</span></a>. The generated models for servers are exactly the same as models generated for clients, so the same patterns apply.</p>
+</section>
+<section id="myserver-impl">
+<h3>+MyServer/+impl<a class="headerlink" href="#myserver-impl" title="Link to this heading"></a></h3>
+<p>Inside the <code class="docutils literal notranslate"><span class="pre">+MyServer/+impl</span></code> directory a MATLAB class file will have been generated for each tag in the OpenAPI spec. Each class in turn contains a number of static methods which are the actual handler functions for the routes/operations in the spec. I.e. in the example above where path <code class="docutils literal notranslate"><span class="pre">/v3/pet</span></code> was mapped to method <code class="docutils literal notranslate"><span class="pre">MyServer.impl.Pet.addPet</span></code>: <code class="docutils literal notranslate"><span class="pre">addPet</span></code> is a static method in the <code class="docutils literal notranslate"><span class="pre">Pet</span></code> class which is in the <code class="docutils literal notranslate"><span class="pre">MyServer.impl</span></code> namespace. Where the <code class="docutils literal notranslate"><span class="pre">Pet</span></code> class M-file is then located at <code class="docutils literal notranslate"><span class="pre">+MyServer/+impl/Pet.m</span></code>.</p>
+<p>Each of the methods will have a signature like the following:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="nf">myOperation</span><span class="p">(</span>req,res,~<span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">req</span></code> is a <a class="reference internal" href="ServerRequestResponse.html#Request" title="Request"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">Request</span></code></a> object which contains more information about the incoming request like the full path of the request, the path parameters, query parameters, headers and the request body. And <code class="docutils literal notranslate"><span class="pre">res</span></code> is a <a class="reference internal" href="ServerRequestResponse.html#Response" title="Response"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">Response</span></code></a> object which can be used to form the response which is to be send back to the client; the function does not have an actual output itself but you interact with the response object to define the response. The third input must be defined but is currently unused by the generated code and therefore it is defined as an <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_prog/ignore-function-inputs.html" rel="noreferrer" target="_blank">ignored input <code class="docutils literal notranslate"><span class="pre">~</span></code></a>, it may be used in future versions.</p>
+<p>The generator may also have generated pieces of example code for each method. The accuracy and completeness of these examples will depend on the accuracy and the completeness of the spec. For example if the spec defines a request body, the generator will show how this can be parsed into a model and how you can verify that all, according to the spec, requires properties are set. But this obviously will not work if you only “intended” there to be a body but it was not actually properly defined in the spec. Similarly the code may show how you can start defining a response body and how you can use the Response object to return this to the client <em>if</em> the response body is properly defined in the spec.</p>
+<p>Further note that these examples are indeed just that: <em>examples</em>. You are expected to review the examples, understand the patterns and conventions used, and then build upon them to implement the full functionality required for your API. The generator can give you a head start, but you will need to complete the implementation yourself to match your specific requirements.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The values of all “input” (e.g. path, query) parameters which you receive in the handler functions will always be strings. If you need to convert these strings to numerical values <strong>never</strong> use <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/matlab/ref/str2num.html" rel="noreferrer" target="_blank" title="(in MATLAB R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">str2num</span></code></a> for the conversion. Its usage of <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/matlab/ref/eval.html" rel="noreferrer" target="_blank" title="(in MATLAB R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">eval</span></code></a> can lead to security vulnerabilities.</p>
+</div>
+<p>For a more detailed overview on how to work with the <a class="reference internal" href="ServerRequestResponse.html#Request" title="Request"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">Request</span></code></a> and <a class="reference internal" href="ServerRequestResponse.html#Response" title="Response"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">Response</span></code></a> classes, see <a class="reference internal" href="ServerRequestResponse.html"><span class="std std-doc">Server Request and Response Classes</span></a>.</p>
+</section>
+<section id="buildfile-m">
+<h3>buildfile.m<a class="headerlink" href="#buildfile-m" title="Link to this heading"></a></h3>
+<p>The generated <code class="docutils literal notranslate"><span class="pre">builfile.m</span></code> is a <a class="reference external" href="https://www.mathworks.com/help/matlab/build-automation.html" rel="noreferrer" target="_blank">MATLAB Build Tool</a> build file which can help with building the server into a CTF-archive which can the be deployed to MATLAB Production Server or be packed into a Microservice Docker image. It is not required to customize the generated <code class="docutils literal notranslate"><span class="pre">buildfile.m</span></code>, unless your implementation requires additional files to be added to the archive (i.e. if somehow the <a class="reference external" href="https://www.mathworks.com/help/compiler_sdk/ml_code/dependency-analysis-function.html" rel="noreferrer" target="_blank">dependency analysis</a> is not able to automatically include all required dependencies). Further, <code class="docutils literal notranslate"><span class="pre">buildfile.m</span></code> can be customized to change certain defaults (like the name of the output directory or the default tag of the Microservice Docker image).</p>
+</section>
+</section>
+<section id="server-testing">
+<h2>Server testing<a class="headerlink" href="#server-testing" title="Link to this heading"></a></h2>
+<p>The server code can be tested inside MATLAB using the testing interface of the <code class="xref mat mat-app docutils literal notranslate"><span class="pre">Production</span> <span class="pre">Server</span> <span class="pre">Compiler</span></code> app. Since the generated server makes use of the Custom Routes and Payloads feature, it is important to configure the testing interface to work with the correct <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> file. Set environment variable <code class="docutils literal notranslate"><span class="pre">PRODSERVER_ROUTES_FILE</span></code> to point to the generated <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> file before starting the testing interface, for example using:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">setenv</span><span class="p">(</span><span class="s">&#39;PRODSERVER_ROUTES_FILE&#39;</span><span class="p">,</span><span class="s">&#39;MyServer/routes.json&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For more details see:</p>
+<p><a class="reference external" href="https://www.mathworks.com/help/compiler_sdk/mps_dev_test/test-web-request-handler.html" rel="noreferrer" target="_blank">https://www.mathworks.com/help/compiler_sdk/mps_dev_test/test-web-request-handler.html</a></p>
+<p>Then start the <code class="xref mat mat-app docutils literal notranslate"><span class="pre">Production</span> <span class="pre">Server</span> <span class="pre">Compiler</span></code> app and:</p>
+<ol class="arabic simple">
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">Archive</span> <span class="pre">Name</span></code> to the Package Name (i.e. in the example above <code class="docutils literal notranslate"><span class="pre">MyServer</span></code>).</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">server.m</span></code> as exported function.</p></li>
+</ol>
+<p>You should then be able to start the test server under “Test Client” → “Start”.</p>
+</section>
+<section id="server-deployment">
+<h2>Server deployment<a class="headerlink" href="#server-deployment" title="Link to this heading"></a></h2>
+<p>Once all server logic has been implemented, it can be compiled into a CTF-archive using the <code class="xref mat mat-app docutils literal notranslate"><span class="pre">Production</span> <span class="pre">Server</span> <span class="pre">Compiler</span></code> app, <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler/mcc.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">mcc</span></code></a> or <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.build.productionserverarchive.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.build.productionServerArchive</span></code></a>. The resulting archive can then be packaged into a Microservice Docker image using <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.package.microservicedockerimage.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.package.microserviceDockerImage</span></code></a> or deployed to a MATLAB Production Server instance.</p>
+<p>As discussed above, the generator also generates a <a class="reference external" href="https://www.mathworks.com/help/matlab/build-automation.html" rel="noreferrer" target="_blank">MATLAB Build Tool</a> <code class="docutils literal notranslate"><span class="pre">builfile.m</span></code> which should allow you to build the CTF-archive inside MATLAB using:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">buildtool</span><span class="w"> </span><span class="s">build</span>
+</pre></div>
+</div>
+<p>It can also package the server into a Microservice Docker image using <code class="docutils literal notranslate"><span class="pre">buildtool</span> <span class="pre">microservice(&quot;image-name&quot;)</span></code> (where <code class="docutils literal notranslate"><span class="pre">image-name</span></code> allows you to specify the name/tag of the Docker image).</p>
+<p>The generated <code class="docutils literal notranslate"><span class="pre">buildfile.m</span></code> is configured in such a way that it should automatically include all the relevant files and directories. See the sections below to learn more about which files and directories should be included.</p>
+<section id="building-the-archive">
+<h3>Building the archive<a class="headerlink" href="#building-the-archive" title="Link to this heading"></a></h3>
+<p>Before/when creating the final package it is important to ensure that the “Archive Name” (<code class="docutils literal notranslate"><span class="pre">ArchiveName</span></code> option when working with <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.build.productionserverarchive.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.build.productionServerArchive</span></code></a>) is set to the package name, e.g. <code class="docutils literal notranslate"><span class="pre">MyServer</span></code> (or to update the generated <code class="docutils literal notranslate"><span class="pre">routes.json</span></code>; update the <code class="docutils literal notranslate"><span class="pre">component</span></code> setting with whatever archive name you choose). Further, it is important that the following files are included:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">server.m</span></code> should be included as “exported function” (<code class="docutils literal notranslate"><span class="pre">FunctionFiles</span></code> option when working with <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.build.productionserverarchive.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.build.productionServerArchive</span></code></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">openapi.json</span></code> and <code class="docutils literal notranslate"><span class="pre">openapi.yaml</span></code> should be manually added as “Additional files required for your archive to run” (<code class="docutils literal notranslate"><span class="pre">AdditionalFiles</span></code> when working with <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.build.productionserverarchive.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.build.productionServerArchive</span></code></a>).</p></li>
+<li><p>If you have a <code class="docutils literal notranslate"><span class="pre">swagger</span></code> directory with the SwaggerUI implementation, that directory should also be manually added as “Additional files required for your archive to run” (<code class="docutils literal notranslate"><span class="pre">AdditionalFiles</span></code>).</p></li>
+<li><p>All other dependencies (like the model files, etc.) <em>should</em> automatically be picked up by the MATLAB Compiler SDK dependency analysis. However, to be 100% certain, you can also manually add the entire <code class="docutils literal notranslate"><span class="pre">+MyServer</span></code> directory<a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> to “Additional files required for your archive to run” (or <code class="docutils literal notranslate"><span class="pre">AdditionalFiles</span></code>).</p></li>
+</ol>
+</section>
+<section id="archive-deployment">
+<h3>Archive deployment<a class="headerlink" href="#archive-deployment" title="Link to this heading"></a></h3>
+<p>When building a Microservice Docker image using <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/compiler_sdk/mps_dev_test/compiler.package.microservicedockerimage.html" rel="noreferrer" target="_blank" title="(in MATLAB Compiler SDK R2025a)"><code class="xref mat mat-func docutils literal notranslate"><span class="pre">compiler.package.microserviceDockerImage</span></code></a>, ensure to configure the <code class="docutils literal notranslate"><span class="pre">RoutesFile</span></code> property to point to the generated <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> file.</p>
+<p>When deploying to MATLAB Production Server, copy the CTF-archive to the <code class="docutils literal notranslate"><span class="pre">auto_deploy</span></code> folder, configure the <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> file on the server instance based on the generated <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> file and (re)start the instance.</p>
+</section>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>the <code class="docutils literal notranslate"><span class="pre">/v3</span></code> part in this example is an explicit part of the Petstore example, it is explicitly set in its spec. The OpenAPI server generator does <em>not</em> add any versioning itself.</p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>It is possible to add entire directories using this option despite it being called “files”</p>
+</aside>
+</aside>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CustomizationExampleAirflow.html" class="btn btn-neutral float-left" title="Advanced Example: Customizing the Generator (for Apache Airflow)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ServerRequestResponse.html" class="btn btn-neutral float-right" title="Server Request and Response Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

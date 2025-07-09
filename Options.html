@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Generator Configuration Options &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Basic Usage" href="BasicUsage.html" />
+    <link rel="prev" title="Customizing Generated Client Code" href="CustomizingGeneratedCode.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client Generator Configuration Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#config">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jarpath">jarPath</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generatorname">generatorName</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inputspec">inputSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inputspecrootdirectory">inputSpecRootDirectory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packagename">packageName</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output">output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#skipvalidatespec">skipValidateSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyrightnotice">copyrightNotice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#templatedir">templateDir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#openapiroot">openapiRoot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#addoauth">AddOAuth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objectparams">ObjectParams</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Client Generator Configuration Options</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="client-generator-configuration-options">
+<h1>Client Generator Configuration Options<a class="headerlink" href="#client-generator-configuration-options" title="Link to this heading"></a></h1>
+<p>There are various options which must be passed to the generator, for example to specify which OpenAPI to generate a client for. And there are additional optional options to customize the behavior of the generator. The following page gives a complete overview of all options and how these can be specified:</p>
+<ul class="simple">
+<li><p>Through <code class="docutils literal notranslate"><span class="pre">openapi.build.Client</span></code> inside MATLAB, or</p></li>
+<li><p>On the <code class="docutils literal notranslate"><span class="pre">npx</span> <span class="pre">&#64;openapitools/openapi-generator-cli</span> <span class="pre">generate</span></code> command line <em>directly</em>, or</p></li>
+<li><p>Through a JSON configuration file which is then passed to the generator on the <code class="docutils literal notranslate"><span class="pre">npx</span> <span class="pre">&#64;openapitools/openapi-generator-cli</span> <span class="pre">generate</span></code> command line.</p></li>
+</ul>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#config" id="id1">config</a></p></li>
+<li><p><a class="reference internal" href="#jarpath" id="id2">jarPath</a></p></li>
+<li><p><a class="reference internal" href="#generatorname" id="id3">generatorName</a></p></li>
+<li><p><a class="reference internal" href="#inputspec" id="id4">inputSpec</a></p></li>
+<li><p><a class="reference internal" href="#inputspecrootdirectory" id="id5">inputSpecRootDirectory</a></p></li>
+<li><p><a class="reference internal" href="#packagename" id="id6">packageName</a></p></li>
+<li><p><a class="reference internal" href="#output" id="id7">output</a></p></li>
+<li><p><a class="reference internal" href="#skipvalidatespec" id="id8">skipValidateSpec</a></p></li>
+<li><p><a class="reference internal" href="#copyrightnotice" id="id9">copyrightNotice</a></p></li>
+<li><p><a class="reference internal" href="#templatedir" id="id10">templateDir</a></p></li>
+<li><p><a class="reference internal" href="#openapiroot" id="id11">openapiRoot</a></p></li>
+<li><p><a class="reference internal" href="#addoauth" id="id12">AddOAuth</a></p></li>
+<li><p><a class="reference internal" href="#objectparams" id="id13">ObjectParams</a></p></li>
+</ul>
+</nav>
+<section id="config">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">config</a><a class="headerlink" href="#config" title="Link to this heading"></a></h2>
+<p>Instructs the command line tool to read further configuration options from a JSON-file.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-0">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>When working with <code class="docutils literal notranslate"><span class="pre">openapi.build.Client</span></code> you can provide such a configuration file, using the <code class="docutils literal notranslate"><span class="pre">inputConfigurationFile</span></code> argument or property.
+When the <code class="docutils literal notranslate"><span class="pre">build()</span></code> method is called an output configuration file is written to the location given by the <code class="docutils literal notranslate"><span class="pre">outputConfigurationFile</span></code> argument or property or the default <code class="docutils literal notranslate"><span class="pre">openapitools.json</span></code>, in the current directory.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="c">% Only if necessary, normally the default value is correct</span>
+<span class="n">client</span><span class="p">.</span><span class="n">inputConfigurationFile</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/alternative/location/myconfig.json&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">inputConfigurationFile</span><span class="p">=</span><span class="s">&quot;/some/alternative/location/myconfig.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-1">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>This <em>is</em> the actual configuration file, and it does not refer to itself inside the configuration.</p>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-2">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">--config</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --config /some/alternative/location/myconfig.json</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="jarpath">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">jarPath</a><a class="headerlink" href="#jarpath" title="Link to this heading"></a></h2>
+<p>Instructs the command line tool where to find the custom MATLAB generator JAR-file. When working with <code class="docutils literal notranslate"><span class="pre">openapi.build.Client</span></code> this typically does not have to be set explicitly but when working with the generator in the shell directly, the location <em>must</em> be provided.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-3">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">jarPath</span></code> property. This typically does not have to be set explicitly and can typically be determined automatically based on the location of <code class="docutils literal notranslate"><span class="pre">openapi.build.Client</span></code> itself, but can be changed if necessary.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="c">% Only if necessary, normally the default value is correct</span>
+<span class="n">client</span><span class="p">.</span><span class="n">templateDir</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/alternative/location/MATLAB-openapi-generator-3.0.0.jar&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">templateDir</span><span class="p">=</span><span class="s">&quot;/some/alternative/location/MATLAB-openapi-generator-3.0.0.jar&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-4">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Cannot be configured in the JSON configuration file. Must be provided on the command-line if not working with the client builder inside MATLAB.</p>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-5">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">--custom-generator</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --custom-generator /some/location/Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generatorname">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">generatorName</a><a class="headerlink" href="#generatorname" title="Link to this heading"></a></h2>
+<p>Specifies which generator to use to generate a client. For the MATLAB generator this must be set to <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-6">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Cannot be changed, defaults to <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code>.</p>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-7">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.generatorName</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;generatorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MATLAB&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-8">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">-g</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... -g matlab-client</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inputspec">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">inputSpec</a><a class="headerlink" href="#inputspec" title="Link to this heading"></a></h2>
+<p>Specifies the location of the OpenAPI spec to generate a MATLAB client for. This can refer to a local file or HTTP(S) URI. If the API specification is spread across multiple separate files consider using <a class="reference internal" href="#inputspecrootdirectory"><code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code></a> instead. Either <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> or <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> must be set (if both are set <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> is ignored and <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> is used instead).</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-9" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-9">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">inputSpec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/location/myspec.yaml&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">inputSpec</span><span class="p">=</span><span class="s">&quot;/some/location/myspec.yaml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-10" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-10">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.inputSpec</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;inputSpec&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/some/location/myspec.yaml&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-11">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">-i</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... -i /some/location/myspec.yaml</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inputspecrootdirectory">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">inputSpecRootDirectory</a><a class="headerlink" href="#inputspecrootdirectory" title="Link to this heading"></a></h2>
+<p>Specifies a directory containing a collection of JSON and/or YAML-files which make up the entire API specification. When working with this option a single MATLAB client is created which covers all APIs and Models from all files combined. Either <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> or <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> must be set (if both are set <code class="docutils literal notranslate"><span class="pre">inputSpec</span></code> is ignored and <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> is used instead).</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-12" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-12">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">inputSpecRootDirectory</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">inputSpecRootDirectory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/location&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">inputSpecRootDirectory</span><span class="p">=</span><span class="s">&quot;/some/location&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-13" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-13">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.inputSpecRootDirectory</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;inputSpecRootDirectory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/some/location&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-14" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-14">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">--input-spec-root-directory</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --input-spec-root-directory /some/location</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="packagename">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">packageName</a><a class="headerlink" href="#packagename" title="Link to this heading"></a></h2>
+<p>Specifies the name of the MATLAB package inside which to generate the MATLAB client.</p>
+<p>If not set, defaults to <code class="docutils literal notranslate"><span class="pre">OpenAPIClientPackage</span></code>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-15" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-15">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">packageName</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">packageName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;myPackage&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">packageName</span><span class="p">=</span><span class="s">&quot;myPackage&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-16" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-16">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.packageName</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;packageName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;myPackage&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-17" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-17">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">--package-name</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --package-name myPackage</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="output">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">output</a><a class="headerlink" href="#output" title="Link to this heading"></a></h2>
+<p>Specifies the output directory where the client is to be generated</p>
+<p>If not set, defaults to <code class="docutils literal notranslate"><span class="pre">OpenAPIClient</span></code>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-18" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-18">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">output</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;myClient&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">output</span><span class="p">=</span><span class="s">&quot;myClient&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-19" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-19">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.output</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;myClient&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-20" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-20">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">-o</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... -o myClient</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="skipvalidatespec">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">skipValidateSpec</a><a class="headerlink" href="#skipvalidatespec" title="Link to this heading"></a></h2>
+<p>By default the generator first validates the input spec to determine whether it conforms to the OpenAPI 3.0.x specification and it errors out if the spec is non-conformant. In some non-conformant cases it is still possible to generate useful clients though and in those cases it is possible to disable the check using <code class="docutils literal notranslate"><span class="pre">skipValidateSpec</span></code>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-21" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-21">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">skipValidateSpec</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">skipValidateSpec</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">skipValidateSpec</span><span class="p">=</span><span class="nb">true</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-22" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-22">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.skipValidateSpec</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;skipValidateSpec&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-23" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-23">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">--skip-validate-spec</span></code> parameter</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --skip-validate-spec</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="copyrightnotice">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">copyrightNotice</a><a class="headerlink" href="#copyrightnotice" title="Link to this heading"></a></h2>
+<p>In some cases it may be desirable to include copyright notices in the generated code, this can be accomplished through the <code class="docutils literal notranslate"><span class="pre">copyrightNotice</span></code> option.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-24" name="sd-tab-set-8" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-24">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">copyrightNotice</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">copyrightNotice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;(c) 2023 My Company&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">copyrightNotice</span><span class="p">=</span><span class="s">&quot;(c) 2023 My Company&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-25" name="sd-tab-set-8" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-25">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">copyrightNotice</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;copyrightNotice&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(c) 2023 My Company&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-26" name="sd-tab-set-8" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-26">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">copyrightNotice</span></code>. Note that specifying this on the command line can be tricky as this may contain characters which need to be escaped.</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --additional-properties copyrightNotice=&quot;(c) My Company&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="templatedir">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">templateDir</a><a class="headerlink" href="#templatedir" title="Link to this heading"></a></h2>
+<p>Specifies the location of the template directory.</p>
+<p>This does not have to be specified if the tooling is run from its default location and no alternative templates are to be used. Do specify when running from non-default locations or if you want to work with modified templates in a different location.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-27" name="sd-tab-set-9" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-27">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">templateDir</span></code> property. Typically does not have to be set and can be determined automatically.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="c">% Only if necessary/desired, normally the default value is correct</span>
+<span class="n">client</span><span class="p">.</span><span class="n">templateDir</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/alternative/location&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">templateDir</span><span class="p">=</span><span class="s">&quot;/some/alternative/location&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-28" name="sd-tab-set-9" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-28">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">generator-cli.generators.v3.0.templateDir</span></code>. Does not have to be set if running the generator CLI from the <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory and wanting to work with the default templates.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;templateDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/some/alternative/location&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-29" name="sd-tab-set-9" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-29">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">-t</span></code> parameter.  Does not have to be set if running the generator CLI from the <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory and wanting to work with the default templates.</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... -t /some/alternative/location</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="openapiroot">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">openapiRoot</a><a class="headerlink" href="#openapiroot" title="Link to this heading"></a></h2>
+<p>Specifies the location of the <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> directory inside the package. Some files and tooling need are located relative to this location.</p>
+<p>This does not have to be specified if the tooling is run from its default location. Do specify when running from non-default locations.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-30" name="sd-tab-set-10" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-30">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through <code class="docutils literal notranslate"><span class="pre">openapiRoot</span></code> property.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the property after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="c">% Only if necessary, normally the default value is correct</span>
+<span class="n">client</span><span class="p">.</span><span class="n">openapiRoot</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/some/location/Software/MATLAB&quot;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">openapiRoot</span><span class="p">=</span><span class="s">&quot;/some/location/Software/MATLAB&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-31" name="sd-tab-set-10" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-31">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">openapiRoot</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;openapiRoot&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/some/location/Software/MATLAB&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-32" name="sd-tab-set-10" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-32">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">openapiRoot</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --additional-properties openapiRoot=/some/location/Software/MATLAB</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="addoauth">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">AddOAuth</a><a class="headerlink" href="#addoauth" title="Link to this heading"></a></h2>
+<p>Adds OAuth authentication to all operations. Strictly speaking, whether or not authentication is required should be specified on a per operation basis in the OpenAPI spec. What often happens though, if <em>all</em> operations require authentication is that this is explained on a high level in text but the formal definitions on each and every operation is omitted from the spec. In that case, by default the generated MATLAB code will als <em>not</em> authenticate any of the requests. Use the <code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code> option to override this and actually force <em>all</em> operations to use authentication.</p>
+<p><code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code> is used with choosing a name for this authentication flow. That name can then later be used when <a class="reference internal" href="CustomizingGeneratedCode.html#authentication"><span class="std std-ref">implementing the logic for the authentication flow</span></a>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-33" name="sd-tab-set-11" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-33">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the additionalProperties after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">additionalProperties</span><span class="p">(</span><span class="s">&#39;AddOAuth&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;MyAuthName&#39;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">aProps</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">containers.Map</span>
+<span class="n">aProps</span><span class="p">(</span><span class="s">&#39;AddOAuth&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;MyAuthName&#39;</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">additionalProperties</span><span class="p">=</span><span class="n">aProps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-34" name="sd-tab-set-11" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-34">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;AddOAuth&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MyAuthName&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-35" name="sd-tab-set-11" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-35">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --additional-properties AddOAuth=MyAuthName</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="objectparams">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">ObjectParams</a><a class="headerlink" href="#objectparams" title="Link to this heading"></a></h2>
+<p>Specifies that certain parameters are to be treated as properties set on the client object rather than input parameters to specific operations.</p>
+<p>For example, (virtually) all operations in all Microsoft Azure services are versioned and this version must be passed along as query parameter (<code class="docutils literal notranslate"><span class="pre">api_version</span></code>) to each and every operation separately. Often you also have to specify a <code class="docutils literal notranslate"><span class="pre">resourceGroupName</span></code>. By default, MATLAB clients generated for these services would then also require these parameters as input to each and every method call. Use <code class="docutils literal notranslate"><span class="pre">ObjectParams</span></code> to specify that such parameters can be set as a property of the client object rather than having to provide them as inputs to each and every method call.</p>
+<p>So then in the end when working with the client instead of having to write:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myPackage</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">SomeClient</span><span class="p">;</span>
+<span class="c">% Apart from providing method specific inputs, also specify the same</span>
+<span class="c">% version and resource group parameter over-and-over again</span>
+<span class="n">client</span><span class="p">.</span><span class="n">someMethod</span><span class="p">(</span><span class="n">someInputSpecificToSomeMethod</span><span class="p">,</span><span class="s">&quot;2023-10-01&quot;</span><span class="p">,</span><span class="s">&quot;myResourceGroup&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">otherMethod</span><span class="p">(</span><span class="n">someInputSpecificToOtherMethod</span><span class="p">,</span><span class="s">&quot;2023-10-01&quot;</span><span class="p">,</span><span class="s">&quot;myResourceGroup&quot;</span><span class="p">)</span>
+<span class="c">% etc</span>
+</pre></div>
+</div>
+<p>This could then become:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Specify the common parameters once, on the client level</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myPackage</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">SomeClient</span><span class="p">(</span><span class="n">api_version</span><span class="p">=</span><span class="s">&quot;2023-10-01&quot;</span><span class="p">,</span><span class="n">resourceGroupName</span><span class="p">=</span><span class="s">&quot;myResourceGroup&quot;</span><span class="p">);</span>
+<span class="c">% Now only the method specific inputs have to be provided</span>
+<span class="n">client</span><span class="p">.</span><span class="n">someMethod</span><span class="p">(</span><span class="n">otherInputSpecificToSomeMethod</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">otherMethod</span><span class="p">(</span><span class="n">otherInputSpecificToOtherMethod</span><span class="p">)</span>
+<span class="c">% etc</span>
+</pre></div>
+</div>
+<p>Where it would then also be possible to <a class="reference internal" href="BasicUsage.html#set-properties-using-a-configuration-file"><span class="std std-ref">set default values for these object properties using a configuration file</span></a>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-36" name="sd-tab-set-12" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="matlab" for="sd-tab-item-36">
+MATLAB</label><div class="sd-tab-content docutils">
+<p>Specified through the <code class="docutils literal notranslate"><span class="pre">objectParameters</span></code> property. Specified as <code class="docutils literal notranslate"><span class="pre">containers.Map</span></code> where the keys are the parameter name and the values are the parameter data types.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Set the additionalProperties after initialization</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">objectParameters</span><span class="p">(</span><span class="s">&#39;api_version&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;string&#39;</span><span class="p">;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">objectParameters</span><span class="p">(</span><span class="s">&#39;resourceGroupName&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;string&#39;</span><span class="p">;</span>
+
+<span class="c">% Or, set during initialization</span>
+<span class="n">oParams</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">containers.Map</span>
+<span class="n">oParams</span><span class="p">(</span><span class="s">&#39;api_version&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;string&#39;</span><span class="p">;</span>
+<span class="n">oParams</span><span class="p">(</span><span class="s">&#39;resourceGroupName&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;string&#39;</span><span class="p">;</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">objectParameters</span><span class="p">=</span><span class="n">oParams</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-37" name="sd-tab-set-12" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="json" for="sd-tab-item-37">
+JSON Configuration</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">objectParameters</span></code>. The value of this property takes the form of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NameOfParameter1</span><span class="o">/</span><span class="n">TypeOfParameter1</span><span class="o">/</span><span class="n">NameOfParameter2</span><span class="o">/</span><span class="n">TypeOfParameter2</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./node_modules/@openapitools/openapi-generator-cli/config.schema.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;generator-cli&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;generators&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;v3.0&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;objectParameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api_version/string/resourceGroupName/string&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-38" name="sd-tab-set-12" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-38">
+Command Line</label><div class="sd-tab-content docutils">
+<p>Specified as additional property named <code class="docutils literal notranslate"><span class="pre">objectParameters</span></code>. The value of this property takes the form of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NameOfParameter1</span><span class="o">/</span><span class="n">TypeOfParameter1</span><span class="o">/</span><span class="n">NameOfParameter2</span><span class="o">/</span><span class="n">TypeOfParameter2</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">npx @openapitools/openapi-generator-cli generate ... --additional-properties objectParameters=api_version/string/resourceGroupName/string</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CustomizingGeneratedCode.html" class="btn btn-neutral float-left" title="Customizing Generated Client Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BasicUsage.html" class="btn btn-neutral float-right" title="Basic Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

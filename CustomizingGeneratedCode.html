@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customizing Generated Client Code &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Client Generator Configuration Options" href="Options.html" />
+    <link rel="prev" title="Building MATLAB Client Code" href="BuildClient.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Customizing Generated Client Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hints">Hints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-control">Source control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selective-generation">Selective generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unsupported-content-type">Unsupported Content-Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authentication">Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#oauth-and-getoauthtoken">OAuth and <code class="docutils literal notranslate"><span class="pre">getOAuthToken</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#presend-and-postsend-methods">preSend and postSend methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#presend">preSend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#postsend">postSend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Selective generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Customizing Generated Client Code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="customizing-generated-client-code">
+<h1>Customizing Generated Client Code<a class="headerlink" href="#customizing-generated-client-code" title="Link to this heading"></a></h1>
+<p>After the MATLAB code has been generated it may be necessary to customize the generated code. The following describes tips to help in doing so and typical points within the generated code where modifications might be made.</p>
+<section id="hints">
+<h2>Hints<a class="headerlink" href="#hints" title="Link to this heading"></a></h2>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Generated models derive from a <code class="docutils literal notranslate"><span class="pre">JSONMapper</span></code> base class and the properties in the Model classes are “annotated” using <code class="docutils literal notranslate"><span class="pre">JSONMapper</span></code> “annotations”. See <a class="reference internal" href="JSONMapper.html"><span class="std std-doc">References/JSONMapper</span></a> to learn more about this class.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>For common functionality consider changing the <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> to that changes propagate to all derived API classes.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If changing the <code class="docutils literal notranslate"><span class="pre">preSend</span></code>, <code class="docutils literal notranslate"><span class="pre">postSend</span></code> or <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> call a function perhaps in separate namespace rather than several lines of code, <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html" rel="noreferrer" target="_blank">https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html</a> so that added code is more distinct from the generated code and reinserting just one line of code adds back functionality making diffs or merges simpler.</p>
+</div>
+</section>
+<section id="source-control">
+<h2>Source control<a class="headerlink" href="#source-control" title="Link to this heading"></a></h2>
+<p>Before modifying the code it is strongly advised to use source control of some form so if the code is regenerated later changes are not lost and changes can be checked against generated code.
+Source controlling the source spec and any build scripts is also recommended so that changes to them can be recorded over time also. This provides an exact means of recording what version of a spec generated what version of a client and potentially recreating it if necessary. This package notes the version of the package used to generate code as a comment in the code itself.</p>
+</section>
+<section id="selective-generation">
+<h2>Selective generation<a class="headerlink" href="#selective-generation" title="Link to this heading"></a></h2>
+<p>The generator takes standard openapi-tools arguments that would allow generation of the APIs or the Models or subsets. This is mostly useful if editing the spec itself or if it is known that a only specific part of a spec has changed. One can use a <code class="docutils literal notranslate"><span class="pre">.openapi-generator-ignore</span></code> file to define files to not regenerate.</p>
+</section>
+<section id="unsupported-content-type">
+<h2>Unsupported Content-Type<a class="headerlink" href="#unsupported-content-type" title="Link to this heading"></a></h2>
+<p>The package only supports <code class="docutils literal notranslate"><span class="pre">application/json</span></code> and <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code> body parameter inputs and <code class="docutils literal notranslate"><span class="pre">application/json</span></code> body replies. If some operations in the API only support other types e.g. <code class="docutils literal notranslate"><span class="pre">application/xml</span></code> the generated code will have to be manually modified to make these calls possible.</p>
+<p>Each and every method/operation will check the in- and output content-types if there are any. For example the <code class="docutils literal notranslate"><span class="pre">addPet</span></code> method for the Pet Store v3 example will contain code like the following:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Verify that operation supports JSON or FORM as input</span>
+<span class="n">specContentTypeHeaders</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;application/json&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;application/xml&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="p">];</span>
+<span class="k">if</span><span class="w"> </span><span class="nb">ismember</span><span class="p">(</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span><span class="n">specContentTypeHeaders</span><span class="p">)</span>
+<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="n">Header</span><span class="p">(</span><span class="k">end</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">matlab.net.http.field.ContentTypeField</span><span class="p">(</span><span class="s">&#39;application/json&#39;</span><span class="p">);</span>
+<span class="k">elseif</span><span class="w"> </span><span class="nb">ismember</span><span class="p">(</span><span class="s">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">,</span><span class="n">specContentTypeHeaders</span><span class="p">)</span>
+<span class="w">    </span><span class="n">request</span><span class="p">.</span><span class="n">Header</span><span class="p">(</span><span class="k">end</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">matlab.net.http.field.ContentTypeField</span><span class="p">(</span><span class="s">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">);</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">error</span><span class="p">(</span><span class="s">&quot;PetStore:api:addPet:UnsupportedMediaType&quot;</span><span class="p">,</span><span class="s">&quot;Generated OpenAPI Classes only support &#39;application/json&#39; and &#39;application/x-www-form-urlencoded&#39; MediaTypes.\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">...</span>
+<span class="w">        </span><span class="s">&quot;Operation &#39;%s&#39; does not support this. It may be possible to call this operation by first editing the generated code.&quot;</span><span class="p">,</span><span class="s">&quot;addPet&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>This code will be executed for each and every call to <code class="docutils literal notranslate"><span class="pre">addPet</span></code>. On the one hand this should not be necessary, this is basically static code resulting in the same code path being followed each call, and it for example does <em>not</em> depend on inputs. On the other hand though, overhead is minimal <em>and</em> this approach does allow easier customization on a per operation/method basis.</p>
+<p>When manually adding support for other content-types for specific operations, make sure to also update these checks otherwise the method will still error out.</p>
+</section>
+<section id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h2>
+<p>In OpenAPI 3, the spec can declare various named authentication methods. And then, for each separate operation, it can specify whether it requires authentication at all, and if so, which of the named methods are supported.</p>
+<p>Basic or Digest authentication should work by default (as long as the correct <code class="docutils literal notranslate"><span class="pre">matlab.net.http.Credentials</span></code> are provided to the client object). API Key based authentication should work as well (if the correct <code class="docutils literal notranslate"><span class="pre">apiKey</span></code> is set on the client object). However, <em>proper</em> oAuth authentication may need customization. See the <a class="reference internal" href="#authentication">Authentication</a> section below to learn more about how the generated classes work with authentication and what customizations may be needed.</p>
+<p>For the <em>entire</em> package exactly <em>one</em> <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> method is generated and it is part of the generated <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;.BaseClient</span></code> class. All the API classes derive from this <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> class. The <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> method will contain a <code class="docutils literal notranslate"><span class="pre">switch,</span> <span class="pre">case,</span> <span class="pre">otherwise</span></code> statement to handle the various authentication mechanisms based on their name. For example for the Pet Store v3 example, it will look like the following:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w">  </span><span class="nf">[request, httpOptions, uri] = requestAuth</span><span class="p">(</span>obj, request, httpOptions, authNames, uri<span class="p">)</span>
+<span class="w">    </span><span class="c">% requestAuth will be called by operations which require </span>
+<span class="w">    </span><span class="c">% authentication. May have to be extended or modified after code </span>
+<span class="w">    </span><span class="c">% generation. For example, authentication methods not present in the</span>
+<span class="w">    </span><span class="c">% service OpenAPI spec or methods not directly supported by the</span>
+<span class="w">    </span><span class="c">% generator will have to be added. Generated logic may also not be</span>
+<span class="w">    </span><span class="c">% 100% correct if the OpenAPI spec contained multiple different </span>
+<span class="w">    </span><span class="c">% authentication methods of the same type.</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="n">authNames</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;api_key&quot;</span>
+<span class="w">            </span><span class="c">% Key based authentication, assumes apiKey property has been set </span>
+<span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="n">Header</span><span class="p">(</span><span class="k">end</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">matlab.net.http.field.GenericField</span><span class="p">(</span><span class="s">&quot;api_key&quot;</span><span class="p">,</span><span class="n">obj</span><span class="p">.</span><span class="n">apiKey</span><span class="p">);</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;petstore_auth&quot;</span>
+<span class="w">            </span><span class="c">% oAuth authentication, calls getOAuthToken and adds returned token as Bearer authorization header</span>
+<span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="n">Header</span><span class="p">(</span><span class="k">end</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">matlab.net.http.field.AuthorizationField</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="s">&quot;Bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">getOAuthToken</span><span class="p">(</span><span class="s">&quot;petstore_auth&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">otherwise</span>
+<span class="w">            </span><span class="nb">error</span><span class="p">(</span><span class="s">&quot;PetStore:UnknownAuthorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Operation requested an authentication method which was not specified in the OpenAPI spec.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Each operation which requires authentication will call this method before making its actual request. The <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> method then updates the request or HTTPOptions with the relevant settings and returns the updated request/options as output.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Not all specs follow this approach strictly. For example, in some cases where <em>all</em> operations require the same authentication, some specs may not list the supported authentication methods on a per operation basis. In that case, the generator will <em>not</em> generate calls to <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> in the operation methods. In such cases, consider using the <a class="reference internal" href="Options.html#addoauth"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code> option</span></a> when generating the client or use <a class="reference internal" href="#presend"><code class="docutils literal notranslate"><span class="pre">preSend</span></code></a> to authenticate the requests before they are made.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to check the generated <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> for correctness and fix any issues it may contain to ensure safe usage of the generated code and safe access to the APIs.</p>
+</div>
+<p>As can be seen in the example above, where the <code class="docutils literal notranslate"><span class="pre">petstore_auth</span></code> method is in fact OAuth based, <code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> will call another generated method for OAuth based authentication mechanisms: <code class="docutils literal notranslate"><span class="pre">getOAuthToken</span></code>. This method will very likely have to be customized.</p>
+<section id="oauth-and-getoauthtoken">
+<h3>OAuth and <code class="docutils literal notranslate"><span class="pre">getOAuthToken</span></code><a class="headerlink" href="#oauth-and-getoauthtoken" title="Link to this heading"></a></h3>
+<p>For OAuth based authentication, the generator will generate an additional method <code class="docutils literal notranslate"><span class="pre">getOAuthToken</span></code>, for example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>token<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">getOAuthToken</span><span class="p">(</span>obj, name<span class="p">)</span><span class="w"> </span><span class="c">%#ok&lt;INUSD&gt; </span>
+<span class="w">    </span><span class="c">%% To be customized after code generation</span>
+<span class="w">    </span><span class="c">% This template method simply returns the bearerToken of the object</span>
+<span class="w">    </span><span class="c">% which is assumed to have been manually set after manually having </span>
+<span class="w">    </span><span class="c">% completed the OAuth flow. Typically this method should be </span>
+<span class="w">    </span><span class="c">% customized to return a properly cached still valid token, refresh</span>
+<span class="w">    </span><span class="c">% an cached expired token just-in-time or perform the entire OAuth</span>
+<span class="w">    </span><span class="c">% flow from the start just-in-time and cache the token.</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% As the exact OAuth flow may vary by OAuth provider, the full</span>
+<span class="w">    </span><span class="c">% authentication flow is not automatically generated and the </span>
+<span class="w">    </span><span class="c">% template method simply returns the bearerToken property.</span>
+<span class="w">    </span><span class="n">token</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">bearerToken</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c">% The code below can be uncommented and then used as a starting </span>
+<span class="w">    </span><span class="c">% point to fully implement the OAuth flows for the flows specified </span>
+<span class="w">    </span><span class="c">% in the API spec.</span>
+
+<span class="w">    </span><span class="c">% switch name</span>
+<span class="w">    </span><span class="c">%     case &quot;petstore_auth&quot;</span>
+<span class="w">    </span><span class="c">%         % Implicit Flow</span>
+<span class="w">    </span><span class="c">%         authorizationUrl = &quot;/api/oauth/dialog&quot;;</span>
+<span class="w">    </span><span class="c">%         refreshUrl = &quot;&quot;;</span>
+<span class="w">    </span><span class="c">%         </span>
+<span class="w">    </span><span class="c">%         % Scopes defined in spec</span>
+<span class="w">    </span><span class="c">%         scopes = [...</span>
+<span class="w">    </span><span class="c">%             &quot;write:pets&quot;,... % modify pets in your account</span>
+<span class="w">    </span><span class="c">%             &quot;read:pets&quot;,... % read your pets</span>
+<span class="w">    </span><span class="c">%         ];</span>
+<span class="w">    </span><span class="c">%     otherwise</span>
+<span class="w">    </span><span class="c">%         error(&quot;PetStore:UnknownOAuth&quot;, &quot;Operation requested an OAUth flow which was not specified in the OpenAPI spec.&quot;)</span>
+<span class="w">    </span><span class="c">% end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>As indicated in the comments of this code, this is really just template code which <em>will</em> allow calling operations requiring an OAuth Bearer Token <em>if</em> the <code class="docutils literal notranslate"><span class="pre">bearerToken</span></code> property of the client object has been set to a <em>manually</em> obtained token. Ideally that token should not have to be obtained manually though; this is something which this method should actually do. Ideally this method is updated such that it can:</p>
+<ol class="arabic simple">
+<li><p>Obtain (with user interaction if needed) and then cache new tokens if there are no cached tokens yet.</p></li>
+<li><p>(Silently without needing user interaction) return a cached token if available and still valid.</p></li>
+<li><p>Just-in-time (silently without needing user interaction) refresh a cached token if available but expired. (And if automatically refreshing fails/is not possible, obtain and cache an entirely new token (which may require user interaction then)).</p></li>
+</ol>
+</section>
+</section>
+<section id="presend-and-postsend-methods">
+<h2>preSend and postSend methods<a class="headerlink" href="#presend-and-postsend-methods" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> is generated with <code class="docutils literal notranslate"><span class="pre">preSend</span></code> and <code class="docutils literal notranslate"><span class="pre">postSend</span></code> methods which will be called by all operations right before and after sending their requests. By default these methods do not actually do anything but they can be <a class="reference internal" href="#presend-and-postsend-methods">customized</a>. The <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> class <code class="docutils literal notranslate"><span class="pre">preSend</span></code> and <code class="docutils literal notranslate"><span class="pre">postSend</span></code> methods:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="nf">[request, httpOptions, uri] = preSend</span><span class="p">(</span>obj, operationId, request, httpOptions, uri<span class="p">)</span><span class="w"> </span><span class="c">%#ok&lt;INUSL&gt; </span>
+<span class="w">    </span><span class="c">% preSend is called by every operation right before sending the</span>
+<span class="w">    </span><span class="c">% request. This method can for example be customized to add a</span>
+<span class="w">    </span><span class="c">% header to all (or most) requests if needed. </span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% If the requests of only a few operations need to be customized</span>
+<span class="w">    </span><span class="c">% it is recommended to modify the generated operation methods</span>
+<span class="w">    </span><span class="c">% in the API classes themselves rather than modifying preSend.</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% By default the generated preSend does not do anything, it just</span>
+<span class="w">    </span><span class="c">% returns the inputs as is.</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span>response<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">postSend</span><span class="p">(</span>obj, operationId, response, request, uri, httpOptions<span class="p">)</span><span class="w">  </span><span class="c">%#ok&lt;INUSD,INUSL&gt;</span>
+<span class="w">    </span><span class="c">% postSend is called by every operation right after sending the</span>
+<span class="w">    </span><span class="c">% request. This method can for example be customized to add</span>
+<span class="w">    </span><span class="c">% customized error handling if the API responds to errors in a</span>
+<span class="w">    </span><span class="c">% consistent way.</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% If the responses of only a few operations need to be customized</span>
+<span class="w">    </span><span class="c">% it is recommended to modify the generated operation methods</span>
+<span class="w">    </span><span class="c">% in the API classes themselves rather than modifying postSend.</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% By default the generated postSend does not do anything, it just</span>
+<span class="w">    </span><span class="c">% returns the response as is.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>As noted in the comments in this code, these methods are called by all operations, right before and after sending their requests.</p>
+<section id="presend">
+<h3>preSend<a class="headerlink" href="#presend" title="Link to this heading"></a></h3>
+<p>By default the generated <code class="docutils literal notranslate"><span class="pre">preSend</span></code> method does not do anything but it offers an entrypoint for customization <em>if needed</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">preSend</span></code> method can be customized if <em>all or at least most</em> requests need some customization before being send. For example, a header field could be added.</p>
+<p>Further, some APIs require authentication on <em>all</em> operations and then do not specify on a <em>per operation</em> basis that they require authentication. In that case it is possible to add the authentication in <code class="docutils literal notranslate"><span class="pre">preSend</span></code>, note however that it is also possible to use the <a class="reference internal" href="Options.html#addoauth"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">AddOAuth</span></code> option</span></a> for this.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If only a few specific operations need customization it makes more sense to edit their methods in the API classes directly rather than handling this in <code class="docutils literal notranslate"><span class="pre">preSend</span></code>.</p>
+</div>
+</section>
+<section id="postsend">
+<h3>postSend<a class="headerlink" href="#postsend" title="Link to this heading"></a></h3>
+<p>By default the generated <code class="docutils literal notranslate"><span class="pre">postSend</span></code> method does not do anything but it offers an entrypoint for customization <em>if needed</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">postSend</span></code> can be used to customize or parse responses of all requests. For example, API specific error handling can be added here if most operations in the API respond to errors in a consistent way.</p>
+</section>
+</section>
+<section id="id1">
+<h2>Selective generation<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>By default, the tool will generate code for <em>all</em> models in the spec. To selectively generate a feature, the client can be configured using global-properties. For example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">globalProperty</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;models&quot;</span><span class="p">;</span><span class="w"> </span><span class="c">% Generate only models</span>
+<span class="n">client</span><span class="p">.</span><span class="n">globalProperty</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;apis&quot;</span><span class="p">;</span><span class="w">   </span><span class="c">% Generate only APIs</span>
+<span class="n">client</span><span class="p">.</span><span class="n">globalProperty</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;models,supportingFiles&quot;</span><span class="w">   </span><span class="c">% Generate models and supporting files</span>
+<span class="n">client</span><span class="p">.</span><span class="n">globalProperty</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;models=&quot;&quot;User:Pet&quot;&quot;&quot;</span><span class="w">      </span><span class="c">% Generate the User and Pet models only</span>
+<span class="n">client</span><span class="p">.</span><span class="n">globalProperty</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;skipFormModel = false&quot;</span><span class="w">    </span><span class="c">% Generate for OAS3 and ver &lt; v5.x using the form parameters in &quot;requestBody&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BuildClient.html" class="btn btn-neutral float-left" title="Building MATLAB Client Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Options.html" class="btn btn-neutral float-right" title="Client Generator Configuration Options" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Building MATLAB Client Code" href="BuildClient.html" />
+    <link rel="prev" title="MATLAB Generator for OpenAPI" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-java-libraries">Required Java libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-openapi-generator-library">Installing the OpenAPI generator library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-matlab-code-generation-jar">Building MATLAB code generation jar</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-matlab-generator-for-openapi-to-the-matlab-path">Adding MATLAB Generator <em>for OpenAPI</em> to the MATLAB Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-generators">Using the Generators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#matlab-client-generator">MATLAB Client Generator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building-matlab-client-code">Building MATLAB client code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verify-the-generated-code-in-matlab">Verify the generated code in MATLAB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#customize-the-generated-code">Customize the generated code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-the-generated-code-in-matlab">Use the generated code in MATLAB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sharing-the-generated-code">Sharing the generated code</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matlab-server-generator">MATLAB Server Generator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<p>This package supports OpenAPI 3.0. OpenAPI was formerly known as Swagger and still is in many contexts. The terms are used largely interchangeably in this document.</p>
+<p>Consider installing the <a class="reference internal" href="SwaggerUI.html"><span class="std std-doc">Swagger UI</span></a> package to help displaying and interacting with the spec. This is useful when comparing the generated code with expected behavior.</p>
+<p>It is assumed that Maven, and a JDK are installed and configured per <span class="xref myst">requirements</span>.</p>
+<section id="required-java-libraries">
+<h2>Required Java libraries<a class="headerlink" href="#required-java-libraries" title="Link to this heading"></a></h2>
+<p>Two Java libraries are required by this package. The following steps describe how they can be provisioned.</p>
+<section id="installing-the-openapi-generator-library">
+<h3>Installing the OpenAPI generator library<a class="headerlink" href="#installing-the-openapi-generator-library" title="Link to this heading"></a></h3>
+<p>The OpenAPI Tools generator Java library is required, this is automatically downloaded by Maven as part of the <a class="reference internal" href="#building-matlab-code-generation-jar">Building MATLAB code generation jar</a> step below. (In the past this used to be a separate download or <code class="docutils literal notranslate"><span class="pre">setup</span></code> step but the separate step is no longer necessary).</p>
+<p>If you intend to work with the generators on the command line using <code class="docutils literal notranslate"><span class="pre">npx</span></code>, to ensure the correct version of the actual code generator JAR-files are available, it is recommended to use the following before running actual code generation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npx<span class="w"> </span>@openapitools/openapi-generator-cli<span class="w"> </span>version-manager<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="m">7</span>.13.0
+</pre></div>
+</div>
+</section>
+<section id="building-matlab-code-generation-jar">
+<h3>Building MATLAB code generation jar<a class="headerlink" href="#building-matlab-code-generation-jar" title="Link to this heading"></a></h3>
+<p>This step builds Java code that defines how to generate MATLAB client code. This jar together with generic functionality in the OpenAPITools package generate the end-product MATLAB code. The resulting jar file is: <code class="docutils literal notranslate"><span class="pre">&lt;package_directory&gt;/matlab-openapi-codegen/Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package_directory&gt;/Software/Java
+mvn<span class="w"> </span>clean<span class="w"> </span>package
+</pre></div>
+</div>
+</section>
+</section>
+<section id="adding-matlab-generator-for-openapi-to-the-matlab-path">
+<h2>Adding MATLAB Generator <em>for OpenAPI</em> to the MATLAB Path<a class="headerlink" href="#adding-matlab-generator-for-openapi-to-the-matlab-path" title="Link to this heading"></a></h2>
+<p>The code generator generates entirely standalone packages, all helper MATLAB code is included <em>in</em> the package. And it is not necessary to add anything other than the generated package itself to the MATLAB path to be able to use the generated client. However, the MATLAB Generator <em>for OpenAPI</em> package also contains some additional helper MATLAB functions which can be useful for generating packages in the first place, as well as for debugging. Run <code class="docutils literal notranslate"><span class="pre">Software/MATLAB/startup.m</span></code> to add the correct directories to the MATLAB path.</p>
+</section>
+<section id="using-the-generators">
+<h2>Using the Generators<a class="headerlink" href="#using-the-generators" title="Link to this heading"></a></h2>
+<p>After these one time setup processes the generators can be used to generated MATLAB client or server code. See the <a class="reference internal" href="#matlab-client-generator">MATLAB Client Generator</a> and <a class="reference internal" href="#matlab-server-generator">MATLAB Server Generator</a> sections below.</p>
+<section id="matlab-client-generator">
+<h3>MATLAB Client Generator<a class="headerlink" href="#matlab-client-generator" title="Link to this heading"></a></h3>
+<section id="building-matlab-client-code">
+<h4>Building MATLAB client code<a class="headerlink" href="#building-matlab-client-code" title="Link to this heading"></a></h4>
+<p>Generating a MATLAB client for a provided spec can be done inside or outside of MATLAB. To generate the client outside of MATLAB using npx directly, use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package_directory&gt;/Software
+npx<span class="w"> </span>@openapitools/openapi-generator-cli<span class="w"> </span>--custom-generator<span class="w"> </span>MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar<span class="w"> </span>generate<span class="w"> </span>-g<span class="w"> </span>matlab-client<span class="w"> </span><span class="se">\</span>
+<span class="w">                 </span>-i<span class="w"> </span>http://localhost:3000/api-json<span class="w"> </span>-o<span class="w"> </span>TestClient<span class="w"> </span>--package-name<span class="w"> </span>Test
+</pre></div>
+</div>
+<p>If not working in the package’s <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory, use full paths and add the following additional arguments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-t<span class="w"> </span><span class="s2">&quot;&lt;package_directory&gt;/Software/Mustache&quot;</span><span class="w"> </span>--additional-properties<span class="w"> </span><span class="nv">openapiRoot</span><span class="o">=</span><span class="s2">&quot;&lt;package_directory&gt;/Software/MATLAB</span>
+</pre></div>
+</div>
+<p>Alternatively from within MATLAB, after running <code class="docutils literal notranslate"><span class="pre">startup.m</span></code>, the MATLAB client can also be generated using:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">inputSpec</span><span class="p">=</span><span class="s">&quot;http://localhost:3000/api-json&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">packageName</span><span class="p">=</span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">=</span><span class="s">&quot;TestClient&quot;</span><span class="p">);</span>
+<span class="n">c</span><span class="p">.</span><span class="n">build</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="BuildClient.html"><span class="std std-doc">Build Client</span></a> file for more details and command options for this approach.</p>
+</section>
+<section id="verify-the-generated-code-in-matlab">
+<h4>Verify the generated code in MATLAB<a class="headerlink" href="#verify-the-generated-code-in-matlab" title="Link to this heading"></a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step requires MATLAB Generator <em>for OpenAPI</em> to have been added to the MATLAB path</p>
+</div>
+<p>After the code has been generated, the <code class="docutils literal notranslate"><span class="pre">verifyPackage</span></code> function can be used inside MATLAB to run <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/checkcode.html" rel="noreferrer" target="_blank"><code class="docutils literal notranslate"><span class="pre">checkcode</span></code></a> on all the M-files inside the specified directory, and which will then display any messages reported for these files. For example:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">openapi</span><span class="p">.</span><span class="n">verifyPackage</span><span class="p">(</span><span class="s">&#39;PetClient&#39;</span><span class="p">);</span>
+<span class="go">Running `checkcode` on all M-files inside `PetClient`.</span>
+<span class="go">Located 12 files.</span>
+
+<span class="go">Checked 12 files, 0 messages across 0 files were reported and printed above.</span>
+</pre></div>
+</div>
+<p>It may also be invoked via the client object:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">.</span><span class="n">verifyPackage</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>As the generated code should contain <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_prog/check-code-for-errors-and-warnings.html#brqxeeu-167" rel="noreferrer" target="_blank">code analyzer suppress comments</a> where appropriate, this should typically report no messages whatsoever in any of the files, any other messages <em>should</em> be further investigated, and if needed fixed manually.</p>
+<p>In MATLAB R2023a an issue with the linter can produce the following error:
+<code class="docutils literal notranslate"><span class="pre">'empty'</span> <span class="pre">is</span> <span class="pre">referenced</span> <span class="pre">but</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">a</span> <span class="pre">property,</span> <span class="pre">method,</span> <span class="pre">or</span> <span class="pre">event</span> <span class="pre">name</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">this</span> <span class="pre">class.'</span></code>
+While the referenced code should be checked for certainty, in general this error can be safely ignored.</p>
+</section>
+<section id="customize-the-generated-code">
+<h4>Customize the generated code<a class="headerlink" href="#customize-the-generated-code" title="Link to this heading"></a></h4>
+<p>Further, it may be necessary to <a class="reference internal" href="CustomizingGeneratedCode.html"><span class="std std-doc">customize the code</span></a> if the API relies on functionality which is not directly supported by the package and/or to properly configure authentication.</p>
+</section>
+<section id="use-the-generated-code-in-matlab">
+<h4>Use the generated code in MATLAB<a class="headerlink" href="#use-the-generated-code-in-matlab" title="Link to this heading"></a></h4>
+<p>See <a class="reference internal" href="BasicUsage.html"><span class="std std-doc">Basic Usage</span></a> to learn more about using the generated code in MATLAB.</p>
+</section>
+<section id="sharing-the-generated-code">
+<h4>Sharing the generated code<a class="headerlink" href="#sharing-the-generated-code" title="Link to this heading"></a></h4>
+<p>After having generated, customized and tested the client code, the client code can be shared with other MATLAB users. The generated packages should be entirely standalone and end-users do not have to install the MATLAB Generator <em>for OpenAPI</em>, Node.js, nor the code generator and they do not have to build the Jar file. They will simply need the whole “output directory” into which the package was generated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If during customization of the code, additional dependencies were introduced, end-users of the customized package will of course also need those dependencies.</p>
+</div>
+</section>
+</section>
+<section id="matlab-server-generator">
+<h3>MATLAB Server Generator<a class="headerlink" href="#matlab-server-generator" title="Link to this heading"></a></h3>
+<p>See <a class="reference internal" href="BuildServer.html"><span class="std std-doc">Building MATLAB Server Code</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="MATLAB Generator for OpenAPI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BuildClient.html" class="btn btn-neutral float-right" title="Building MATLAB Client Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

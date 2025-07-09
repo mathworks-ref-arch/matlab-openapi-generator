@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Usage &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Advanced Example: Customizing the Generator (for Apache Airflow)" href="CustomizationExampleAirflow.html" />
+    <link rel="prev" title="Client Generator Configuration Options" href="Options.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-classes">API Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-properties-using-a-configuration-file">Set properties using a configuration file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calling-api-operations">Calling API Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cookies">Cookies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model-constructors">Model constructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-inheritance">Model inheritance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-method-call-with-model-as-input">Example method call with model as input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enumeration-handling">Enumeration handling</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Basic Usage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h1>
+<p>The examples below are based on the Pet Store v3 OpenAPI example which can for example be run in a Docker container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-e<span class="w"> </span><span class="nv">OPENAPI_BASE_PATH</span><span class="o">=</span>/v3<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISABLE_OAUTH</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:8080<span class="w"> </span>openapitools/openapi-petstore
+</pre></div>
+</div>
+<p>This will run the Pet Store example on <a class="reference external" href="http://localhost:8080" rel="noreferrer" target="_blank">http://localhost:8080</a>, open this URL in a web browser to see the SwaggerUI for the example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For simplicity OAuth is disabled in this example using environment variable <code class="docutils literal notranslate"><span class="pre">DISABLE_OAUTH=1</span></code>. In this case the OpenAPI spec of the example does still contain the OAUth definition and the appropriate <a class="reference internal" href="CustomizingGeneratedCode.html#authentication"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">requestAuth</span></code> and <code class="docutils literal notranslate"><span class="pre">getOAuthToken</span></code> methods</span></a> will be generated in <code class="docutils literal notranslate"><span class="pre">BaseClient</span></code> but the token is not actually verified when calling the secured endpoints.</p>
+</div>
+<p>The MATLAB client code for this example can then be generated by running the following from a shell in the <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npx<span class="w"> </span>@openapitools/openapi-generator-cli<span class="w"> </span>--custom-generator<span class="w"> </span>Java/target/MATLAB-openapi-generator-3.0.0.jar<span class="w"> </span>generate<span class="w"> </span>-g<span class="w"> </span>matlab-client<span class="w"> </span>-i<span class="w"> </span>http://localhost:8080/openapi.json<span class="w"> </span>-o<span class="w"> </span>PetClient<span class="w"> </span>--package-name<span class="w"> </span>PetStore
+</pre></div>
+</div>
+<p>If not working in the package’s <code class="docutils literal notranslate"><span class="pre">Software</span></code> directory, use full paths and add the following additional arguments:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-t<span class="w"> </span><span class="s2">&quot;&lt;package_directory&gt;/Software/Mustache&quot;</span><span class="w"> </span>--additional-properties<span class="w"> </span><span class="nv">openapiRoot</span><span class="o">=</span><span class="s2">&quot;&lt;package_directory&gt;/Software/MATLAB</span>
+</pre></div>
+</div>
+<p>Or by using the following commands in MATLAB:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="n">inputSpec</span><span class="p">=</span><span class="s">&quot;http://localhost:8080/openapi.json&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">packageName</span><span class="p">=</span><span class="s">&quot;PetStore&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">=</span><span class="s">&quot;PetClient&quot;</span><span class="p">);</span>
+<span class="n">c</span><span class="p">.</span><span class="n">build</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="BuildClient.html"><span class="std std-doc">BuildClient.md</span></a> for further details on using the MATLAB based build process.</p>
+<p>The example below assumes that the generated package is called <code class="docutils literal notranslate"><span class="pre">PetStore</span></code> as was also set in the commands above. Add the directory in which the package was generated (<code class="docutils literal notranslate"><span class="pre">PetClient</span></code> in the examples above) to the MATLAB path (e.g. using <code class="docutils literal notranslate"><span class="pre">addpath</span></code>).</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The generator is designed to generate classes with proper <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_prog/create-help-for-classes.html" rel="noreferrer" target="_blank">help comments</a>. <em>Do</em> use the <code class="docutils literal notranslate"><span class="pre">help</span></code> function to learn more about the generated <code class="docutils literal notranslate"><span class="pre">api</span></code> and <code class="docutils literal notranslate"><span class="pre">model</span></code> classes, and their properties and methods.</p>
+</div>
+<section id="api-classes">
+<h2>API Classes<a class="headerlink" href="#api-classes" title="Link to this heading"></a></h2>
+<p>The generator generates classes for all of the APIs in the spec. The classes are generated in a sub package named <code class="docutils literal notranslate"><span class="pre">api</span></code>. The API objects are used to interact with the service and hold various configuration options for interacting with the service. All API classes have the following properties:</p>
+<dl class="field-list simple">
+<dt class="field-odd">serverUri<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Base URI to use when calling the API. Allows using a different server
+than specified in the original API spec.</p>
+</dd>
+<dt class="field-even">httpOptions<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://www.mathworks.com/help/matlab/ref/matlab.net.http.httpoptions-class.html" rel="noreferrer" target="_blank">HTTPOptions</a>
+used by all requests. This for example allows configuring whether- and
+which proxy to use for requests. Or to configure trusted HTTPS
+certificates and root CAs.</p>
+</dd>
+<dt class="field-odd">preferredAuthMethod<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If operation supports multiple authentication methods, specified which
+method to prefer.</p>
+</dd>
+<dt class="field-even">bearerToken<span class="colon">:</span></dt>
+<dd class="field-even"><p>If Bearer token authentication is used, the token can be supplied
+here. Note the token is only used if operations are called for which
+the API explicitly specified that Bearer authentication is supported.
+If this has not been specified in the spec but most operations do
+require Bearer authentication, consider adding the relevant header to
+all requests in the preSend method.</p>
+</dd>
+<dt class="field-odd">apiKey<span class="colon">:</span></dt>
+<dd class="field-odd"><p>If API key authentication is used, the key can be supplied here.
+Note the key is only used if operations are called for which
+the API explicitly specified that API key authentication is supported.
+If this has not been specified in the spec but most operations do
+require API key authentication, consider adding the API key to all
+requests in the preSend method.</p>
+</dd>
+<dt class="field-even">httpCredentials<span class="colon">:</span></dt>
+<dd class="field-even"><p>If Basic or Digest authentication is supported username/password
+credentials can be supplied here as matlab.net.http.Credentials. Note
+these are only actively used if operations are called for which the
+API spec has specified they require Basic authentication. If this has
+not been specified in the spec but most operations do require
+Basic authentication, consider setting the Credentials property in the
+httpOptions rather than through httpCredentials.</p>
+</dd>
+<dt class="field-odd">cookies<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Cookie jar. The cookie jar is shared across all API classes in the
+same package. All responses are automatically parsed for Set-Cookie
+headers and cookies are automatically added to the jar. Similarly
+cookies are added to outgoing requests if there are matching cookies
+in the jar for the given request. Cookies can also be added manually
+by calling the setCookies method on the cookies property. The cookie
+jar is also saved to disk (cookies.mat in the same directory as
+BaseClient) and reloaded in new MATLAB sessions.</p>
+</dd>
+</dl>
+<p>These properties can be set as any normal MATLAB object property:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="n">c</span><span class="p">.</span><span class="n">bearerToken</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;3244&lt;MY-REDACTED-TOKEN&gt;53abef&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>But they can also be set when instantiating the object using Name-Value pairs where the Name matches the property name, e.g.:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&quot;bearerToken&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3244&lt;MY-REDACTED-TOKEN&gt;53abef&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;apiKey&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;myapikey&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="n">bearerToken</span><span class="p">=</span><span class="s">&quot;3244&lt;MY-REDACTED-TOKEN&gt;53abef&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">apiKey</span><span class="p">=</span><span class="s">&quot;myapikey&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="set-properties-using-a-configuration-file">
+<h3>Set properties using a configuration file<a class="headerlink" href="#set-properties-using-a-configuration-file" title="Link to this heading"></a></h3>
+<p>These properties are rarely changed when working with a given API. To aid configuration they can be loaded from a simple JSON file rather than being explicitly set in code. This also permits an end user to change the properties without needing to alter or understand the code. Configuration files can be used to quickly switch between different servers or credentials for example.</p>
+<p>If a configuration file named <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;.Client.Settings.json</span></code> is found on the MATLAB path, it is loaded automatically when instantiating the client objects. To load a file with different name, use the <code class="docutils literal notranslate"><span class="pre">&quot;configFile&quot;</span></code> Name-Value pair when instantiating the object:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;configFile&quot;</span><span class="p">,</span><span class="s">&quot;/home/username/myconfigfile.json&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This will search for the specified file on the MATLAB path if not specifying an absolute path.</p>
+<p>Any additional options specified after the <code class="docutils literal notranslate"><span class="pre">&quot;configFile&quot;</span></code> argument, or when a <code class="docutils literal notranslate"><span class="pre">&lt;PackageName&gt;.Client.Settings.json</span></code> exists, allow overriding values from the configuration file. For example, suppose that the following <code class="docutils literal notranslate"><span class="pre">PetStore.Client.Settings.json</span></code> exists:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;serverUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost/v2&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;apiKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;myKey&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and then the following is used:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;serverUri&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;http://example.com/api/v2&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Then the client is instantiated with the <code class="docutils literal notranslate"><span class="pre">apiKey</span></code> from the configuration file but the <code class="docutils literal notranslate"><span class="pre">serverUri</span></code> is set to <code class="docutils literal notranslate"><span class="pre">&quot;http://example.com/api/v2&quot;</span></code> as specified in the code.</p>
+</section>
+<section id="calling-api-operations">
+<h3>Calling API Operations<a class="headerlink" href="#calling-api-operations" title="Link to this heading"></a></h3>
+<p>Operation calls are made by making method calls on API Object instances e.g. <code class="docutils literal notranslate"><span class="pre">Pet</span></code>, <code class="docutils literal notranslate"><span class="pre">Store</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">User</span></code>. If the operation has any required parameters according to its OpenAPI spec, the generated MATLAB method will have the same arguments as required positional input arguments. Any optional parameters are specified through Name-Value pairs.</p>
+<p>To learn more about the exact arguments a methods requires and/or supports, use the <code class="docutils literal notranslate"><span class="pre">help</span></code> function in MATLAB:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">help</span><span class="w"> </span><span class="s">c.findPetsByTags</span>
+<span class="go">--- help for PetStore.api.Pet/findPetsByTags ---</span>
+
+<span class="go">  findPetsByTags Finds Pets by tags</span>
+<span class="go">  Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.</span>
+<span class="go"> </span>
+<span class="hll"><span class="go">  Required parameters:</span>
+</span><span class="hll"><span class="go">    tags - Tags to filter by, Type: array</span>
+</span><span class="hll"><span class="go"> </span>
+</span><span class="hll"><span class="go">  No optional parameters</span>
+</span><span class="go"> </span>
+<span class="go">  Responses:</span>
+<span class="go">    200: successful operation</span>
+<span class="go">    400: Invalid tag value</span>
+<span class="go"> </span>
+<span class="go">  Returns: Array of Pet</span>
+<span class="go"> </span>
+<span class="go">  See Also: PetStore.models.Pet</span>
+</pre></div>
+</div>
+<p>All methods always have three outputs:</p>
+<ol class="arabic">
+<li><p>The HTTP StatusCode of the API call.</p></li>
+<li><p>The response body:</p>
+<p>a. Decoded into the correct model, if the call was successful and returned an expected StatusCode according to the spec, or</p>
+<p>b. As raw string, if there was a body but it could not be decoded (for example, if a StatusCode was returned which was not specified in the spec), or</p>
+<p>c. Empty, if there is no response body at all.</p>
+</li>
+<li><p>The full response of the API call as <code class="docutils literal notranslate"><span class="pre">matlab.net.http.ResponseMessage</span></code>.</p></li>
+</ol>
+<p>So the method mentioned above can then for example be called using:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">findPetsByTags</span><span class="p">([</span><span class="s">&quot;tag1&quot;</span><span class="p">,</span><span class="s">&quot;tag2&quot;</span><span class="p">])</span>
+
+<span class="go">status = </span>
+
+<span class="go">  StatusCode enumeration</span>
+
+<span class="go">    OK</span>
+
+<span class="go">response = </span>
+
+<span class="go">  1x6 Pet array with properties:</span>
+
+<span class="go">    id</span>
+<span class="go">    category</span>
+<span class="go">    name</span>
+<span class="go">    photoUrls</span>
+<span class="go">    tags</span>
+<span class="go">    status</span>
+</pre></div>
+</div>
+<p>Or the <code class="docutils literal notranslate"><span class="pre">updatePetWithForm</span></code> method:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">help</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">updatePetWithForm</span>
+<span class="go">  updatePetWithForm Updates a pet in the store with form data</span>
+<span class="go">  No description provided</span>
+<span class="go"> </span>
+<span class="hll"><span class="go">  Required parameters:</span>
+</span><span class="hll"><span class="go">    petId - ID of pet that needs to be updated, Type: int64, Format: int64</span>
+</span><span class="hll"><span class="go"> </span>
+</span><span class="hll"><span class="go">  Optional name-value parameters:</span>
+</span><span class="hll"><span class="go">    name - Updated name of the pet, Type: string</span>
+</span><span class="hll"><span class="go">    status - Updated status of the pet, Type: string</span>
+</span><span class="go"> </span>
+<span class="go">  Responses:</span>
+<span class="go">    405: Invalid input</span>
+<span class="go"> </span>
+<span class="go">  Returns:</span>
+</pre></div>
+</div>
+<p>Which has <code class="docutils literal notranslate"><span class="pre">petId</span></code> as required input and <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">status</span></code> as optional inputs, could be called as:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Theoretically allowed, with only required ID, not very useful though as you do</span>
+<span class="c">% not actually update any field for the specified pet then</span>
+<span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">response</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">updatePetWithForm</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c">% Or, more useful, with required ID and optional name</span>
+<span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">response</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">updatePetWithForm</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;New Name&quot;</span><span class="p">)</span>
+<span class="c">% Or, with required ID and optional status</span>
+<span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">response</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">updatePetWithForm</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="s">&quot;sold&quot;</span><span class="p">)</span>
+<span class="c">% Or, with require ID and both optional values</span>
+<span class="p">[</span><span class="n">status</span><span class="p">,</span><span class="n">response</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">updatePetWithForm</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;New Name&quot;</span><span class="p">,</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="s">&quot;available&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="cookies">
+<h3>Cookies<a class="headerlink" href="#cookies" title="Link to this heading"></a></h3>
+<p>The generated API classes try to automatically manage cookies. <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header in responses are parsed and the returned cookies are stored in a cookie jar which is shared across all API classes in the same package. Similarly cookies are added to outgoing requests if there are relevant cookies in the jar. The cookies are saved to disk in a file named <code class="docutils literal notranslate"><span class="pre">cookies.mat</span></code> which is placed next to <code class="docutils literal notranslate"><span class="pre">BaseClient.m</span></code>, the cookies are automatically reloaded in new MATLAB sessions.</p>
+</section>
+</section>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h2>
+<p>Models are objects that are used to define data structures, e.g. <code class="docutils literal notranslate"><span class="pre">Address</span></code>, <code class="docutils literal notranslate"><span class="pre">Pet</span></code>, <code class="docutils literal notranslate"><span class="pre">Category</span></code>. Models are generated in a sub package called <code class="docutils literal notranslate"><span class="pre">models</span></code>. They may be nested. In some cases they may be returned by operations (e.g. the example above returned a 1×6 array of <code class="docutils literal notranslate"><span class="pre">PetStore.models.Pet</span></code>), in some cases operations may require a model as input. When a model is required as input, some of the properties must be set, some may be optional and some may be ignored by a specific operation, for example:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">help</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">addPet</span>
+<span class="go">--- help for PetStore.api.Pet/addPet ---</span>
+
+<span class="go">  addPet Add a new pet to the store</span>
+<span class="go">  No description provided</span>
+<span class="go"> </span>
+<span class="hll"><span class="go">  Required parameters:</span>
+</span><span class="hll"><span class="go">    Pet - Pet object that needs to be added to the store, Type: Pet</span>
+</span><span class="hll"><span class="go">        Required properties in the model for this call:</span>
+</span><span class="hll"><span class="go">            name</span>
+</span><span class="hll"><span class="go">            photoUrls</span>
+</span><span class="hll"><span class="go">        Optional properties in the model for this call:</span>
+</span><span class="hll"><span class="go">            id</span>
+</span><span class="hll"><span class="go">            category</span>
+</span><span class="hll"><span class="go">            tags</span>
+</span><span class="hll"><span class="go">            status</span>
+</span><span class="go"> </span>
+<span class="go">  No optional parameters</span>
+<span class="go"> </span>
+<span class="go">  Responses:</span>
+<span class="go">    405: Invalid input</span>
+<span class="go"> </span>
+<span class="go">  Returns:</span>
+</pre></div>
+</div>
+<p>I.e. in the example above, a <code class="docutils literal notranslate"><span class="pre">Pet</span></code> model <em>must</em> be provided as input, but only its <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">photoUrls</span></code> fields have to be set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the API spec uses <code class="docutils literal notranslate"><span class="pre">oneOf</span></code>,<code class="docutils literal notranslate"><span class="pre">anyOf</span></code> or <code class="docutils literal notranslate"><span class="pre">allOf</span></code> combinations of models for inputs, the generator will not be able to properly determine which fields may be required or optional, in that case no required and no optional parameters are listed at all. It is then entirely up to the end-user to supply a correct model instance with the correct fields set. There will be no error checking on the MATLAB side and all fields which have a value are included in the request.</p>
+</div>
+<p>In MATLAB to create a model instance, simply instantiate an object of the right class:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And then set the properties to the desired values, for example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Bo&quot;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">photoUrls</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;http://example.com/cat.png&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Models can also be nested, in the example above the <code class="docutils literal notranslate"><span class="pre">category</span></code> and <code class="docutils literal notranslate"><span class="pre">tags</span></code> properties are of type <code class="docutils literal notranslate"><span class="pre">Category</span></code> and array of <code class="docutils literal notranslate"><span class="pre">Tag</span></code> respectively. The easiest way to fill out such properties is to work with subscripted assignment. I.e. the following does <em>not</em> work:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">p</span><span class="p">.</span><span class="n">tags</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;cats&quot;</span>
+<span class="go">Property assignment is not allowed when the object is empty.  Use subscripted assignment to create an array element.</span>
+</pre></div>
+</div>
+<p>But as the error message also indicates “subscripted assignment” can be used to create the element and then also immediately assign a value. I.e. the following <em>will</em> work:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">p</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;tag1&quot;</span>
+<span class="gp">&gt;&gt; </span><span class="n">p</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And for properties which are arrays, like <code class="docutils literal notranslate"><span class="pre">tags</span></code>, this can also be used to add additional elements:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">p</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;tag2&quot;</span>
+<span class="gp">&gt;&gt; </span><span class="n">p</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Alternatively it is of course also possible to first create an instance of a particular model and then assign it to the property:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="n">category</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Category</span><span class="p">;</span>
+<span class="n">category</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;cats&quot;</span><span class="p">;</span>
+<span class="n">category</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">category</span><span class="p">;</span>
+</pre></div>
+</div>
+<section id="model-constructors">
+<h3>Model constructors<a class="headerlink" href="#model-constructors" title="Link to this heading"></a></h3>
+<p>All models are generated with a constructor which:</p>
+<ol class="arabic simple">
+<li><p>Can deserialize a JSON string into a model instance, and</p></li>
+<li><p>Allows setting property values by providing Name-Value pairs as input.</p></li>
+</ol>
+<p>For example, the following one-liner with Name-Value pairs can be used to immediately create a Pet instance with specified name and photoUrls instead of needing three lines for this:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;Bo&quot;</span><span class="p">,</span><span class="s">&quot;photoUrls&quot;</span><span class="p">,[</span><span class="s">&quot;http://example.com/cat.png&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Or with a JSON string:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&#39;{&quot;name&quot;:&quot;Bo&quot;,&quot;photoUrls&quot;:[&quot;http://example.com/cat.png&quot;]}&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And this can also be used in a nested way:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;Bo&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;photoUrls&quot;</span><span class="p">,[</span><span class="s">&quot;http://example.com/cat.png&quot;</span><span class="p">],</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;category&quot;</span><span class="p">,</span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Category</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;cats&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Note that first JSON strings are deserialized and then the Name-Value pairs are applied, so a Name-Value pair can override a property from the JSON string, for example in:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&#39;{&quot;name&quot;: &quot;Foo&quot;}&#39;</span><span class="p">,</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;Bar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The final Pet instance will have <code class="docutils literal notranslate"><span class="pre">name</span></code> = <code class="docutils literal notranslate"><span class="pre">&quot;Bar&quot;</span></code> and not <code class="docutils literal notranslate"><span class="pre">&quot;Foo&quot;</span></code>.</p>
+</section>
+<section id="model-inheritance">
+<h3>Model inheritance<a class="headerlink" href="#model-inheritance" title="Link to this heading"></a></h3>
+<p>In the example discussed on this documentation page, there is no inheritance between models and there is no polymorphism in the operations. These feature may be used in more complex services though and this will influence model behavior. If working with such services/specs, see <a class="reference internal" href="InheritanceAndPolymorphism.html"><span class="std std-doc">Inheritance and Polymorphism</span></a> for more information.</p>
+</section>
+</section>
+<section id="example-method-call-with-model-as-input">
+<h2>Example method call with model as input<a class="headerlink" href="#example-method-call-with-model-as-input" title="Link to this heading"></a></h2>
+<p>So finally to call the <code class="docutils literal notranslate"><span class="pre">addPet</span></code> operation with a <code class="docutils literal notranslate"><span class="pre">Pet</span></code> as input:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Create the client with which the operation can be called</span>
+<span class="n">client</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="c">% Create the Pet model for the Pet which is to be added</span>
+<span class="n">petToAdd</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="s">&quot;Bo&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;photoUrls&quot;</span><span class="p">,[</span><span class="s">&quot;http://example.com/cat.png&quot;</span><span class="p">],</span><span class="w"> </span><span class="k">...</span>
+<span class="w">    </span><span class="s">&quot;category&quot;</span><span class="p">,</span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Category</span><span class="p">(</span><span class="s">&#39;{&quot;id&quot;:2,&quot;name&quot;:&quot;cats&quot;}&#39;</span><span class="p">));</span>
+<span class="c">% Call the method</span>
+<span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">addPet</span><span class="p">(</span><span class="n">petToAdd</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="enumeration-handling">
+<h2>Enumeration handling<a class="headerlink" href="#enumeration-handling" title="Link to this heading"></a></h2>
+<p>For enumeration model properties, MATLAB enumerations are generated. These are also part of the <code class="docutils literal notranslate"><span class="pre">models</span></code> sub package. For example in the <code class="docutils literal notranslate"><span class="pre">Pet</span></code> model, the <code class="docutils literal notranslate"><span class="pre">status</span></code> property is of type <code class="docutils literal notranslate"><span class="pre">PetStore.models.PetStatusEnum</span></code>. As always in MATLAB, enums can be set using actual enum instances:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">PetStatusEnum</span><span class="p">.</span><span class="n">available</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>or using their string equivalent:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;available&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And this can also be used in a constructor again:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">PetStatusEnum</span><span class="p">.</span><span class="n">available</span><span class="p">);</span>
+<span class="c">% Or</span>
+<span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PetStore</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Pet</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="s">&quot;available&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This fully integrates with MATLAB Tab completion. Typing <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">PetStore.models.Pet(</span></code> and then hitting [Tab] should show all properties:</p>
+<p><img alt="Image showing tab completion options" src="_images/tabcompletion1.png" /></p>
+<p>And after choosing an enumeration property hitting [Tab] again should show the available enumerations:</p>
+<p><img alt="Image showing tab completion options" src="_images/tabcompletion2.png" /></p>
+<p>For enumerations which are direct inputs to an operation and which are not part of an model, the generator does not generate actual MATLAB enums but it does generate input argument validation using <code class="docutils literal notranslate"><span class="pre">{mustBeMember}</span></code> which also offers tab completion, for example for the <code class="docutils literal notranslate"><span class="pre">getPetsByStatus</span></code> operation:</p>
+<p><img alt="Image showing tab completion options" src="_images/tabcompletion3.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Options.html" class="btn btn-neutral float-left" title="Client Generator Configuration Options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CustomizationExampleAirflow.html" class="btn btn-neutral float-right" title="Advanced Example: Customizing the Generator (for Apache Airflow)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

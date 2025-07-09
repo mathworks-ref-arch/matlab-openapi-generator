@@ -1,0 +1,1482 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server Generation Example &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Frequently Asked Questions" href="FAQ.html" />
+    <link rel="prev" title="Server Request and Response Classes" href="ServerRequestResponse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Server Generation Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interface-definition">Interface definition</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#path">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-body">Input body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#response-body">Response Body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openapi-spec">OpenAPI Spec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#server-generation">Server generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inspect-the-generated-code">Inspect the generated code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#server-m">server.m</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulationserver-impl-simulation-simmassspringdamper">SimulationServer.impl.Simulation.simMassSpringDamper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generated-models">Generated Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#server-implementation">Server implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#server-testing">Server Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bonus-test-using-a-partly-generated-python-client">(Bonus) Test using a (partly generated) Python client</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#package">Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy">Deploy</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JSONMapper.html">JSONMapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Server Generation Example</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="server-generation-example">
+<h1>Server Generation Example<a class="headerlink" href="#server-generation-example" title="Link to this heading"></a></h1>
+<p>This example is a variation of the <a class="reference external" href="https://www.mathworks.com/help/slcompiler/ug/deploy-mass-springr-app-with-simulink-compiler.html" rel="noreferrer" target="_blank">Deploying a Simulation App with Simulink Compiler</a> example from the <a class="reference external" href="https://www.mathworks.com/products/simulink-compiler.html" rel="noreferrer" target="_blank">Simulink Compiler</a> documentation. Only, instead of deploying the model as a MATLAB App with an interactive graphical user interface in which an end-user can enter various parameters for the simulation, the model is going to be deployed as an API. This API should still have an easy-to-use and well defined interface.</p>
+<p>To accomplish this, we first actually define the interface using an OpenAPI specification. Doing this first, rather than immediately jumping into MATLAB developing code and worrying about interfaces later, has several advantages:</p>
+<ol class="arabic simple">
+<li><p>This interface forms a contract between server and client. Both sides know exactly what to expect from the other side. On the server side it is clear what inputs you can expect and you know exactly what outputs you need to provide. The client knows exactly how it can interact with the server; it knows which inputs it needs to provide and which outputs it can expect.</p></li>
+<li><p>As a matter of fact, once the interface has been defined, a client developer could already immediately start developing the client even before the server is fully ready; actual implementation work can be done in parallel once the interfaces have been defined.</p></li>
+<li><p>Parts of both the client and server side can automatically be generated from the spec and do not have to be hand coded. In this example we the MATLAB Generator <em>for OpenAPI</em> package to generate part of the server side. And for the client side, <a class="reference external" href="https://openapi-generator.tech/docs/generators" rel="noreferrer" target="_blank">many other generators</a> are available<a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+</ol>
+<p>Code for the example can be found in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Software</span><span class="o">/</span><span class="n">MATLAB</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">simulink</span>
+</pre></div>
+</div>
+<p>If you want to <em>fully</em> follow along this example you will need <a class="reference external" href="https://www.mathworks.com/products/simulink-compiler.html" rel="noreferrer" target="_blank">Simulink Compiler</a>. However, even if you do not have Simulink Compiler you can still follow along this example for the most part but you will not be able to package the final CTF-archive. Also the concepts demonstrated in the example are transferable to other toolboxes, use-cases and APIs.</p>
+<section id="interface-definition">
+<h2>Interface definition<a class="headerlink" href="#interface-definition" title="Link to this heading"></a></h2>
+<section id="path">
+<h3>Path<a class="headerlink" href="#path" title="Link to this heading"></a></h3>
+<p>First, we need to think about the path/URL on which the function can be called. It is probably good to group all operations in our package together below a path named after the package, so we can for example come up with a base path of <code class="docutils literal notranslate"><span class="pre">/openapi-example</span></code>.</p>
+<p>Then, in this example we will just add one model to the server, but in the future perhaps multiple models can be added, so it could be a good idea to define a path like <code class="docutils literal notranslate"><span class="pre">/sim</span></code> which represents “run a simulation”.</p>
+<p>And then after that we can add a model name like <code class="docutils literal notranslate"><span class="pre">/mass-spring-damper</span></code>. Meaning our model then becomes callable as <code class="docutils literal notranslate"><span class="pre">/openapi-example/sim/mass-spring-damper</span></code>.</p>
+<p>If in the future we want to add additional models to the package they could be made available as <code class="docutils literal notranslate"><span class="pre">/openapi-example/sim/some-new-other-model</span></code>.</p>
+</section>
+<section id="input-body">
+<h3>Input body<a class="headerlink" href="#input-body" title="Link to this heading"></a></h3>
+<p>To define the interface for our specific example model we are going to take some inspiration from the GUI of the original example where the inputs are split into three main sections “Parameters”, “Randomly Generated Force Input” and a global “Max number of points per signal” setting. And, we will actually replace this “Max number of points per signal”, which in the original example configured how many points to plot of the simulation which actually runs indefinitely, with a parameter Stop Time which represents for how long to run the simulation; in our API the model will not be able to run indefinitely it actually has to stop at some point and return the results.</p>
+<p>So on a higher level we want the inputs to look something like:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Parameters go here</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="c1">// Inputs go here </span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;stopTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Further, we are going to make an enhancement to the inputs, instead of only allowing the client to specify parameters to define a randomly generated input for the model, we will also allow the client to provide an exact input in the form of an array of doubles representing the input force, in combination with a time vector.</p>
+<p>So the client will then be able to either call the endpoint with an input body like this:</p>
+<div class="literal-block-wrapper docutils container" id="random-input-example">
+<div class="code-block-caption"><span class="caption-text">Random Input Example</span><a class="headerlink" href="#random-input-example" title="Link to this code"></a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">  </span><span class="c1">// Mass</span>
+<span class="w">    </span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="c1">// Stiffness</span>
+<span class="w">    </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">   </span><span class="c1">// Damping</span>
+<span class="w">    </span><span class="nt">&quot;x0&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span><span class="c1">// Initial Position</span>
+<span class="w">              </span><span class="c1">//   Just as an example we will make x0 an optional parameter (default: 0)</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inputType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MassSpringDamperRandomInput&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Extra property added to specify what type of input</span>
+<span class="w">                                </span><span class="c1">// the client wants to provide RandomInput or ExactInput</span>
+<span class="w">    </span><span class="c1">// If MassSpringDamperRandomInput, provide the parameters with which the server should generate the random input signal</span>
+<span class="w">    </span><span class="nt">&quot;maxMagnitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">        </span><span class="c1">// Max Magnitude</span>
+<span class="w">    </span><span class="nt">&quot;inputChangeInterval&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="c1">// Input Change Interval</span>
+<span class="w">    </span><span class="nt">&quot;seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">                   </span><span class="c1">// Rand Stream Seed</span>
+<span class="w">                                </span><span class="c1">// As an example this is also an optional setting (default: 0)</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;stopTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="c1">// The stop time of the model</span>
+<span class="w">                   </span><span class="c1">// As an example this will also be an optional property (default: 1000)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>or like this:</p>
+<div class="literal-block-wrapper docutils container" id="exact-input-example">
+<div class="code-block-caption"><span class="caption-text">Exact Input Example</span><a class="headerlink" href="#exact-input-example" title="Link to this code"></a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">  </span><span class="c1">// Mass</span>
+<span class="w">    </span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="c1">// Stiffness</span>
+<span class="w">    </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">   </span><span class="c1">// Damping</span>
+<span class="w">    </span><span class="nt">&quot;x0&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span><span class="c1">// Initial Position</span>
+<span class="w">              </span><span class="c1">//   Just as an example we will make x0 an optional parameter (default: 0)</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inputType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MassSpringDamperExactInput&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Extra property added to specify what type of input</span>
+<span class="w">                               </span><span class="c1">// the client wants to provide RandomInput or ExactInput</span>
+<span class="w">    </span><span class="c1">// If MassSpringDamperExactInput, provide the Input Force</span>
+<span class="w">    </span><span class="nt">&quot;F&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Input Force</span>
+<span class="w">        </span><span class="nt">&quot;Time&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="w">            </span><span class="c1">// Time at which the force is specified</span>
+<span class="w">        </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.718</span><span class="p">,</span><span class="w"> </span><span class="mf">3.1415</span><span class="p">]</span><span class="w"> </span><span class="c1">// Samples of the force at those times</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;stopTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="c1">// Stop time of the model</span>
+<span class="w">                   </span><span class="c1">//   As an example this will also be an optional property (default: 1000)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Note how for the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> field, we added an extra <code class="docutils literal notranslate"><span class="pre">inputType</span></code> property here which allows the client to specify whether it wants to work with a randomly generated input or with an exact input and then the other properties of the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> field change accordingly. All of this (i.e. the “polymorphism”) <em>can</em> actually be specified in an OpenAPI spec and our generators <em>do</em> support these constructs.</p>
+</section>
+<section id="response-body">
+<h3>Response Body<a class="headerlink" href="#response-body" title="Link to this heading"></a></h3>
+<p>We then need to think about what the endpoint will return. The model has two actual outputs plus one logged signal, it makes sense to return these and it probably makes sense to use a format similar to what was used to allow providing the (exact) input force input signal (i.e. using a <code class="docutils literal notranslate"><span class="pre">Time</span></code> and <code class="docutils literal notranslate"><span class="pre">Data</span></code> vectors which mimics MATLAB’s <a class="reference external" href="https://www.mathworks.com/help/releases/R2025a/matlab/ref/timeseries.html" rel="noreferrer" target="_blank" title="(in MATLAB R2025a)"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">timeseries</span></code></a> somewhat). Also, if a randomly generated input signal was used, it probably makes sense to return this to the client so it knows what was generated exactly.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;F&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Input Force, only included if it was generated, </span>
+<span class="w">         </span><span class="c1">// if it was provided as input by the client,</span>
+<span class="w">         </span><span class="c1">// it already knows what this looks like</span>
+<span class="w">    </span><span class="nt">&quot;Time&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.17</span><span class="p">,</span><span class="w"> </span><span class="mf">3.14</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Acceleration</span>
+<span class="w">    </span><span class="nt">&quot;Time&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">       </span><span class="mf">0.9134</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6324</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0975</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;v&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Velocity</span>
+<span class="w">    </span><span class="nt">&quot;Time&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.2785</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5469</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9575</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Position</span>
+<span class="w">    </span><span class="nt">&quot;Time&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.9649</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1576</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9706</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this example all <code class="docutils literal notranslate"><span class="pre">Time</span></code> vectors are the same, but note that in general this does not have to be the case, Simulink may have determined simulation timesteps which differ from the timesteps of the input signals and outputs may have different rates; that is also why we repeat <code class="docutils literal notranslate"><span class="pre">Time</span></code> for each signal separately and we do not use a common <code class="docutils literal notranslate"><span class="pre">Time</span></code> vector for all signals.</p>
+</div>
+</section>
+<section id="openapi-spec">
+<h3>OpenAPI Spec<a class="headerlink" href="#openapi-spec" title="Link to this heading"></a></h3>
+<p>Now that we have come up with a good interface for the API, we should properly record it in an OpenAPI spec.</p>
+<p>We start with the header of the file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># The version of OpenAPI in which we are writing this spec</span>
+<span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.3</span><span class="w"> </span>
+<span class="c1"># High-level information about our API</span>
+<span class="nt">info</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># A title for the API</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MATLAB Simulation Server</span>
+<span class="w">  </span><span class="c1"># A description for the API</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run simulations of various Simulink models</span>
+<span class="w">  </span><span class="c1"># The version of our API, this can for example change if you additional models</span>
+<span class="w">  </span><span class="c1"># and endpoints to the API or if the in- or output of an existing endpoint was</span>
+<span class="w">  </span><span class="c1"># changed.</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+</pre></div>
+</div>
+<p>Then we define a list of servers to which our API may be deployed:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># An array of known servers which may be hosting our API</span>
+<span class="nt">servers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9910/openapi-example</span><span class="w">          </span><span class="c1"># The base URL of the API</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Local Testing MATLAB Production Server</span><span class="w"> </span><span class="c1"># Description</span>
+</pre></div>
+</div>
+<p>Note that a client can always choose to override the server address and base path but if you have one or more dedicated servers on which this service is going to run, adding them can help the client with finding the right one. In the example here, we add the typical local address of a testing server.</p>
+<p>After that we define the paths/endpoints and we add our <code class="docutils literal notranslate"><span class="pre">/sim/mass-spring-damper</span></code> endpoint:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start defining the actual paths</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Add our API path</span>
+<span class="w">  </span><span class="nt">/sim/mass-spring-damper</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Specify that this is a POST operation</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="c1"># Give the generators a hint on what they could name the method for calling this operation could be</span>
+<span class="w">      </span><span class="nt">operationId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SimMassSpringDamper</span>
+<span class="w">      </span><span class="c1"># Generators typically group operations by tag, for example creating a namespace for each tag</span>
+<span class="w">      </span><span class="c1"># and grouping the operations with the same tag inside this namespace. Or by creating a class</span>
+<span class="w">      </span><span class="c1"># with this name and then adding the operations as methods.</span>
+<span class="w">      </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Simulation</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="c1"># A high-level summary of the operation, generators may include this in code comments or </span>
+<span class="w">      </span><span class="c1"># documentation generators will use it </span>
+<span class="w">      </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># A more in-depth description of the operation</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">         </span><span class="no">Run a simulation... (truncated here, see openapi.yaml in the example directory)</span>
+<span class="w">      </span><span class="c1"># Define the input request body</span>
+<span class="w">      </span><span class="nt">requestBody</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Specify that this request really requires a request body always</span>
+<span class="w">        </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="c1"># Describe the body</span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Request Body for Simulating the mass spring damper model</span>
+<span class="w">        </span><span class="c1"># Define what the request body should look like</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="c1"># Specify that it expects JSON</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">            </span><span class="c1"># Describe what this JSON should look like</span>
+<span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">              </span><span class="c1"># It is possible to describe the whole request body here, instead in this example</span>
+<span class="w">              </span><span class="c1"># we choose to define it separately further down in our spec and refer to it here.</span>
+<span class="w">              </span><span class="c1"># You typically do this for both readability and reusability. Also this typically</span>
+<span class="w">              </span><span class="c1"># allows generators to generate cleaner code, it can use the names of these schemas</span>
+<span class="w">              </span><span class="c1"># when it is generating names for model classes.</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperRequest&quot;</span>
+<span class="w">      </span><span class="c1"># Define what the response body will look like</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Specify that the endpoint may respond with code 200 (OK)</span>
+<span class="w">        </span><span class="s">&quot;200&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Results of the simulation</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="c1"># Specify that the response body will be in JSON as well</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="c1"># Describe what this JSON will look like</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="c1"># Again refer to a definition further down in the OpenAPI spec</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperResponse&quot;</span>
+<span class="w">        </span><span class="c1"># We also define two other possible responses, one for when the client called</span>
+<span class="w">        </span><span class="c1"># the operation with an incorrect/invalid request</span>
+<span class="w">        </span><span class="s">&quot;400&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The operations was called incorrectly by the client</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/ErrorResponse&quot;</span>
+<span class="w">        </span><span class="c1"># And one for when an error occurs in the MATLAB code or simulation</span>
+<span class="w">        </span><span class="s">&quot;500&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An error occurred in the MATLAB code or simulation</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/ErrorResponse&quot;</span>
+</pre></div>
+</div>
+<p>Now we can start defining those JSON schemas for the request and response bodies</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># These separate definitions are always done below components</span>
+<span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># And we are actually defining schemas here</span>
+<span class="w">  </span><span class="nt">schemas</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Define the request body for the mass-spring-damper model</span>
+<span class="w">    </span><span class="nt">MassSpringDamperRequest</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Request body for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># The main request body is an object with a number of properties</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="c1"># Define each of the properties</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Add the parameters field</span>
+<span class="w">        </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">          </span><span class="c1"># Again this could be defined inline, but we choose to</span>
+<span class="w">          </span><span class="c1"># split this into a separate definition and refer to it</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperParameters&quot;</span>
+<span class="w">        </span><span class="c1"># Add the inputs field</span>
+<span class="w">        </span><span class="nt">inputs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="c1"># Add the stopTime field, this field is just a simple scalar number</span>
+<span class="w">        </span><span class="c1"># so we do define it here without further references to definitions elsewhere</span>
+<span class="w">        </span><span class="nt">stopTime</span><span class="p">:</span><span class="w"> </span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Simulate the model until this specified stop time</span>
+<span class="w">          </span><span class="c1"># Since we wanted this parameter to be optional we do also tell clients</span>
+<span class="w">          </span><span class="c1"># which default the server will use if the value is not specified</span>
+<span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">          </span><span class="c1"># The data type for this field is a double which in OpenAPI is specified</span>
+<span class="w">          </span><span class="c1"># by setting type = number and format = double</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">      </span><span class="c1"># Specify which of the fields/properties are required</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">parameters</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs</span>
+</pre></div>
+</div>
+<p>So now we then need to define those <code class="docutils literal notranslate"><span class="pre">MassSpringDamperParameters</span></code> and <code class="docutils literal notranslate"><span class="pre">MassSpringDamperInput</span></code> schemas which we referred to above, starting with <code class="docutils literal notranslate"><span class="pre">MassSpringDamperParameters</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define the MassSpringDamperParameters schema</span>
+<span class="w">    </span><span class="nt">MassSpringDamperParameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tunable Parameters for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># This one is actually pretty straightforward, it is an object</span>
+<span class="w">      </span><span class="c1"># with a number of properties/fields and each of the fields</span>
+<span class="w">      </span><span class="c1"># is simply a scalar double</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">m</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mass (kg)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">k</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stiffness (N/m)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">b</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Damping (N/m/s)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">x0</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Initial Position (m)</span>
+<span class="w">          </span><span class="c1"># Again, we decided that x0 should be optional, so inform</span>
+<span class="w">          </span><span class="c1"># clients what the assumed default is when omitted</span>
+<span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">      </span><span class="c1"># Also, again specify which of the properties are required</span>
+<span class="w">      </span><span class="c1"># (i.e. all expect x0)</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">m</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">b</span>
+</pre></div>
+</div>
+<p>Followed by the <code class="docutils literal notranslate"><span class="pre">MassSpringDamperInput</span></code> schema. For this schema we will do something slightly more complicated. Remember, we wanted the client to be able to either provide parameters which the server can then use to generate a random input signal <em>or</em> provide an exact input signal as is. To allow this we will define a small “schema hierarchy” (similar to class hierarchies; typically OpenAPI generators will in fact generate class hierarchies for them when generating a client or server) where there is a base schema <code class="docutils literal notranslate"><span class="pre">MassSpringDamperInput</span></code> and then there are two child schemas <code class="docutils literal notranslate"><span class="pre">MassSpringDamperRandomInput</span></code> and <code class="docutils literal notranslate"><span class="pre">MassSpringDamperExactInput</span></code> which derive from it:</p>
+<pre  class="mermaid">
+        classDiagram
+    MassSpringDamperInput &lt;|-- MassSpringDamperRandomInput
+    MassSpringDamperInput &lt;|-- MassSpringDamperExactInput
+    class MassSpringDamperInput{
+      string inputType
+    }
+    class MassSpringDamperRandomInput{
+      double maxMagnitude
+      double inputChangeInterval
+      double seed
+    }
+    class MassSpringDamperExactInput{
+        SimulinkTimeSeries F
+    }
+    </pre><p>The base schema (and the schemas derived from it) are going to have that <code class="docutils literal notranslate"><span class="pre">inputType</span></code> property which allows the client to explicitly specify what type of input (random or exact) it wants to work with. And <code class="docutils literal notranslate"><span class="pre">MassSpringDamperRandomInput</span></code> then adds the <code class="docutils literal notranslate"><span class="pre">maxMagnitude</span></code>, <code class="docutils literal notranslate"><span class="pre">inputChangeInterval</span></code> and <code class="docutils literal notranslate"><span class="pre">seed</span></code> parameters whereas <code class="docutils literal notranslate"><span class="pre">MassSpringDamperExactInput</span></code> adds this field named <code class="docutils literal notranslate"><span class="pre">F</span></code> representing the input force over time.</p>
+<p>So now, let’s first define the base <code class="docutils literal notranslate"><span class="pre">MassSpringDamperInput</span></code> class:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define the MassSpringDamperInput base class</span>
+<span class="w">    </span><span class="nt">MassSpringDamperInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Model Input Signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># It is an object with one property</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Add the inputType property</span>
+<span class="w">        </span><span class="nt">inputType</span><span class="p">:</span>
+<span class="w">          </span><span class="c1"># It is of type string</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">      </span><span class="c1"># This one field is required</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputType</span>
+<span class="w">      </span><span class="c1"># And we also define it to be a discriminator. This allows generators</span>
+<span class="w">      </span><span class="c1"># to generate code which can use the value of inputType to then determine</span>
+<span class="w">      </span><span class="c1"># whether it should really return a MassSpringDamperRandomInput or</span>
+<span class="w">      </span><span class="c1"># MassSpringDamperExactInput</span>
+<span class="w">      </span><span class="nt">discriminator</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">propertyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputType</span>
+</pre></div>
+</div>
+<p>And then the derived <code class="docutils literal notranslate"><span class="pre">MassSpringDamperRandomInput</span></code> schema:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define child schema MassSpringDamperRandomInput      </span>
+<span class="w">    </span><span class="nt">MassSpringDamperRandomInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Parameters for generating a random input signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># Now to define a child schema you can use this allOf keyword. We are going to say</span>
+<span class="w">      </span><span class="c1"># MassSpringDamperRandomInput is going to have all properties of MassSpringDamperInput</span>
+<span class="w">      </span><span class="c1"># (i.e. inherits from MassSpringDamperInput) plus a few additional properties which are</span>
+<span class="w">      </span><span class="c1"># specific to this child schema.</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Refer to the parent schema to inherit all of its properties</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="c1"># Add additional properties specific to this derived schema.</span>
+<span class="w">        </span><span class="c1"># All those properties are simple double scalars again</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">maxMagnitude</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Max maxMagnitude (N)</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">            </span><span class="nt">inputChangeInterval</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input Change Interval (s)</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">            </span><span class="nt">seed</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Random Stream Seed</span>
+<span class="w">              </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">          </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maxMagnitude</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputChangeInterval</span>
+</pre></div>
+</div>
+<p>In a similar way we can define the other child schema <code class="docutils literal notranslate"><span class="pre">MassSpringDamperExactInput</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define child schema MassSpringDamperExactInput      </span>
+<span class="w">    </span><span class="nt">MassSpringDamperExactInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An exact model input signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="c1"># Again use allOf to inherit from the parent schema and add additional</span>
+<span class="w">      </span><span class="c1"># properties specific to this particular child schema</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">F</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Force (N)</span>
+<span class="w">              </span><span class="c1"># As discussed above this input signal is going to be defined</span>
+<span class="w">              </span><span class="c1"># using Time and Data vectors, we again use a separate schema</span>
+<span class="w">              </span><span class="c1"># to define this type and refer to it here</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">          </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">F</span>
+</pre></div>
+</div>
+<p>Where we have again introduced a new schema <code class="docutils literal notranslate"><span class="pre">SimulinkTimeSeries</span></code> which we then have to define:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define the data object with fields Time and Data which are both arrays of doubles</span>
+<span class="w">    </span><span class="nt">SimulinkTimeSeries</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">A Simulink Signal specified in the form of a Time vector specifying at which exact points in time the samples are specified</span>
+<span class="w">        </span><span class="no">and a Data vector representing the signal samples at the specified times.</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">Time</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time values</span>
+<span class="w">          </span><span class="c1"># Specify that this is an array</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="c1"># And inside the array, the items</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="c1"># are doubles</span>
+<span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">Data</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sample data</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+</pre></div>
+</div>
+<p>There is now one last schema which we need to define, the schema of the response body <code class="docutils literal notranslate"><span class="pre">MassSpringDamperResponse</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1"># Define the response body schema</span>
+<span class="w">    </span><span class="nt">MassSpringDamperResponse</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output signals of the model and if a randomly generated input signal was used, also the input signal</span>
+<span class="w">      </span><span class="c1"># Again this is an object with a number of properties, one for each of the output signals</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">F</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input force (only returned if working with a randomly generated input)</span>
+<span class="w">          </span><span class="c1"># And now here we can in fact reuse the SimulinkTimeSeries schema.</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">a</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Acceleration</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">v</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Velocity</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">x</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Position</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v</span>
+</pre></div>
+</div>
+<p>Where once more we referred to another schema <code class="docutils literal notranslate"><span class="pre">SimulinkTimeSeries</span></code>, only in this case that one is already defined, we were simply able to reuse what we defined for the input signal.</p>
+<p>The final schema which we then need to define is the <code class="docutils literal notranslate"><span class="pre">ErrorResponse</span></code>, which we keep relatively simple, it is going to be an object with one field <code class="docutils literal notranslate"><span class="pre">error_message</span></code> which is simply going to contain an error message:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nt">ErrorResponse</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An object containing the error message if an error has occurred</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">error_message</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+</pre></div>
+</div>
+<p>In the end, when everything is combined we should get the following full spec:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Software/MATLAB/examples/server/simulink/openapi.yaml</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.3</span>
+<span class="nt">info</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MATLAB Simulation Server</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run simulations of various Simulink models</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+
+<span class="nt">servers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9910/openapi-example</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Local Testing MATLAB Production Server</span>
+
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">/sim/mass-spring-damper</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">post</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">operationId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SimMassSpringDamper</span>
+<span class="w">      </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">Simulation</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">Run a simulation of the following Simulink Model:</span>
+
+<span class="w">        </span><span class="no">![](https://www.mathworks.com/help/examples/simulinkcompiler/win64/DeployingASimulationAppUsingSimulinkCompilerExample_01.png)</span>
+
+<span class="w">        </span><span class="no">The mass-spring-damper model consists of discrete mass nodes distributed </span>
+<span class="w">        </span><span class="no">throughout an object and interconnected via a network of springs and dampers. </span>
+<span class="w">        </span><span class="no">This model is well-suited for modeling object with complex material </span>
+<span class="w">        </span><span class="no">properties such as non-linearity and elasticity.</span>
+
+<span class="w">        </span><span class="no">The model is parameterized using the following four tunable parameters which can be specified in the API call:</span>
+<span class="w">        </span><span class="no">* Mass - `m`.</span>
+<span class="w">        </span><span class="no">* Spring stiffness - `k`.</span>
+<span class="w">        </span><span class="no">* Damping - `b`.</span>
+<span class="w">        </span><span class="no">* Initial position - `x0`.</span>
+
+<span class="w">        </span><span class="no">The model has an `External Force` input signal. The input signal can be randomly generated as part of the simulation run.</span>
+<span class="w">        </span><span class="no">Alternatively, it is possible to provide an exact input signal as part of the API request.</span>
+
+<span class="w">        </span><span class="no">The model has two actual outputs `Position` and `Velocity` and since `Acceleration` is logged, it is returned as well. Further,</span>
+<span class="w">        </span><span class="no">when working with a randomly generated input signal, the input signal which was generated is returned as well.</span>
+
+<span class="w">        </span><span class="no">Finally, it is possible to specify the stop time of the model.</span>
+<span class="w">      </span><span class="nt">requestBody</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Request Body for Simulating the mass spring damper model</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperRequest&quot;</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="s">&quot;200&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Results of the simulation</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperResponse&quot;</span>
+<span class="w">        </span><span class="s">&quot;400&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The operations was called incorrectly by the client</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/ErrorResponse&quot;</span>
+<span class="w">        </span><span class="s">&quot;500&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An error occurred in the MATLAB code or simulation</span>
+<span class="w">          </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/ErrorResponse&quot;</span>
+<span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schemas</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">MassSpringDamperRequest</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Request body for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperParameters&quot;</span>
+<span class="w">        </span><span class="nt">inputs</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="nt">stopTime</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Simulate the model until this specified stop time</span>
+<span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">parameters</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs</span>
+<span class="w">    </span><span class="nt">MassSpringDamperParameters</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tunable Parameters for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">m</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mass (kg)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">k</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stiffness (N/m)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">b</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Damping (N/m/s)</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">x0</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Initial Position (m)</span>
+<span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">m</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">b</span>
+<span class="w">    </span><span class="nt">MassSpringDamperInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Model Input Signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">inputType</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputType</span>
+<span class="w">      </span><span class="nt">discriminator</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">propertyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputType</span>
+<span class="w">    </span><span class="nt">MassSpringDamperRandomInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Parameters for generating a random input signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">maxMagnitude</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Max maxMagnitude (N)</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">            </span><span class="nt">inputChangeInterval</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input Change Interval (s)</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">            </span><span class="nt">seed</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Random Stream Seed</span>
+<span class="w">              </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">              </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">          </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maxMagnitude</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputChangeInterval</span>
+<span class="w">    </span><span class="nt">MassSpringDamperExactInput</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An exact model input signal for the Mass Spring Damper Model</span>
+<span class="w">      </span><span class="nt">allOf</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/MassSpringDamperInput&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">F</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Force (N)</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">          </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">F</span>
+<span class="w">    </span><span class="nt">SimulinkTimeSeries</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">A Simulink Signal specified in the form of a Time vector specifying at which exact points in time the samples are specified</span>
+<span class="w">        </span><span class="no">and a Data vector representing the signal samples at the specified times.</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">Time</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Time values</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">        </span><span class="nt">Data</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sample data</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">number</span>
+<span class="w">            </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">    </span><span class="nt">MassSpringDamperResponse</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Output signals of the model and if a randomly generated input signal was used, also the input signal</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">F</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Input force (only returned if working with a randomly generated input)</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">a</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Acceleration</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">v</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Velocity</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">        </span><span class="nt">x</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Position</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/SimulinkTimeSeries&quot;</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
+<span class="w">    </span><span class="nt">ErrorResponse</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">An object containing the error message if an error has occurred</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">error_message</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="server-generation">
+<h2>Server generation<a class="headerlink" href="#server-generation" title="Link to this heading"></a></h2>
+<p>With the spec now in place we can generate the server stubs:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">cd</span><span class="w"> </span><span class="n">Software</span><span class="o">/</span><span class="n">MATLAB</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">simulink</span>
+<span class="gp">&gt;&gt; </span><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">openapi</span><span class="p">.</span><span class="n">build</span><span class="p">.</span><span class="n">Server</span><span class="p">(</span><span class="n">inputSpec</span><span class="p">=</span><span class="s">&quot;openapi.yaml&quot;</span><span class="p">,</span><span class="n">output</span><span class="p">=</span><span class="s">&quot;server&quot;</span><span class="p">,</span><span class="n">packageName</span><span class="p">=</span><span class="s">&quot;SimulationServer&quot;</span><span class="p">);</span>
+<span class="gp">&gt;&gt; </span><span class="n">s</span><span class="p">.</span><span class="n">build</span><span class="p">;</span>
+<span class="go">Building client, executing command:</span>
+<span class="go">  java  -cp &quot;/work/openapi/openapicodegen/Software/MATLAB/lib/jar/openapi-generator-cli-7.13.0.jar:/work/openapi/openapicodegen/Software/MATLAB/lib/jar/MATLAB-openapi-generator-3.0.0.jar&quot; org.openapitools.codegen.OpenAPIGenerator generate --generator-name matlab-server --input-spec &quot;openapi.yaml&quot; --output &quot;server&quot; --package-name &quot;SimulationServer&quot; --template-dir &quot;/work/openapi/openapicodegen/Software/Mustache&quot; --additional-properties openapiRoot=&quot;/work/openapi/openapicodegen/Software/MATLAB&quot;,packageVersion=3.0.0 --skip-validate-spec</span>
+
+<span class="go">build completed, output directory: server</span>
+</pre></div>
+</div>
+</section>
+<section id="inspect-the-generated-code">
+<h2>Inspect the generated code<a class="headerlink" href="#inspect-the-generated-code" title="Link to this heading"></a></h2>
+<section id="server-m">
+<h3>server.m<a class="headerlink" href="#server-m" title="Link to this heading"></a></h3>
+<p>Once the code has been generated, we can have a closer look at it. <code class="docutils literal notranslate"><span class="pre">server.m</span></code> in this case does not contain much, it simply contains the <a class="reference internal" href="BuildServer.html#server-m"><span class="std std-ref">standard code we expect to find in <code class="docutils literal notranslate"><span class="pre">server.m</span></code></span></a>; it defines the one specific route for our <code class="docutils literal notranslate"><span class="pre">/openapi-example/sim/mass-spring-damper</span></code> path and all the rest is standard <code class="docutils literal notranslate"><span class="pre">server.m</span></code> code:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span>…
+<span class="n">app</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;/openapi-example/sim/mass-spring-damper&quot;</span><span class="p">,@</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">impl</span><span class="p">.</span><span class="n">Simulation</span><span class="p">.</span><span class="n">simMassSpringDamper</span><span class="p">);</span>
+…
+</pre></div>
+</div>
+<p>Note though, how apart from the path, we also see a few other things which we defined in the spec coming back here. For example, the handler function here is named <code class="docutils literal notranslate"><span class="pre">SimulationServer.impl.Simulation.simMassSpringDamper</span></code> where <code class="docutils literal notranslate"><span class="pre">Simulation</span></code> comes from the <code class="docutils literal notranslate"><span class="pre">tags</span></code> which we set in the spec and <code class="docutils literal notranslate"><span class="pre">simMassSpringDamper</span></code> is the <code class="docutils literal notranslate"><span class="pre">operationId</span></code> which we specified.</p>
+<p>Further, <code class="docutils literal notranslate"><span class="pre">SimulationServer</span></code> is the <code class="docutils literal notranslate"><span class="pre">packageName</span></code> which we specified when we generated the server stubs and <code class="docutils literal notranslate"><span class="pre">impl</span></code> is a fixed part which stands for “implementation” to signify that this package really is supposed to provide the actual implementation (and not just defines an interface).</p>
+<p>Basically <code class="docutils literal notranslate"><span class="pre">server.m</span></code> is fine as-is and we won’t have to modify it at all to correctly implement the server.</p>
+</section>
+<section id="simulationserver-impl-simulation-simmassspringdamper">
+<h3>SimulationServer.impl.Simulation.simMassSpringDamper<a class="headerlink" href="#simulationserver-impl-simulation-simmassspringdamper" title="Link to this heading"></a></h3>
+<p>It is much more interesting to look at the handler method <code class="docutils literal notranslate"><span class="pre">SimulationServer.impl.Simulation.simMassSpringDamper</span></code> and see what has been generated. It starts with:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="nf">simMassSpringDamper</span><span class="p">(</span>req,res,~<span class="p">)</span>
+<span class="w">    </span><span class="c">% simMassSpringDamper Mass Spring Damper Model</span>
+<span class="w">    </span><span class="c">% Run a simulation of the following Simulink Model:  ![](https://www.mathworks.com/help/examples/simulinkcompiler/win64/DeployingASimulationAppUsingSimulinkCompilerExample_01.png)  The mass-spring-damper model consists of discrete mass nodes distributed  throughout an object and interconnected via a network of springs and dampers.  This model is well-suited for modeling object with complex material  properties such as non-linearity and elasticity.  The model is parameterized using the following four tunable parameters which can be specified in the API call: * Mass - `m`. * Spring stiffness - `k`. * Damping - `b`. * Initial position - `x0`.  The model has an `External Force` input signal. The input signal can be randomly generated as part of the simulation run. Alternatively, it is possible to provide an exact input signal as part of the API request.  The model has two actual outputs `Position` and `Velocity` and since `Acceleration` is logged, it is returned as well. Further, when working with a randomly generated input signal, the input signal which was generated is returned as well.  Finally, it is possible to specify the stop time of the model. </span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Required parameters:</span>
+<span class="w">    </span><span class="c">%   MassSpringDamperRequest - Request Body for Simulating the mass spring damper model, Type: MassSpringDamperRequest</span>
+<span class="w">    </span><span class="c">%       Required properties in the model for this call:</span>
+<span class="w">    </span><span class="c">%           parameters</span>
+<span class="w">    </span><span class="c">%           inputs</span>
+<span class="w">    </span><span class="c">%       Optional properties in the model for this call:</span>
+<span class="w">    </span><span class="c">%           stopTime</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% No optional parameters</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Responses:</span>
+<span class="w">    </span><span class="c">%   200: Results of the simulation</span>
+<span class="w">    </span><span class="c">%   400: The operations was called incorrectly by the client</span>
+<span class="w">    </span><span class="c">%   500: An error occurred in the MATLAB code or simulation</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Returns: MassSpringDamperResponse</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% See Also: SimulationServer.models.MassSpringDamperResponse</span>
+<span class="w">    </span><span class="nb">arguments</span>
+<span class="w">        </span><span class="n">req</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">mws</span><span class="p">.</span><span class="n">Request</span>
+<span class="w">        </span><span class="n">res</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">mws</span><span class="p">.</span><span class="n">Response</span>
+<span class="w">        </span><span class="o">~</span>
+<span class="w">    </span><span class="k">end</span>
+</pre></div>
+</div>
+<p>Which <a class="reference internal" href="BuildServer.html#myserver-impl"><span class="std std-ref">is a standard handler function</span></a> signature followed by a whole bunch of generated comments/help text in which we see all kinds of information from the spec coming back. <code class="docutils literal notranslate"><span class="pre">description</span></code> and <code class="docutils literal notranslate"><span class="pre">summary</span></code> fields have been used, we see it explicitly mentions the request requiring the request body and it even mentions which properties inside the request are required and optional.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When it comes to required and optional fields/properties, only the top-level properties are mentioned, if there are nested objects which in turn may also contain required properties, those are not explicitly mentioned.</p>
+</div>
+<p>It also tells us what kind of response we should be generating in our handler. And it even mentions a helper model class <code class="docutils literal notranslate"><span class="pre">SimulationServer.models.MassSpringDamperResponse</span></code> which has been generated with can help with parsing and interpreting the request body; more on this later.</p>
+<p>It then continues with some standard text and implementation which explains that we should indeed further customize this code:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c">% TODO implement SimulationServer.impl.Simulation.simMassSpringDamper</span>
+
+<span class="w">    </span><span class="c">% Depending on the level of detail of the OpenAPI spec,</span>
+<span class="w">    </span><span class="c">% the input parameters which this operation may require</span>
+<span class="w">    </span><span class="c">% or output bodies this operation may produce, various</span>
+<span class="w">    </span><span class="c">% pieces of example code may have been generated below.</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% These are all just examples which should be further</span>
+<span class="w">    </span><span class="c">% customized. It is also possible to ignore the examples</span>
+<span class="w">    </span><span class="c">% altogether and replace the function body entirely with</span>
+<span class="w">    </span><span class="c">% your own code.</span>
+
+<span class="w">    </span><span class="c">% As long as the method is not yet implemented, return</span>
+<span class="w">    </span><span class="c">% status code 501. Remove these lines once the operation</span>
+<span class="w">    </span><span class="c">% has been fully implemented.</span>
+<span class="w">    </span><span class="n">res</span><span class="p">.</span><span class="n">SendStatus</span><span class="p">(</span><span class="mi">501</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span>
+</pre></div>
+</div>
+<p>And we then even get some example code on what an actual implementation can start to look like:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c">% This operation expects a MassSpringDamperRequest as input body - Request Body for Simulating the mass spring damper model</span>
+<span class="w">    </span><span class="c">% This can be parsed into a MATLAB MassSpringDamperRequest object using</span>
+<span class="w">    </span><span class="k">try</span>
+<span class="w">        </span><span class="nb">input</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperRequest</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="n">Body</span><span class="p">);</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span>
+<span class="w">        </span><span class="c">% In case parsing fails, return an error</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">SendText</span><span class="p">(</span><span class="s">&quot;Error parsing input body&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="c">% Verify that required properties are set            </span>
+<span class="w">    </span><span class="n">requiredProperties</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="k">...</span>
+<span class="w">        </span><span class="s">&quot;parameters&quot;</span><span class="p">,</span><span class="k">...</span>
+<span class="w">        </span><span class="s">&quot;inputs&quot;</span><span class="p">,</span><span class="k">...</span>
+<span class="w">    </span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">prop</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">requiredProperties</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.(</span><span class="n">prop</span><span class="p">))</span>
+<span class="w">            </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">SendText</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;Required body parameter &#39;%s&#39; has not been set.&quot;</span><span class="p">,</span><span class="n">prop</span><span class="p">));</span><span class="w"> </span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+</pre></div>
+</div>
+<p>In here we again see this helper model <code class="docutils literal notranslate"><span class="pre">SimulationServer.models.MassSpringDamperRequest</span></code> coming back which we will have a closer look at in the next section. And we also see that some code has been generated which can help with verifying the inputs, it checks that all required properties of the request body have indeed been set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This check is only automatically implemented on the top-level input request object. If the object contains nested other objects, no code is automatically generated to check whether these nested objects also have all their required properties set. You would have to implement such checks by yourself if you need them.</p>
+</div>
+<p>Finally, it provides examples on how we could start on returning the output signals or return an error response:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c">% This operation may respond with status code 200 and a body of type MassSpringDamperResponse - Results of the simulation</span>
+<span class="w">    </span><span class="c">% Such a response can be formed in MATLAB using</span>
+<span class="w">    </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperResponse</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c">% Write your code to fill out the values of output here</span>
+
+<span class="w">    </span><span class="c">% Write the output to the response</span>
+<span class="w">    </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c">% This operation may respond with status code 400 and a body of type ErrorResponse - The operations was called incorrectly by the client</span>
+<span class="w">    </span><span class="c">% Such a response can be formed in MATLAB using</span>
+<span class="w">    </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c">% Write your code to fill out the values of output here</span>
+
+<span class="w">    </span><span class="c">% Write the output to the response</span>
+<span class="w">    </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">output</span><span class="p">);</span><span class="w">    </span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c">% This operation may respond with status code 500 and a body of type ErrorResponse - An error occurred in the MATLAB code or simulation</span>
+<span class="w">    </span><span class="c">% Such a response can be formed in MATLAB using</span>
+<span class="w">    </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c">% Write your code to fill out the values of output here</span>
+
+<span class="w">    </span><span class="c">% Write the output to the response</span>
+<span class="w">    </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span>
+<span class="k">end</span><span class="w"> </span><span class="c">% simMassSpringDamper method</span>
+</pre></div>
+</div>
+</section>
+<section id="generated-models">
+<h3>Generated Models<a class="headerlink" href="#generated-models" title="Link to this heading"></a></h3>
+<p>Let have a closer look at <code class="docutils literal notranslate"><span class="pre">SimulationServer.models.MassSpringDamperRequest</span></code>. As shown in the generated code discussed in the previous section you can use the following to parse the JSON input into a MATLAB Object representation of the data:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperRequest</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="n">jsonInput</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s explore this further and try this out with the input examples we had defined above.</p>
+<p>First, if you are not already in the generated <code class="docutils literal notranslate"><span class="pre">server</span></code> directory:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">cd</span><span class="w"> </span><span class="n">server</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>And then try the <a class="reference internal" href="#random-input-example"><span class="std std-ref">Random Input Example</span></a>:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">randomInput</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;{&quot;parameters&quot;:{&quot;m&quot;:10,&quot;k&quot;:100,&quot;b&quot;:1,&quot;x0&quot;:0},&quot;inputs&quot;:{&quot;inputType&quot;:&quot;MassSpringDamperRandomInput&quot;,&quot;maxMagnitude&quot;:100,&quot;inputChangeInterval&quot;:100,&quot;seed&quot;:1},&quot;stopTime&quot;:1000}&#39;</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">randomData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperRequest</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="n">randomInput</span><span class="p">)</span>
+
+
+<span class="go">randomData = </span>
+
+<span class="go">  MassSpringDamperRequest with properties:</span>
+
+<span class="go">    parameters: [1×1 SimulationServer.models.MassSpringDamperParameters]</span>
+<span class="go">        inputs: [1×1 SimulationServer.models.MassSpringDamperRandomInput]</span>
+<span class="go">      stopTime: 1000</span>
+
+<span class="gp">&gt;&gt; </span><span class="n">randomData</span><span class="p">.</span><span class="n">parameters</span>
+
+<span class="go">ans = </span>
+
+<span class="go">  MassSpringDamperParameters with properties:</span>
+
+<span class="go">     m: 10</span>
+<span class="go">     k: 100</span>
+<span class="go">     b: 1</span>
+<span class="go">    x0: 0</span>
+
+<span class="gp">&gt;&gt; </span><span class="n">randomData</span><span class="p">.</span><span class="n">inputs</span>
+
+<span class="go">ans = </span>
+
+<span class="go">  MassSpringDamperRandomInput with properties:</span>
+
+<span class="go">           maxMagnitude: 100</span>
+<span class="go">    inputChangeInterval: 100</span>
+<span class="go">                   seed: 1</span>
+<span class="go">              inputType: &quot;MassSpringDamperRandomInput&quot;</span>
+</pre></div>
+</div>
+<p>Where we see that all the data has been parsed into easy to work with (nested) objects with properties set to the right values. Also note that in this case <code class="docutils literal notranslate"><span class="pre">inputs</span></code> quite specifically has become a <code class="docutils literal notranslate"><span class="pre">MassSpringDamperRandomInput</span></code> instance with indeed then <code class="docutils literal notranslate"><span class="pre">maxMagnitude</span></code>, <code class="docutils literal notranslate"><span class="pre">inputChangeInterval</span></code> and <code class="docutils literal notranslate"><span class="pre">seed</span></code> properties. Whereas if we try the <a class="reference internal" href="#exact-input-example"><span class="std std-ref">Exact Input Example</span></a> we see that <code class="docutils literal notranslate"><span class="pre">inputs</span></code> then becomes a <code class="docutils literal notranslate"><span class="pre">MassSpringDamperExactInput</span></code> with a field <code class="docutils literal notranslate"><span class="pre">F</span></code> which in turn contains <code class="docutils literal notranslate"><span class="pre">Time</span></code> and <code class="docutils literal notranslate"><span class="pre">Data</span></code>.</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">exactInput</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;{&quot;parameters&quot;:{&quot;m&quot;:10,&quot;k&quot;:100,&quot;b&quot;:1,&quot;x0&quot;:0},&quot;inputs&quot;:{&quot;inputType&quot;:&quot;MassSpringDamperExactInput&quot;,&quot;F&quot;:{&quot;Time&quot;:[0,1,2],&quot;Data&quot;:[0.0,2.718,3.1415]}},&quot;stopTime&quot;:1000}&#39;</span><span class="p">;</span>
+<span class="gp">&gt;&gt; </span><span class="n">exactData</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperRequest</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="n">exactInput</span><span class="p">)</span>
+
+
+<span class="go">exactData = </span>
+
+<span class="go">  MassSpringDamperRequest with properties:</span>
+
+<span class="go">    parameters: [1×1 SimulationServer.models.MassSpringDamperParameters]</span>
+<span class="go">        inputs: [1×1 SimulationServer.models.MassSpringDamperExactInput]</span>
+<span class="go">      stopTime: 1000</span>
+
+<span class="gp">&gt;&gt; </span><span class="n">exactData</span><span class="p">.</span><span class="n">parameters</span>
+
+<span class="go">ans = </span>
+
+<span class="go">  MassSpringDamperParameters with properties:</span>
+
+<span class="go">     m: 10</span>
+<span class="go">     k: 100</span>
+<span class="go">     b: 1</span>
+<span class="go">    x0: 0</span>
+
+<span class="gp">&gt;&gt; </span><span class="n">exactData</span><span class="p">.</span><span class="n">inputs</span>
+
+<span class="go">ans = </span>
+
+<span class="go">  MassSpringDamperExactInput with properties:</span>
+
+<span class="go">            F: [1×1 SimulationServer.models.SimulinkTimeSeries]</span>
+<span class="go">    inputType: &quot;MassSpringDamperExactInput&quot;</span>
+
+<span class="gp">&gt;&gt; </span><span class="n">exactData</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">F</span>
+
+<span class="go">ans = </span>
+
+<span class="go">  SimulinkTimeSeries with properties:</span>
+
+<span class="go">    Time: [3×1 double]</span>
+<span class="go">    Data: [3×1 double]</span>
+</pre></div>
+</div>
+<p>The generated model code automatically takes care of such things. You basically get this functionality “for free” by working with an OpenAPI spec and a generator like this. Yes, there was some effort required in defining the spec properly, but once we did we get things like this for free.</p>
+</section>
+</section>
+<section id="server-implementation">
+<h2>Server implementation<a class="headerlink" href="#server-implementation" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step and all following steps require Simulink Compiler, if you do not have this product available you can still read through the example in the documentation but you will not be able to fully follow along in MATLAB.</p>
+</div>
+<p>Now that we have a reasonable idea of the code which was generated for us, let’s really implement the actual handler which will run the simulation and returns the results.</p>
+<p>In this part we will be working in the <code class="docutils literal notranslate"><span class="pre">server</span></code> directory which was generated, if you are not in that directory yet:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">cd</span><span class="w"> </span><span class="n">server</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>And as a first step we will need to copy the example model into this directory, to obtain the model first we need to open the example:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">openExample</span><span class="p">(</span><span class="s">&#39;simulinkcompiler/DeployingASimulationAppUsingSimulinkCompilerExample&#39;</span><span class="p">,</span><span class="s">&#39;workDir&#39;</span><span class="p">,</span><span class="s">&#39;model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which will create a subdirectory <code class="docutils literal notranslate"><span class="pre">model</span></code> inside the <code class="docutils literal notranslate"><span class="pre">server</span></code> directory and it then copies in the example files including the model. We can then copy the model to the parent directory (<code class="docutils literal notranslate"><span class="pre">server</span></code>), go back into <code class="docutils literal notranslate"><span class="pre">server</span></code> and delete the <code class="docutils literal notranslate"><span class="pre">model</span></code> directory which we no longer need:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">copyfile</span><span class="p">(</span><span class="s">&#39;MassSpringDamperModel.slx&#39;</span><span class="p">,</span><span class="s">&#39;..&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt; </span><span class="nb">cd</span><span class="w"> </span><span class="p">..</span>
+<span class="gp">&gt;&gt; </span><span class="nb">rmdir</span><span class="p">(</span><span class="s">&#39;model&#39;</span><span class="p">,</span><span class="s">&#39;s&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And we can then start really writing our implementation. The start of the function is mostly left as is. Obviously we remove the standard text which explains how to implement the function and we remove the <code class="docutils literal notranslate"><span class="pre">res.SendStatus(501)</span></code> placeholder. But other than that we only make two small changes to the generated code which returned errors to the client, we update this to use our specific <code class="docutils literal notranslate"><span class="pre">ErrorResponse</span></code> format instead:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>function simMassSpringDamper(req,res,~)
+<span class="w"> </span>   % simMassSpringDamper Mass Spring Damper Model
+<span class="w"> </span>   % Run a simulation of the following Simulink Model:  ![](https://www.mathworks.com/help/examples/simulinkcompiler/win64/DeployingASimulationAppUsingSimulinkCompilerExample_01.png)  The mass-spring-damper model consists of discrete mass nodes distributed  throughout an object and interconnected via a network of springs and dampers.  This model is well-suited for modeling object with complex material  properties such as non-linearity and elasticity.  The model is parameterized using the following four tunable parameters which can be specified in the API call: * Mass - `m`. * Spring stiffness - `k`. * Damping - `b`. * Initial position - `x0`.  The model has an `External Force` input signal. The input signal can be randomly generated as part of the simulation run. Alternatively, it is possible to provide an exact input signal as part of the API request.  The model has two actual outputs `Position` and `Velocity` and since `Acceleration` is logged, it is returned as well. Further, when working with a randomly generated input signal, the input signal which was generated is returned as well.  Finally, it is possible to specify the stop time of the model. 
+<span class="w"> </span>   %
+<span class="w"> </span>   % Required parameters:
+<span class="w"> </span>   %   MassSpringDamperRequest - Request Body for Simulating the mass spring damper model, Type: MassSpringDamperRequest
+<span class="w"> </span>   %       Required properties in the model for this call:
+<span class="w"> </span>   %           parameters
+<span class="w"> </span>   %           inputs
+<span class="w"> </span>   %       Optional properties in the model for this call:
+<span class="w"> </span>   %           stopTime
+<span class="w"> </span>   %
+<span class="w"> </span>   % No optional parameters
+<span class="w"> </span>   %
+<span class="w"> </span>   % Responses:
+<span class="w"> </span>   %   200: Results of the simulation
+<span class="w"> </span>   %   400: The operations was called incorrectly by the client
+<span class="w"> </span>   %   500: An error occurred in the MATLAB code or simulation
+<span class="w"> </span>   %
+<span class="w"> </span>   % Returns: MassSpringDamperResponse
+<span class="w"> </span>   %
+<span class="w"> </span>   % See Also: SimulationServer.models.MassSpringDamperResponse
+<span class="w"> </span>   arguments
+<span class="w"> </span>       req SimulationServer.mws.Request
+<span class="w"> </span>       res SimulationServer.mws.Response
+<span class="w"> </span>       ~
+<span class="w"> </span>   end
+<span class="w"> </span>   
+<span class="gd">-   % TODO implement SimulationServer.impl.Simulation.simMassSpringDamper</span>
+<span class="gd">-</span>
+<span class="gd">-   % Depending on the level of detail of the OpenAPI spec,</span>
+<span class="gd">-   % the input parameters which this operation may require</span>
+<span class="gd">-   % or output bodies this operation may produce, various</span>
+<span class="gd">-   % pieces of example code may have been generated below.</span>
+<span class="gd">-   %</span>
+<span class="gd">-   % These are all just examples which should be further</span>
+<span class="gd">-   % customized. It is also possible to ignore the examples</span>
+<span class="gd">-   % altogether and replace the function body entirely with</span>
+<span class="gd">-   % your own code.</span>
+<span class="gd">-</span>
+<span class="gd">-   % As long as the method is not yet implemented, return</span>
+<span class="gd">-   % status code 501. Remove these lines once the operation</span>
+<span class="gd">-   % has been fully implemented.</span>
+<span class="gd">-   res.SendStatus(501);</span>
+<span class="gd">-   return</span>
+
+<span class="w"> </span>   % This operation expects a MassSpringDamperRequest as input body - Request Body for Simulating the mass spring damper model
+<span class="w"> </span>   % This can be parsed into a MATLAB MassSpringDamperRequest object using
+<span class="w"> </span>   try
+<span class="w"> </span>       input = SimulationServer.models.MassSpringDamperRequest().fromJSON(req.Body);
+<span class="w"> </span>   catch 
+<span class="w"> </span>       % In case parsing fails, return an error
+<span class="gd">-       res.Status(400).SendText(&quot;Error parsing input body&quot;);</span>
+<span class="gi">+       res.Status(400).Json(SimulationServer.models.ErrorResponse(error_message=&quot;Error parsing input body&quot;));</span>
+<span class="w"> </span>       return;
+<span class="w"> </span>   end
+<span class="w"> </span>   % Verify that required properties are set            
+<span class="w"> </span>   requiredProperties = [...
+<span class="w"> </span>       &quot;parameters&quot;,...
+<span class="w"> </span>       &quot;inputs&quot;,...
+<span class="w"> </span>   ];
+<span class="w"> </span>   for prop = requiredProperties
+<span class="w"> </span>       if isempty(input.(prop))
+<span class="gd">-           res.Status(400).SendText(sprintf(&quot;Required body parameter &#39;%s&#39; has not been set.&quot;,prop));         </span>
+<span class="gi">+           res.Status(400).Json(SimulationServer.models.ErrorResponse(error_message=sprintf(&quot;Required body parameter &#39;%s&#39; has not been set.&quot;,prop))); </span>
+<span class="w"> </span>           return
+<span class="w"> </span>       end
+<span class="w"> </span>   end
+</pre></div>
+</div>
+<p>And then the remainder of the function becomes our actual implementation which:</p>
+<ol class="arabic simple">
+<li><p>Generates the input if necessary</p></li>
+<li><p>Calls the model configured with the specified arguments and input</p></li>
+<li><p>Forms the response based on the simulation results</p></li>
+</ol>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c">% Run the entire actual code inside a TRY-CATCH such that if an</span>
+<span class="w">    </span><span class="c">% error occurs we can correctly return an ErrorResponse rather</span>
+<span class="w">    </span><span class="c">% than the code just erroring out which will lead to MATLAB</span>
+<span class="w">    </span><span class="c">% Production Server returning a generic error message</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span>
+<span class="w">        </span><span class="c">% If no value specified for stopTime, use the default</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">        </span><span class="c">% If no value specified for x0, use the default</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">                </span>
+<span class="w">        </span><span class="c">% Set or generate the input signal based on the type of input that was</span>
+<span class="w">        </span><span class="c">% provided</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperRandomInput&quot;</span>
+<span class="w">            </span><span class="c">% If seed was not set use its default value</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="p">)</span>
+<span class="w">                </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">end</span>
+<span class="w">            </span><span class="c">% Generate a random signal based on the provided properties</span>
+<span class="w">            </span><span class="n">rs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">RandStream</span><span class="p">(</span><span class="s">&quot;mt19937ar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Seed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="p">);</span>
+<span class="w">            </span><span class="nb">time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputChangeInterval</span><span class="p">:</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">)</span><span class="o">&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">force</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">maxMagnitude</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">rand</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span><span class="nb">size</span><span class="p">(</span><span class="nb">time</span><span class="p">));</span>
+<span class="w">            </span><span class="n">inputSignal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">timeseries</span><span class="p">(</span><span class="n">force</span><span class="p">,</span><span class="nb">time</span><span class="p">);</span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperExactInput&quot;</span>
+<span class="w">            </span><span class="c">% Simply use the provided signal as is</span>
+<span class="w">            </span><span class="n">inputSignal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">timeseries</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">F</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">F</span><span class="p">.</span><span class="n">Time</span><span class="p">);</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="c">% Return an error</span>
+<span class="w">            </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="s">&quot;Invalid inputType specified&quot;</span><span class="p">));</span><span class="w"> </span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% Configure the inputs and parameters of the model based on the</span>
+<span class="w">        </span><span class="c">% provided inputs</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulink</span><span class="p">.</span><span class="n">SimulationInput</span><span class="p">(</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the force input signal</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setExternalInput</span><span class="p">(</span><span class="n">inputSignal</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the parameters</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">m</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">k</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">b</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;x0&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the stop time</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setModelParameter</span><span class="p">(</span><span class="s">&quot;StopTime&quot;</span><span class="p">,</span><span class="nb">string</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">));</span>
+<span class="w">        </span><span class="c">% Needed for deployment using Simulink Compiler</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simulink</span><span class="p">.</span><span class="n">compiler</span><span class="p">.</span><span class="n">configureForDeployment</span><span class="p">(</span><span class="n">simIn</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Run the actual simulation</span>
+<span class="w">        </span><span class="n">out</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">sim</span><span class="p">(</span><span class="n">simIn</span><span class="p">);</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% Start building the response</span>
+<span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperResponse</span><span class="p">();</span>
+<span class="w">        </span><span class="c">% Fill-out all the signals based on the outputs from the model</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;acc&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;acc&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;vel&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;vel&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span><span class="w">    </span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;pos&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;pos&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span><span class="w">    </span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% In case a randomly generated input signal was used, also include it</span>
+<span class="w">        </span><span class="c">% in the output</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperRandomInput&quot;</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">inputSignal</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">inputSignal</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+
+<span class="w">        </span><span class="c">% Write the output to the response</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="n">ME</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="n">ME</span><span class="p">.</span><span class="n">message</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">end</span>
+</pre></div>
+</div>
+<p>Putting this all together then gives:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="nf">simMassSpringDamper</span><span class="p">(</span>req,res,~<span class="p">)</span>
+<span class="w">    </span><span class="c">% simMassSpringDamper Mass Spring Damper Model</span>
+<span class="w">    </span><span class="c">% Run a simulation of the following Simulink Model:  ![](https://www.mathworks.com/help/examples/simulinkcompiler/win64/DeployingASimulationAppUsingSimulinkCompilerExample_01.png)  The mass-spring-damper model consists of discrete mass nodes distributed  throughout an object and interconnected via a network of springs and dampers.  This model is well-suited for modeling object with complex material  properties such as non-linearity and elasticity.  The model is parameterized using the following four tunable parameters which can be specified in the API call: * Mass - `m`. * Spring stiffness - `k`. * Damping - `b`. * Initial position - `x0`.  The model has an `External Force` input signal. The input signal can be randomly generated as part of the simulation run. Alternatively, it is possible to provide an exact input signal as part of the API request.  The model has two actual outputs `Position` and `Velocity` and since `Acceleration` is logged, it is returned as well. Further, when working with a randomly generated input signal, the input signal which was generated is returned as well.  Finally, it is possible to specify the stop time of the model. </span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Required parameters:</span>
+<span class="w">    </span><span class="c">%   MassSpringDamperRequest - Request Body for Simulating the mass spring damper model, Type: MassSpringDamperRequest</span>
+<span class="w">    </span><span class="c">%       Required properties in the model for this call:</span>
+<span class="w">    </span><span class="c">%           parameters</span>
+<span class="w">    </span><span class="c">%           inputs</span>
+<span class="w">    </span><span class="c">%       Optional properties in the model for this call:</span>
+<span class="w">    </span><span class="c">%           stopTime</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% No optional parameters</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Responses:</span>
+<span class="w">    </span><span class="c">%   200: Results of the simulation</span>
+<span class="w">    </span><span class="c">%   400: The operations was called incorrectly by the client</span>
+<span class="w">    </span><span class="c">%   500: An error occurred in the MATLAB code or simulation</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% Returns: MassSpringDamperResponse</span>
+<span class="w">    </span><span class="c">%</span>
+<span class="w">    </span><span class="c">% See Also: SimulationServer.models.MassSpringDamperResponse</span>
+<span class="w">    </span><span class="nb">arguments</span>
+<span class="w">        </span><span class="n">req</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">mws</span><span class="p">.</span><span class="n">Request</span>
+<span class="w">        </span><span class="n">res</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">mws</span><span class="p">.</span><span class="n">Response</span>
+<span class="w">        </span><span class="o">~</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c">% This operation expects a MassSpringDamperRequest as input body - Request Body for Simulating the mass spring damper model</span>
+<span class="w">    </span><span class="c">% This can be parsed into a MATLAB MassSpringDamperRequest object using</span>
+<span class="w">    </span><span class="k">try</span>
+<span class="w">        </span><span class="nb">input</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperRequest</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="n">Body</span><span class="p">);</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span>
+<span class="w">        </span><span class="c">% In case parsing fails, return an error</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="s">&quot;Error parsing input body&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="c">% Verify that required properties are set            </span>
+<span class="w">    </span><span class="n">requiredProperties</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="k">...</span>
+<span class="w">        </span><span class="s">&quot;parameters&quot;</span><span class="p">,</span><span class="k">...</span>
+<span class="w">        </span><span class="s">&quot;inputs&quot;</span><span class="p">,</span><span class="k">...</span>
+<span class="w">    </span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">prop</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">requiredProperties</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.(</span><span class="n">prop</span><span class="p">))</span>
+<span class="w">            </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;Required body parameter &#39;%s&#39; has not been set.&quot;</span><span class="p">,</span><span class="n">prop</span><span class="p">)));</span><span class="w"> </span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c">% Run the entire actual code inside a TRY-CATCH such that if an</span>
+<span class="w">    </span><span class="c">% error occurs we can corectly return an ErrorResponse rather</span>
+<span class="w">    </span><span class="c">% than the code just erroring out which will lead to MATLAB</span>
+<span class="w">    </span><span class="c">% Production Server returning a generic error message</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span>
+<span class="w">        </span><span class="c">% If no value specified for stopTime, use the default</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">        </span><span class="c">% If no value specified for x0, use the default</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="p">)</span>
+<span class="w">            </span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">                </span>
+<span class="w">        </span><span class="c">% Set or generate the input signal based on the type of input that was</span>
+<span class="w">        </span><span class="c">% provided</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperRandomInput&quot;</span>
+<span class="w">            </span><span class="c">% If seed was not set use its default value</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="nb">isempty</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="p">)</span>
+<span class="w">                </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">end</span>
+<span class="w">            </span><span class="c">% Generate a random signal based on the provided properties</span>
+<span class="w">            </span><span class="n">rs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">RandStream</span><span class="p">(</span><span class="s">&quot;mt19937ar&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Seed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">seed</span><span class="p">);</span>
+<span class="w">            </span><span class="nb">time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputChangeInterval</span><span class="p">:</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">)</span><span class="o">&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="n">force</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">maxMagnitude</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">rand</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span><span class="nb">size</span><span class="p">(</span><span class="nb">time</span><span class="p">));</span>
+<span class="w">            </span><span class="n">inputSignal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">timeseries</span><span class="p">(</span><span class="n">force</span><span class="p">,</span><span class="nb">time</span><span class="p">);</span>
+<span class="w">        </span><span class="k">elseif</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperExactInput&quot;</span>
+<span class="w">            </span><span class="c">% Simply use the provided signal as is</span>
+<span class="w">            </span><span class="n">inputSignal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">timeseries</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">F</span><span class="p">.</span><span class="n">Data</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">F</span><span class="p">.</span><span class="n">Time</span><span class="p">);</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="c">% Return an error</span>
+<span class="w">            </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="s">&quot;Invalid inputType specified&quot;</span><span class="p">));</span><span class="w"> </span>
+<span class="w">            </span><span class="k">return</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% Configure the inputs and parameters of the model based on the</span>
+<span class="w">        </span><span class="c">% provided inputs</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Simulink</span><span class="p">.</span><span class="n">SimulationInput</span><span class="p">(</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the force input signal</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setExternalInput</span><span class="p">(</span><span class="n">inputSignal</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the parameters</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">m</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">k</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">b</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setVariable</span><span class="p">(</span><span class="s">&#39;x0&#39;</span><span class="p">,</span><span class="nb">input</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">x0</span><span class="p">,</span><span class="s">&#39;Workspace&#39;</span><span class="p">,</span><span class="s">&#39;MassSpringDamperModel&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Set the stop time</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simIn</span><span class="p">.</span><span class="n">setModelParameter</span><span class="p">(</span><span class="s">&quot;StopTime&quot;</span><span class="p">,</span><span class="nb">string</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">stopTime</span><span class="p">));</span>
+<span class="w">        </span><span class="c">% Needed for deployment using Simulink Compiler</span>
+<span class="w">        </span><span class="n">simIn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">simulink</span><span class="p">.</span><span class="n">compiler</span><span class="p">.</span><span class="n">configureForDeployment</span><span class="p">(</span><span class="n">simIn</span><span class="p">);</span>
+<span class="w">        </span><span class="c">% Run the actual simulation</span>
+<span class="w">        </span><span class="n">out</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">sim</span><span class="p">(</span><span class="n">simIn</span><span class="p">);</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% Start building the response</span>
+<span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">MassSpringDamperResponse</span><span class="p">();</span>
+<span class="w">        </span><span class="c">% Fill-out all the signals based on the outputs from the model</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;acc&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;acc&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;vel&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">v</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;vel&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span><span class="w">    </span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;pos&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">        </span><span class="n">output</span><span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">logsout</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;pos&quot;</span><span class="p">).</span><span class="n">Values</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span><span class="w">    </span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c">% In case a randomly generated input signal was used, also include it</span>
+<span class="w">        </span><span class="c">% in the output</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">inputs</span><span class="p">.</span><span class="n">inputType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;MassSpringDamperRandomInput&quot;</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Time</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">inputSignal</span><span class="p">.</span><span class="n">Time</span><span class="p">;</span>
+<span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">Data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">inputSignal</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span>
+
+<span class="w">        </span><span class="c">% Write the output to the response</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="n">ME</span>
+<span class="w">        </span><span class="n">res</span><span class="p">.</span><span class="n">Status</span><span class="p">(</span><span class="mi">500</span><span class="p">).</span><span class="n">Json</span><span class="p">(</span><span class="n">SimulationServer</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">ErrorResponse</span><span class="p">(</span><span class="n">error_message</span><span class="p">=</span><span class="n">ME</span><span class="p">.</span><span class="n">message</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span>
+<span class="k">end</span><span class="w"> </span><span class="c">% simMassSpringDamper method</span>
+</pre></div>
+</div>
+</section>
+<section id="server-testing">
+<h2>Server Testing<a class="headerlink" href="#server-testing" title="Link to this heading"></a></h2>
+<p>Now that the handler has been implemented we can test the server using the <a class="reference external" href="https://www.mathworks.com/help/compiler_sdk/mps_dev_test/test-in-process.html" rel="noreferrer" target="_blank">testing interface for MATLAB Production Server</a>.</p>
+<p>First we tell the test server where to find the routes configuration and then we start the Production Server Archive Compiler App:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="nb">setenv</span><span class="p">(</span><span class="s">&#39;PRODSERVER_ROUTES_FILE&#39;</span><span class="p">,</span><span class="s">&#39;MyServer/routes.json&#39;</span><span class="p">);</span>
+<span class="gp">&gt;&gt; </span><span class="n">productionServerArchiveCompiler</span>
+</pre></div>
+</div>
+<p>In the App add <code class="docutils literal notranslate"><span class="pre">server.m</span></code> as Exported Function and set the Archive Name to <code class="docutils literal notranslate"><span class="pre">SimulationServer</span></code>, the testing server can then be started under <code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">Client</span></code> and by then clicking <code class="docutils literal notranslate"><span class="pre">Start</span></code>.</p>
+<p>And then we can try calling the end-point. For example if you have cURL available, you can run the following from a command prompt:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>--location<span class="w"> </span><span class="s1">&#39;http://localhost:9910/openapi-example/sim/mass-spring-damper&#39;</span><span class="w"> </span>--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span>--data<span class="w"> </span><span class="s1">&#39;{&quot;parameters&quot;:{&quot;m&quot;:10,&quot;k&quot;:100,&quot;b&quot;:1,&quot;x0&quot;:0},&quot;inputs&quot;:{&quot;inputType&quot;:&quot;MassSpringDamperRandomInput&quot;,&quot;maxMagnitude&quot;:100,&quot;inputChangeInterval&quot;:10,&quot;seed&quot;:1},&quot;stopTime&quot;:100}&#39;</span>
+</pre></div>
+</div>
+<p>Or you can perform a similar request using tools like Postman or any other RESTful client.</p>
+<p>This should return the output signals in the <a class="reference internal" href="#response-body">JSON format as discussed above</a>.</p>
+<section id="bonus-test-using-a-partly-generated-python-client">
+<h3>(Bonus) Test using a (partly generated) Python client<a class="headerlink" href="#bonus-test-using-a-partly-generated-python-client" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section requires NodeJS and Python.</p>
+</div>
+<p>As mentioned before, working with OpenAPI does not only allow us to generate parts of the server, it can also be used to generate (parts of) clients.</p>
+<p>To get an idea of how this could work, and also to actually test our server even more, in this section we generate and then use a Python client.</p>
+<p>To generate a client we can call the OpenAPI Generator CLI from a terminal. In the <code class="docutils literal notranslate"><span class="pre">Software/MATLAB/examples/server/simulink</span></code> directory, run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>npx<span class="w"> </span>@openapitools/openapi-generator-cli<span class="w"> </span>generate<span class="w"> </span>-g<span class="w"> </span>python<span class="w"> </span>-i<span class="w"> </span>openapi.yaml<span class="w"> </span>-o<span class="w"> </span>python
+</pre></div>
+</div>
+<p>This will generate a Python API client inside a directory named <code class="docutils literal notranslate"><span class="pre">python</span></code>. We can then go into that directory and install any Python dependencies which the generated package need:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>python
+<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>matplotlib
+</pre></div>
+</div>
+<p>We can then create a new file <code class="docutils literal notranslate"><span class="pre">example.py</span></code> with the following content which uses the generated OpenAPI client to call the server:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># All these imports refer to code in the package which was generated</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openapi_client.models.mass_spring_damper_parameters</span><span class="w"> </span><span class="kn">import</span> <span class="n">MassSpringDamperParameters</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openapi_client.models.mass_spring_damper_random_input</span><span class="w"> </span><span class="kn">import</span> <span class="n">MassSpringDamperRandomInput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openapi_client.models.mass_spring_damper_request</span><span class="w"> </span><span class="kn">import</span> <span class="n">MassSpringDamperRequest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openapi_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationApi</span>
+
+<span class="c1"># Create an instance of the generated SimulationApi class</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">SimulationApi</span><span class="p">()</span>
+<span class="c1"># Configure the request body using the generated classes</span>
+<span class="n">req</span> <span class="o">=</span> <span class="n">MassSpringDamperRequest</span><span class="p">(</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="n">MassSpringDamperParameters</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">inputs</span><span class="o">=</span><span class="n">MassSpringDamperRandomInput</span><span class="p">(</span>
+        <span class="n">inputType</span><span class="o">=</span><span class="s2">&quot;MassSpringDamperRandomInput&quot;</span><span class="p">,</span>
+        <span class="n">maxMagnitude</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">inputChangeInterval</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">stopTime</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+<span class="c1"># Call the API using the generated method</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">sim_mass_spring_damper</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+<span class="c1"># As an example, visualize the result</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Input Force&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">stairs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">result</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Acceleration&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">time</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Velocity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">time</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Position&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">time</span><span class="p">,</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you are familiar with Python, you will notice that in this code we are not explicitly doing anything with JSON nor are we explicitly making any low-level HTTP requests. We have a clean, higher level, class-based interface which we can easily work with.</p>
+<p>Finally we can run the example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>example.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="package">
+<h2>Package<a class="headerlink" href="#package" title="Link to this heading"></a></h2>
+<p>To package the server into a CTF-archive, we can use the <code class="docutils literal notranslate"><span class="pre">buildfile.m</span></code> which was also generated:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">buildtool</span><span class="w"> </span><span class="s">build</span>
+</pre></div>
+</div>
+<p>If you wish to build a Microservice Docker image (instead of deploying the CTF-archive to MATLAB Production Server), this can then be done using:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">buildtool</span><span class="w"> </span><span class="s">microservice</span>
+</pre></div>
+</div>
+</section>
+<section id="deploy">
+<h2>Deploy<a class="headerlink" href="#deploy" title="Link to this heading"></a></h2>
+<p>To deploy the package to MATLAB Production Server, copy over the CTF-archive which was produced and update <code class="docutils literal notranslate"><span class="pre">routes.json</span></code> on the server instance.</p>
+<p>Or to run the Microservice image which was created:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">9910</span>:9910<span class="w"> </span>simulationserver
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Note that theoretically, it is also possible to use the MATLAB Generator <em>for OpenAPI</em> package to generate a MATLAB client. However if your MATLAB Production Server deployed functions are exclusively going to be called from MATLAB only, it may make more sense to work with MATLAB Production Server’s standard interface and <a class="reference internal" href="#"><span class="xref myst">MATLAB Client for MATLAB Production Server</span></a> instead of going through these OpenAPI based workflows.</p>
+</aside>
+</aside>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ServerRequestResponse.html" class="btn btn-neutral float-left" title="Server Request and Response Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FAQ.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

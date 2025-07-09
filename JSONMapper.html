@@ -1,0 +1,593 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSONMapper &mdash; MATLAB Generator for OpenAPI  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/mathworks.css?v=0dd1dfac" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=35a8b989"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Swagger UI" href="SwaggerUI.html" />
+    <link rel="prev" title="Inheritance and Polymorphism" href="InheritanceAndPolymorphism.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MATLAB Generator for OpenAPI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Client Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildClient.html">Building MATLAB Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CustomizingGeneratedCode.html">Customizing Generated Client Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Options.html">Client Generator Configuration Options</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BasicUsage.html">Basic Usage</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MATLAB Client Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CustomizationExampleAirflow.html">Advanced Example: Customizing the Generator (for Apache Airflow)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Server Code Generation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BuildServer.html">Building MATLAB Server Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerRequestResponse.html">Server Request and Response Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ServerExample.html">Server Generation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InheritanceAndPolymorphism.html">Inheritance and Polymorphism</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">JSONMapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jsonmapper-base-class">JSONMapper Base Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-class-hierarchies">Building class hierarchies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#annotations">Annotations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-fieldname">JSONMapper.fieldName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-jsonarray">JSONMapper.JSONArray</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-epochdatetime">JSONMapper.epochDatetime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-stringdatetime">JSONMapper.stringDatetime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-discriminator">JSONMapper.discriminator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonmapper-donotdecode">JSONMapper.doNotDecode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fromjson">fromJSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsonencode">jsonencode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getpayload">getPayload</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#jsonenum">JSONEnum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jsonmappermap">JSONMapperMap</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SwaggerUI.html">Swagger UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MATLAB Generator for OpenAPI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">JSONMapper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jsonmapper">
+<h1>JSONMapper<a class="headerlink" href="#jsonmapper" title="Link to this heading"></a></h1>
+<section id="jsonmapper-base-class">
+<h2>JSONMapper Base Class<a class="headerlink" href="#jsonmapper-base-class" title="Link to this heading"></a></h2>
+<p>JSONMapper base class - adds JSON serialization and deserialization.
+Derive MATLAB classes from this class to allow them to be
+deserialized from JSON mapping the JSON fields to the class
+properties. To allow proper nesting of objects, derived objects must
+call the <code class="docutils literal notranslate"><span class="pre">initialize</span></code> method from their constructor</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the past it was recommended to call the JSONMapper constructor from derived classes.
+While this can indeed also still be used as an alternative to calling <code class="docutils literal notranslate"><span class="pre">initialize</span></code>, this
+is no longer recommended as it does not allow building deeper class hierarchies,
+also see <a class="reference internal" href="#building-class-hierarchies">Building class hierarchies</a>.</p>
+</div>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">myClass</span><span class="p">(</span>s,inputs<span class="p">)</span>
+<span class="w">    </span><span class="nb">arguments</span>
+<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">ConstructorArgument</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">        </span><span class="n">inputs</span><span class="p">.</span>?<span class="n">myClass</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">inputs</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to update the class name (<code class="docutils literal notranslate"><span class="pre">myClass</span></code> in the example above) in both the function name <em>as well as in the arguments block</em>.</p>
+</div>
+<p>During serialization or deserialization the MATLAB object definition
+is leading. JSON data is converted to MATLAB data types based on the
+type declaration in MATLAB. Therefore all properties of the MATLAB
+class <em>must</em> have a type declaration. Also, fields are only
+deserialized if they actually exist on the MATLAB class, any
+additional fields in the JSON input are ignored.</p>
+<p>Supported property data types: double, float, uint8, int8, uint16,
+int16, uint32, int32, uint64, int64, logical, string, char,
+datetime (must be annotated), JSONMapperMap, classes derived from
+<a class="reference internal" href="#jsonmappermap">JSONMapper</a> and <a class="reference internal" href="#jsonenum">JSONEnum</a>.</p>
+<p>Annotations can be added to properties as “validation functions”.</p>
+<p>JSONMapper <em>methods</em> usable as <em>annotations</em>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Annotation</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fieldName</p></td>
+<td><p>Allows property to be mapped to a JSON field with different name.</p></td>
+</tr>
+<tr class="row-odd"><td><p>JSONArray</p></td>
+<td><p>Specifies field is a JSON array.</p></td>
+</tr>
+<tr class="row-even"><td><p>epochDatetime</p></td>
+<td><p>For datetime properties specifies in JSON the date time is encoded as epoch. Must be the first attribute if used.</p></td>
+</tr>
+<tr class="row-odd"><td><p>stringDatetime</p></td>
+<td><p>For datetime properties specifies in JSON the date time encoded as string with a particular format. Must be the first attribute if used.</p></td>
+</tr>
+<tr class="row-even"><td><p>discriminator</p></td>
+<td><p>Indicates that the property acts as a discriminator based upon which the JSON document can be deserialized to a more specific derived class. Also see <a class="reference internal" href="#building-class-hierarchies">Building class hierarchies</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>doNotDecode</p></td>
+<td><p>Indicates that the property will not be decoded using MATLAB’s jsondecode or otherwise when mapping to an object.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="building-class-hierarchies">
+<h3>Building class hierarchies<a class="headerlink" href="#building-class-hierarchies" title="Link to this heading"></a></h3>
+<p>It is possible to build entire object hierarchies on top of <code class="docutils literal notranslate"><span class="pre">JSONMapper</span></code>. It is for example possible to define
+a <code class="docutils literal notranslate"><span class="pre">Pet</span></code> class and two classes <code class="docutils literal notranslate"><span class="pre">Cat</span></code> and <code class="docutils literal notranslate"><span class="pre">Dog</span></code> which derive from it. It is also possible to define a
+<a class="reference internal" href="#jsonmapper-discriminator">discriminator property</a> then; this is a property whose value specifies the exact subclass of an instance.</p>
+<p>This all ties in with <a class="reference external" href="https://spec.openapis.org/oas/v3.0.3#composition-and-inheritance-polymorphism" rel="noreferrer" target="_blank">composition, inheritance and polymorphism in OpenAPI compatible services</a>.</p>
+<p>So, it is for example possible to implement the following MATLAB classes:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">Pet</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">JSONMapper</span>
+<span class="w">    </span><span class="k">properties</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="n">string</span>
+<span class="w">        </span><span class="n">petType</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">petType</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Cat&quot;</span><span class="p">,</span><span class="s">&quot;Cat&quot;</span><span class="p">,</span><span class="s">&quot;Dog&quot;</span><span class="p">,</span><span class="s">&quot;Dog&quot;</span><span class="p">)}</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">methods</span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Pet</span><span class="p">(</span>s,inputs<span class="p">)</span>
+<span class="w">            </span><span class="nb">arguments</span>
+<span class="w">                </span><span class="n">s</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">ConstructorArgument</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="n">inputs</span><span class="p">.</span>?<span class="n">Pet</span>
+<span class="w">            </span><span class="k">end</span>
+<span class="w">            </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">inputs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">classdef</span><span class="w"> </span><span class="n">Cat</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Pet</span>
+<span class="w">    </span><span class="k">properties</span>
+<span class="w">        </span><span class="n">huntingSkill</span><span class="w"> </span><span class="n">string</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">methods</span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Cat</span><span class="p">(</span>s,inputs<span class="p">)</span>
+<span class="w">            </span><span class="nb">arguments</span>
+<span class="w">                </span><span class="n">s</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">ConstructorArgument</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="n">inputs</span><span class="p">.</span>?<span class="n">Cat</span>
+<span class="w">            </span><span class="k">end</span>
+<span class="w">            </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">inputs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span><span class="w">    </span>
+<span class="k">end</span>
+
+<span class="k">classdef</span><span class="w"> </span><span class="n">Dog</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Pet</span>
+<span class="w">    </span><span class="k">properties</span>
+<span class="w">        </span><span class="n">packSize</span><span class="w"> </span><span class="n">int32</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">methods</span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Dog</span><span class="p">(</span>s,inputs<span class="p">)</span>
+<span class="w">            </span><span class="nb">arguments</span>
+<span class="w">                </span><span class="n">s</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">ConstructorArgument</span><span class="p">}</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="n">inputs</span><span class="p">.</span>?<span class="n">Dog</span>
+<span class="w">            </span><span class="k">end</span>
+<span class="w">            </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">inputs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span><span class="w">    </span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Where if <code class="docutils literal notranslate"><span class="pre">Pet().fromJSON</span></code> is called with a JSON document with the <code class="docutils literal notranslate"><span class="pre">petType</span></code> set, it can actually return a <code class="docutils literal notranslate"><span class="pre">Cat</span></code> or <code class="docutils literal notranslate"><span class="pre">Dog</span></code> specifically rather than a more generic <code class="docutils literal notranslate"><span class="pre">Pet</span></code>, for example:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">p</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Pet</span><span class="p">().</span><span class="n">fromJSON</span><span class="p">(</span><span class="s">&#39;{&quot;name&quot;:&quot;Garfield&quot;,&quot;petType&quot;: &quot;Cat&quot;,&quot;huntingSkill&quot;:&quot;lazy&quot;}&#39;</span><span class="p">)</span>
+
+<span class="go">p = </span>
+
+<span class="go">  Cat with properties:</span>
+
+<span class="go">    huntingSkill: &quot;lazy&quot;</span>
+<span class="go">            name: &quot;Garfield&quot;</span>
+<span class="go">         petType: &quot;Cat&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is only possible when working with <code class="docutils literal notranslate"><span class="pre">fromJSON</span></code>, this will <em>not</em> work if calling the <em>constructor</em> with a JSON document as input. (A constructor cannot return object of other classes, regardless of whether those classes are children of the class in question or not).</p>
+</div>
+</section>
+<section id="annotations">
+<h3>Annotations<a class="headerlink" href="#annotations" title="Link to this heading"></a></h3>
+<section id="jsonmapper-fieldname">
+<h4>JSONMapper.fieldName<a class="headerlink" href="#jsonmapper-fieldname" title="Link to this heading"></a></h4>
+<p>fieldName JSONMapper Annotation
+This can be added to properties if the MATLAB property name
+and JSON field name differ. For example, when the JSON field
+name is not a valid MATLAB identifier.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span>
+<span class="w">    </span><span class="n">some_field</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">fieldName</span><span class="p">(</span><span class="n">some_field</span><span class="p">,</span><span class="s">&quot;some.field&quot;</span><span class="p">)}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonmapper-jsonarray">
+<h4>JSONMapper.JSONArray<a class="headerlink" href="#jsonmapper-jsonarray" title="Link to this heading"></a></h4>
+<p>JSONArray JSONMapper Annotation
+Specified that the JSON field is an array.</p>
+<p>Ensures that when serializing a MATLAB scalar it is in fact
+encoded as a JSON array rather than a scalar if the property
+has been annotated with this option.</p>
+</section>
+<section id="jsonmapper-epochdatetime">
+<h4>JSONMapper.epochDatetime<a class="headerlink" href="#jsonmapper-epochdatetime" title="Link to this heading"></a></h4>
+<p>epochDatetime JSONMapper Annotation
+When working with datetime fields either epochDatetime or
+stringDatetime annotation is required to specify how the
+datetime is encoded in JSON. This must be the first
+annotation.</p>
+<p>When called without inputs POSIX time/UNIX timestamp is
+assumed.</p>
+<p>Optional Name-Value pairs TimeZone, Epoch and TicksPerSecond
+can be provided, their meaning is the same as when working
+with <code class="docutils literal notranslate"><span class="pre">datetime(d,'ConvertFrom','epochtime',</span> <span class="pre">OPTIONS)</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span>
+<span class="w">    </span><span class="c">% start_date is a UNIX timestamp</span>
+<span class="w">    </span><span class="n">start_date</span><span class="w"> </span><span class="n">datetime</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">epochDatetime</span><span class="p">}</span>
+<span class="w">    </span><span class="c">% end_date is UNIX timestamp in milliseconds</span>
+<span class="w">    </span><span class="n">end_date</span><span class="w"> </span><span class="n">datetime</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">epochDatetime</span><span class="p">(</span><span class="n">end_date</span><span class="p">,</span><span class="s">&#39;TicksPerSecond&#39;</span><span class="p">,</span><span class="mi">1000</span><span class="p">)}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonmapper-stringdatetime">
+<h4>JSONMapper.stringDatetime<a class="headerlink" href="#jsonmapper-stringdatetime" title="Link to this heading"></a></h4>
+<p>stringDatetime JSONMapper Annotation
+When working with datetime fields either epochDatetime or
+stringDatetime annotation is required to specify how the
+datetime is encoded in JSON. This must be the first
+annotation.</p>
+<p>stringDatetime requires the string format as input.</p>
+<p>Optional Name-Value pair TimeZone can be provided.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span>
+<span class="w">    </span><span class="n">start_date</span><span class="w"> </span><span class="n">datetime</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">stringDatetime</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="s">&#39;yyyy-MM-dd&#39;&#39;T&#39;&#39;HH:mm:ss&#39;</span><span class="p">)}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonmapper-discriminator">
+<h4>JSONMapper.discriminator<a class="headerlink" href="#jsonmapper-discriminator" title="Link to this heading"></a></h4>
+<p>Indicates that the property acts as a discriminator based upon which the JSON document can be deserialized to a more specific derived class. Also see <a class="reference internal" href="#building-class-hierarchies">Building class hierarchies</a>.</p>
+<p>discriminator requires pairs of values and classes as input. Where the pair indicates that if the property has a particular value then this maps to a particular class.</p>
+<p>For example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span>
+<span class="w">    </span><span class="n">petType</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">discriminator</span><span class="p">(</span><span class="n">petType</span><span class="p">,</span><span class="s">&quot;cat&quot;</span><span class="p">,</span><span class="s">&quot;Cat&quot;</span><span class="p">,</span><span class="s">&quot;dog&quot;</span><span class="p">,</span><span class="s">&quot;Dog&quot;</span><span class="p">)}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Specifies that if:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">petType==&quot;cat&quot;</span></code> then the object should be deserialized as <code class="docutils literal notranslate"><span class="pre">Cat</span></code> class</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">petType==&quot;dog&quot;</span></code> then the object should be deserialized as <code class="docutils literal notranslate"><span class="pre">Dog</span></code> class</p></li>
+</ul>
+</section>
+<section id="jsonmapper-donotdecode">
+<h4>JSONMapper.doNotDecode<a class="headerlink" href="#jsonmapper-donotdecode" title="Link to this heading"></a></h4>
+<p>Indicates that the text property should not be decoded using a JSON parser.
+However it may be parsed and thus should be valid JSON.
+A scenario where this can be useful is if receiving JSON which can only be
+decoded correctly using a bespoke schema at a higher level.</p>
+<p>Such a property should be a scalar string.
+It should not be used in combination with other annotations.</p>
+<p>For example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">properties</span>
+<span class="w">    </span><span class="n">myJSONValue</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="p">{</span><span class="n">JSONMapper</span><span class="p">.</span><span class="n">doNotDecode</span><span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<section id="fromjson">
+<h4>fromJSON<a class="headerlink" href="#fromjson" title="Link to this heading"></a></h4>
+<p>fromJSON deserializes the object from JSON format</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span><span class="p">;</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">fromJSON</span><span class="p">(</span><span class="s">&#39;{&quot;answer&quot;: 42}&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonencode">
+<h4>jsonencode<a class="headerlink" href="#jsonencode" title="Link to this heading"></a></h4>
+<p>jsonencode serializes the object as JSON</p>
+<p>The function should only ever be called with one input: the
+object to be serialized. The second input is only meant to be
+used internally when jsonencode is called recursively.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">json</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">jsonencode</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="getpayload">
+<h4>getPayload<a class="headerlink" href="#getpayload" title="Link to this heading"></a></h4>
+<p>getPayload JSON encodes the object taking into account
+required and optional properties.</p>
+<p>Verifies that required properties have indeed been set.
+Includes optional properties in the output. All other
+properties are not included in the output.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span><span class="p">();</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">required1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;foo&quot;</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">required2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;bar&quot;</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">optional1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<span class="n">json</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">getPayload</span><span class="p">([</span><span class="s">&quot;required1&quot;</span><span class="p">,</span><span class="s">&quot;required2&quot;</span><span class="p">],[</span><span class="s">&quot;optional1&quot;</span><span class="p">,</span><span class="s">&quot;optional2&quot;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>If both inputs (required- as well as optional-parameter arrays) are set to empty
+<code class="docutils literal notranslate"><span class="pre">[]</span></code>, no validation takes place and all properties which are non-empty are
+included in the encoded JSON.</p>
+</section>
+</section>
+</section>
+<section id="jsonenum">
+<h2>JSONEnum<a class="headerlink" href="#jsonenum" title="Link to this heading"></a></h2>
+<p>JSONEnum Base class for enumerations when working with JSONMapper
+When adding enumeration properties to JSONMapper objects, the custom
+enumeration classes must inherit from this JSONEnum base class. And
+the custom enumeration class must declare string values for each enum
+element, these represent the JSON representation of the enumeration
+values; this is required since not all JSON values are guaranteed to
+be valid MATLAB variable names whereas the actual MATLAB enumeration
+values must be.</p>
+<p>Example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">myEnum</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">JSONEnum</span>
+<span class="w">    </span><span class="nb">enumeration</span>
+<span class="w">        </span><span class="n">VAL1</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;VAL.1&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">VAL2</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;VAL.2&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Even if JSON values are valid MATLAB variables, the string value must
+be provided, e.g.:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">myEnum</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">JSONEnum</span>
+<span class="w">    </span><span class="nb">enumeration</span>
+<span class="w">        </span><span class="n">VAL1</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;VAL1&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="n">VAL2</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;VAL2&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</section>
+<section id="jsonmappermap">
+<h2>JSONMapperMap<a class="headerlink" href="#jsonmappermap" title="Link to this heading"></a></h2>
+<p>JSONMapperMap is a wrapper around <code class="docutils literal notranslate"><span class="pre">containers.Map</span></code> which:</p>
+<ol class="arabic">
+<li><p>Allows properties with free-form (string) key (string) value pairs. A typical
+use-case is in REST APIs where objects can have some user defined tags:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Standard fixed properties for this object</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="w">    </span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// Free-form map with user defined keys and values</span>
+<span class="w">    </span><span class="c1">// (can also be empty if user does not want to set them)</span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="nt">&quot;someKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;someValue&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;someOtherKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;anotherValue&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">JSONMapper</span></code> derived MATLAB class for this could look like the following:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">myClass</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">JSONMapper</span>
+<span class="w">    </span><span class="k">properties</span>
+<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="n">string</span>
+<span class="w">        </span><span class="n">version</span><span class="w"> </span><span class="n">double</span>
+<span class="hll"><span class="w">        </span><span class="n">tags</span><span class="w"> </span><span class="n">JSONMapperMap</span>
+</span><span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">methods</span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>obj<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">myClass</span><span class="p">(</span>varargin<span class="p">)</span>
+<span class="w">            </span><span class="n">obj</span><span class="p">@</span><span class="n">JSONMapper</span><span class="p">(</span><span class="nb">varargin</span><span class="p">{:});</span>
+<span class="w">        </span><span class="k">end</span><span class="w">   </span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</li>
+<li><p>Avoids shared instances. <em>If</em> <code class="docutils literal notranslate"><span class="pre">tags</span></code> in the MATLAB snippet above would have
+been declared as <code class="docutils literal notranslate"><span class="pre">containers.Map</span></code> then all instances of <code class="docutils literal notranslate"><span class="pre">myClass</span></code> would have
+shared one single <code class="docutils literal notranslate"><span class="pre">containers.Map</span></code> instance. I.e., in the following, even
+though we assign a <code class="docutils literal notranslate"><span class="pre">someKey</span></code> to obj<strong>1</strong>.tags, obj<strong>2</strong>.tags changed as well:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">obj1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span>
+
+<span class="go">obj1 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [0×1 containers.Map]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span>
+
+<span class="go">obj2 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [0×1 containers.Map]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj1</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="s">&#39;someKey&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;someValue&#39;</span>
+
+<span class="go">obj1 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [1×1 containers.Map]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj2</span>
+
+<span class="go">obj2 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [1×1 containers.Map]</span>
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">JSONMapperMap</span></code> avoids this, with <code class="docutils literal notranslate"><span class="pre">JSONMapperMap</span></code>:</p>
+<div class="highlight-matlabsession notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt; </span><span class="n">obj1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span>
+
+<span class="go">obj1 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [0×0 JSONMapperMap]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myClass</span>
+
+<span class="go">obj2 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [0×0 JSONMapperMap]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj1</span><span class="p">.</span><span class="n">tags</span><span class="p">(</span><span class="s">&#39;someKey&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;someValue&#39;</span>
+
+<span class="go">obj1 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [1×1 JSONMapperMap]</span>
+</span>
+<span class="gp">&gt;&gt; </span><span class="n">obj2</span>
+
+<span class="go">obj2 = </span>
+
+<span class="go">myClass with properties:</span>
+
+<span class="go">    name: [0×0 string]</span>
+<span class="go">    version: []</span>
+<span class="hll"><span class="go">    tags: [0×0 JSONMapperMap]</span>
+</span></pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="InheritanceAndPolymorphism.html" class="btn btn-neutral float-left" title="Inheritance and Polymorphism" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SwaggerUI.html" class="btn btn-neutral float-right" title="Swagger UI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, MathWorks, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
