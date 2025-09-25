@@ -1,1 +1,1 @@
-{{^isFreeFormObject}}{{#isPrimitiveType}}{{dataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{^vendorExtensions.x-is-one-of-primitives}}{{#isModel}}{{modelPackage}}.{{complexType}}{{/isModel}}{{/vendorExtensions.x-is-one-of-primitives}}{{/isPrimitiveType}}{{/isFreeFormObject}}
+{{^isFreeFormObject}}{{#isPrimitiveType}}{{dataType}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{^vendorExtensions.x-is-one-of-primitives}}{{#complexType}}{{modelPackage}}.{{.}}{{/complexType}}{{/vendorExtensions.x-is-one-of-primitives}}{{/isPrimitiveType}}{{/isFreeFormObject}}

@@ -232,6 +232,45 @@ classdef DataTypes < GenerateSpec
             testCase.verifyEqual(DT.models.MyEnum.x123.JSONValue,"123")
         end
 
+        function EnumAsField(testCase)
+            testCase.generate('MyModel',[ ...
+                "type: object" 
+                "properties:"
+                "  my_enum:"
+                "    type: string"
+                "    enum:"
+                "    - foo"
+                "    - 123"
+            ]);
+
+
+            % Verify MyModel model was generated
+            testCase.verifyEqual(exist('DT.models.MyModel','class'),8);
+            % Verify that MyModel has an my_enum field and it is of the
+            % DT.models.MyModelMy_enumEnum type
+            m = ?DT.models.MyModel;
+            p = m.PropertyList;
+            testCase.verifyEqual(p.Name,'my_enum');
+            testCase.verifyEqual(p.Validation.Class,?DT.models.MyModelMy_enumEnum)
+
+            % Verify enum model was generated
+            testCase.verifyEqual(exist('DT.models.MyModelMy_enumEnum','class'),8);
+
+            % Verify that it is an enum
+            m = ?DT.models.MyModelMy_enumEnum;
+            testCase.verifyTrue(m.Enumeration)
+            % Verify it has two values
+            ev = m.EnumerationMemberList;
+            testCase.verifyEqual(length(ev),2)
+            % Verify the names are correct
+            testCase.verifyEqual(ev(1).Name,'foo')
+            testCase.verifyEqual(ev(2).Name,'x123')
+            % Verify their underlying values
+            testCase.verifyEqual(DT.models.MyModelMy_enumEnum.foo.JSONValue,"foo")
+            testCase.verifyEqual(DT.models.MyModelMy_enumEnum.x123.JSONValue,"123")
+
+        end        
+
         function IntEnum(testCase)
             testCase.generate('MyEnum',[ ...
                 "type: integer" 

@@ -324,21 +324,21 @@ classdef Project < handle
             fprintf("Creating local git repository: %s\n", obj.path);
             obj.createGitIgnores();
             % Consider MATLAB's built in git init in >=24a (g3389057)
-            cmd = sprintf("cd %s;   git init --initial-branch=main", obj.path);
+            cmd = sprintf('cd "%s" &&  git init --initial-branch=main', obj.path);
             [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             if status ~= 0
                 fprintf(2, "git init failed, skipping remain repository creation steps\n");
                 return;
             end
 
-            cmd = sprintf("cd %s;  git add .", obj.path);
+            cmd = sprintf('cd "%s" &&  git add .', obj.path);
             [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             if status ~= 0
                 fprintf(2, "git add failed, skipping remain repository creation steps\n");
                 return;
             end
 
-            cmd = sprintf('cd %s;  git commit -m "Initial commit"', obj.path);
+            cmd = sprintf('cd "%s" &&  git commit -m "Initial commit"', obj.path);
             [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             if status ~= 0
                 fprintf(2, "git commit failed\n");
@@ -374,7 +374,7 @@ classdef Project < handle
 
             % Repo already init'd
             % % Consider MATLAB's built in git init in >=24a (g3389057)
-            % cmd = sprintf("cd %s;   git init --initial-branch=main", obj.path);
+            % cmd = sprintf('cd "%s" &&   git init --initial-branch=main', obj.path);
             % [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             % if status ~= 0
             %     fprintf(2, "git init failed, skipping upload\n");
@@ -382,9 +382,9 @@ classdef Project < handle
             % end
 
             if options.useSSH
-                cmd = sprintf("cd %s; git remote add origin %s", obj.path, options.sshURL);
+                cmd = sprintf('cd "%s" && git remote add origin %s', obj.path, options.sshURL);
             else
-                cmd = sprintf("cd %s; git remote add origin %s", obj.path, options.httpURL);
+                cmd = sprintf('cd "%s" && git remote add origin %s', obj.path, options.httpURL);
             end
             [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             if status ~= 0
@@ -392,7 +392,7 @@ classdef Project < handle
                 return;
             end
 
-            cmd = sprintf("cd %s;  git add .", obj.path);
+            cmd = sprintf('cd "%s" &&  git add .', obj.path);
             [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             if status ~= 0
                 fprintf(2, "git add failed, skipping upload\n");
@@ -400,14 +400,14 @@ classdef Project < handle
             end
 
             % Already committed
-            % cmd = sprintf('cd %s;  git commit -m "Initial commit"', obj.path);
+            % cmd = sprintf('cd "%s" &&  git commit -m "Initial commit"', obj.path);
             % [status, cmdout] = system(cmd, "-echo"); %#ok<ASGLU>
             % if status ~= 0
             %     fprintf(2, "git commit failed, skipping upload\n");
             %     return;
             % end
 
-            cmd = sprintf("cd %s;  git push --progress --set-upstream origin main", obj.path);
+            cmd = sprintf('cd "%s" &&  git push --progress --set-upstream origin main', obj.path);
             [status, cmdout] = system(cmd);
             if status ~= 0
                 fprintf(2, "git push failed\nOutput:\n%s\n", cmdout);

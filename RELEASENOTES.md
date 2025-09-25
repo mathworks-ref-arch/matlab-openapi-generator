@@ -1,5 +1,13 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 3.0.2 (September 24th 2025)
+
+* Fixes issue where the data type of enum fields were not set correctly.
+
+## Version 3.0.1 (August 25th 2025)
+
+* Bug fix to Git repo generation on Windows
+
 ## Version 3.0.0 (July 9th 2025)
 
 * **Breaking Change**: The MATLAB Client Generator previously named `MATLAB` was renamed to `matlab-client` (this brings the MATLAB Client generator better in line with other OpenAPI generator names, which by convention are in  kebab-case, and makes a clearer distinction between the Client generator and the newly introduced Server generator which is named `matlab-server`). When generating clients using `openapi.build.Client` inside MATLAB, no changes are required, the builder has been updated to reflect this change. However, if calling generator from the command line using `npx @openapitools/openapi-generator-cli` (or by invoking the generator through `java` directly) make sure to update the command line arguments, replace `-g MATLAB` (or `--generator MATLAB`) with `-g matlab-client` (or `--generator matlab-client`).
