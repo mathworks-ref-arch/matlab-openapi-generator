@@ -32,5 +32,27 @@ classdef (SharedTestFixtures={testServerFixture}) invokeTests < matlab.unittest.
             testCase.verifyEqual(r.u64,uint64(18446744073709551614));
             testCase.verifyEqual(r.b,true);
         end
+
+        function testPathParameters(testCase)
+            client = Test.api.App;
+            % Standard string parameter
+            [c,r] = client.apppathMessage("Hello World");
+            testCase.verifyEqual(c,matlab.net.http.StatusCode.OK);
+            testCase.verifyClass(r,'Test.models.HelloMessage');
+            testCase.verifyEqual(r.message, "Hello World");
+            % Logical/boolean parameter
+            % Most importantly test that the next line does not error out
+            [c,r] = client.apppathBool(true);
+            % For good measure also verify the actual return value
+            testCase.verifyEqual(c,matlab.net.http.StatusCode.OK);
+            testCase.verifyClass(r,'Test.models.HelloMessage');
+            testCase.verifyEqual(r.message, "state is true");
+            % Numeric parameter
+            [c,r] = client.apppathNumber(42);
+            testCase.verifyEqual(c,matlab.net.http.StatusCode.OK);
+            testCase.verifyClass(r,'Test.models.HelloMessage');
+            testCase.verifyEqual(r.message, "num is 42");
+            
+        end        
     end
 end

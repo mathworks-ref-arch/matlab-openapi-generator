@@ -158,7 +158,7 @@ classdef {{classname}} < {{packageName}}.BaseClient
             uri.EncodedPath = uri.EncodedPath + "{{path}}";
 
             {{^pathParams}}% No path parameters{{/pathParams}}{{#pathParams}}{{#-first}}% Substitute path parameters{{/-first}}
-            uri.Path = replace(uri.Path, "{" + "{{baseName}}" + "}", {{>paramName}});{{/pathParams}}
+            uri.Path = replace(uri.Path, "{" + "{{baseName}}" + "}", string({{>paramName}}));{{/pathParams}}
 
             {{^queryParams}}% No query parameters{{/queryParams}}{{#queryParams}}{{#-first}}% Set query parameters{{/-first}}{{#required}}
             uri.Query(end+1) = matlab.net.QueryParameter("{{baseName}}", {{>paramName}}{{#isCollectionFormatMulti}}, matlab.net.ArrayFormat.repeating{{/isCollectionFormatMulti}});{{/required}}{{^required}}

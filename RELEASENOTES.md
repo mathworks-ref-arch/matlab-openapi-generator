@@ -1,8 +1,12 @@
 # MATLAB Generator *for OpenAPI*
 
+## Version 3.0.3 (September 26th 2025)
+
+* Fixes issue with non-string path parameters.
+
 ## Version 3.0.2 (September 24th 2025)
 
-* Fixes issue where the data type of enum fields were not set correctly.
+* Fixes issue where the data type of enum fields was not set correctly.
 
 ## Version 3.0.1 (August 25th 2025)
 
